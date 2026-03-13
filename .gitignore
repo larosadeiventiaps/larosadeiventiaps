@@ -1,0 +1,28 @@
+# WordPress core - non versionato (non serve su git)
+wp-admin/
+wp-includes/
+
+# Sensitive files - MAI su git
+wp-config.php
+
+# Uploads - troppo grandi per git
+wp-content/uploads/
+
+# Cache e file temporanei
+wp-content/cache/
+wp-content/wpo-cache/
+wp-content/advanced-cache.php
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+wp-content/ai1wm-backups/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
