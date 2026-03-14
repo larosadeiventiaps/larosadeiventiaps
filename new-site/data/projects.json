@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Progetto Esempio In Corso",
+    "description": "Descrizione del progetto attualmente in corso.",
+    "image": "images/projects/placeholder.svg",
+    "startDate": "2026-01-15",
+    "endDate": "2026-06-30",
+    "status": "in_corso"
+  },
+  {
+    "title": "Secondo Progetto In Corso",
+    "description": "Un altro progetto attivo dell'associazione.",
+    "image": "images/projects/placeholder.svg",
+    "startDate": "2026-02-01",
+    "endDate": "2026-08-31",
+    "status": "in_corso"
+  },
+  {
+    "title": "Progetto Esempio Futuro",
+    "description": "Un progetto che partirà nei prossimi mesi.",
+    "image": "images/projects/placeholder.svg",
+    "startDate": "2026-07-01",
+    "endDate": "2026-12-31",
+    "status": "futuro"
+  },
+  {
+    "title": "Progetto Esempio Passato",
+    "description": "Un progetto già completato con successo.",
+    "image": "images/projects/placeholder.svg",
+    "startDate": "2025-03-01",
+    "endDate": "2025-09-30",
+    "status": "passato"
+  }
+]

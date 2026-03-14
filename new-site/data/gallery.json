@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Foto Esempio 1",
+    "description": "Una foto di esempio per la gallery.",
+    "image": "images/gallery/placeholder.svg",
+    "date": "2026-02-10"
+  },
+  {
+    "title": "Foto Esempio 2",
+    "description": "Un'altra foto di esempio.",
+    "image": "images/gallery/placeholder.svg",
+    "date": "2026-01-20"
+  },
+  {
+    "title": "Foto Esempio 3",
+    "description": "Terza foto di esempio per testare la gallery.",
+    "image": "images/gallery/placeholder.svg",
+    "date": "2025-11-15"
+  }
+]
