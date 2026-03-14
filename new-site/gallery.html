@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — La Rosa dei Venti APS</title>
+  <meta name="description" content="La Rosa dei Venti APS — Gallery fotografica dei nostri eventi, attività e momenti speciali.">
+  <meta property="og:title" content="Gallery — La Rosa dei Venti APS">
+  <meta property="og:description" content="Guarda le foto dei nostri eventi, attività e momenti speciali condivisi insieme.">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">🌹 La Rosa dei Venti APS</a>
+    <button class="hamburger" aria-label="Menu">☰</button>
+    <ul class="navbar-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="mission.html">Mission</a></li>
+      <li><a href="progetti.html">Progetti</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="filter-bar">
+      <input type="text" id="search-input" placeholder="🔍 Cerca nella gallery...">
+      <input type="date" id="date-from" title="Da">
+      <input type="date" id="date-to" title="A">
+    </div>
+
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </main>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">✕</button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Precedente">❮</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-next" id="lightbox-next" aria-label="Successivo">❯</button>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <footer class="footer">
+    <p>La Rosa dei Venti APS</p>
+    <p>Via Example 1, Città — info@larosadeiventiaps.org</p>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+    </div>
+    <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -115,7 +115,96 @@ async function loadProjects() {
 }
 
 async function loadGallery() {
-  // Will be implemented when gallery page is created
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
+
+  try {
+    const res = await fetch('data/gallery.json');
+    const allPhotos = await res.json();
+    let currentIndex = 0;
+    let visiblePhotos = [];
+
+    const searchInput = document.getElementById('search-input');
+    const dateFrom = document.getElementById('date-from');
+    const dateTo = document.getElementById('date-to');
+
+    function renderGallery() {
+      const query = searchInput.value.toLowerCase();
+      const from = dateFrom.value ? new Date(dateFrom.value) : null;
+      const to = dateTo.value ? new Date(dateTo.value) : null;
+
+      visiblePhotos = allPhotos.filter(p => {
+        if (query && !p.title.toLowerCase().includes(query) && !p.description.toLowerCase().includes(query)) return false;
+        if (from || to) {
+          const pDate = new Date(p.date);
+          if (from && pDate < from) return false;
+          if (to && pDate > to) return false;
+        }
+        return true;
+      });
+
+      grid.innerHTML = visiblePhotos.map((p, i) => `
+        <div class="gallery-item" data-index="${i}">
+          <img src="${p.image}" alt="${p.title}">
+          <div class="gallery-item-info">
+            <h3>${p.title}</h3>
+            <p class="date">${formatDate(p.date)}</p>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
+      });
+    }
+
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCaption = document.getElementById('lightbox-caption');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('active');
+    }
+
+    function updateLightbox() {
+      const photo = visiblePhotos[currentIndex];
+      lbImg.src = photo.image;
+      lbImg.alt = photo.title;
+      lbCaption.innerHTML = '<h3>' + photo.title + '</h3><p>' + photo.description + '</p>';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+    }
+
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-prev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + visiblePhotos.length) % visiblePhotos.length;
+      updateLightbox();
+    });
+    document.getElementById('lightbox-next').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % visiblePhotos.length;
+      updateLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + visiblePhotos.length) % visiblePhotos.length; updateLightbox(); }
+      if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visiblePhotos.length; updateLightbox(); }
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    searchInput.addEventListener('input', renderGallery);
+    dateFrom.addEventListener('change', renderGallery);
+    dateTo.addEventListener('change', renderGallery);
+    renderGallery();
+  } catch (e) {
+    console.warn('Could not load gallery:', e);
+  }
 }
