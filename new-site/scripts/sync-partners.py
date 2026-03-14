@@ -55,6 +55,7 @@ ALIASES = {
     "fpgrassina": "Fratellanza Popolare Grassina",
     "croce d'oro ponte a ema": "Croce d'Oro Ponte a Ema",
     "l'apiario": "Apicoltura San Martino",
+    "fontenuova": "Cooperativa Fontenuova",
 }
 
 # Stringhe composte nell'Excel che vanno espanse in più partner singoli

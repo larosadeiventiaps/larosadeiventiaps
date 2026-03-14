@@ -2,8 +2,8 @@
   {
     "name": "Angeli del Bello",
     "type": "associazione",
-    "description": "Associazione di volontari dedicata alla cura, al decoro e alla valorizzazione degli spazi pubblici di Firenze e dintorni.",
-    "logo": "",
+    "description": "Fondazione di volontari dedicata alla cura, al decoro e alla valorizzazione degli spazi pubblici di Firenze e dintorni.",
+    "logo": "images/partners/angeli-del-bello.png",
     "url": "https://www.angelidelbello.org"
   },
   {
@@ -23,9 +23,9 @@
   {
     "name": "BE Care S.r.l.",
     "type": "azienda",
-    "description": "Azienda di servizi tecnologici e consulenza che sostiene i progetti dell'associazione.",
-    "logo": "",
-    "url": ""
+    "description": "Azienda di servizi ICT con ventennale esperienza nel settore informatico, partner tecnologico dell'associazione.",
+    "logo": "images/partners/becare.png",
+    "url": "https://www.becare.it"
   },
   {
     "name": "Biblioteca di Bagno a Ripoli",
@@ -51,93 +51,93 @@
   {
     "name": "Casa del Popolo Grassina",
     "type": "associazione",
-    "description": "Circolo ricreativo e culturale con attività sociali, eventi e aggregazione a Grassina.",
+    "description": "Circolo ricreativo e culturale fondato nel 1893, con teatro, pizzeria, corsi e attività sociali a Grassina.",
     "logo": "",
-    "url": ""
+    "url": "https://www.casadelpopolo.fi.it"
   },
   {
     "name": "Circolo Vie Nuove",
     "type": "associazione",
-    "description": "Circolo ricreativo e culturale che promuove attività sociali, sportive e culturali nel quartiere dell'Isolotto a Firenze.",
+    "description": "Circolo ARCI fondato nel 1944 che promuove attività sociali, sportive e culturali nel quartiere dell'Isolotto a Firenze.",
     "logo": "",
-    "url": "https://www.circolovienuove.it"
+    "url": "https://www.arcifirenze.it/circoli/circolo-vie-nuove/"
   },
   {
     "name": "Comune di Bagno a Ripoli",
     "type": "istituzionale",
     "description": "Ente locale che amministra il territorio del comune di Bagno a Ripoli (FI), partner istituzionale in numerosi progetti.",
-    "logo": "",
+    "logo": "images/partners/comune-bagno-a-ripoli.png",
     "url": "https://www.comune.bagno-a-ripoli.fi.it"
   },
   {
     "name": "Consorzio Blu",
     "type": "cooperativa",
-    "description": "Consorzio di cooperative sociali per servizi educativi, di inclusione e assistenza alla persona.",
-    "logo": "",
+    "description": "Consorzio di cooperative sociali nato dall'esperienza di Àncora e In Cammino, per servizi educativi, di inclusione e assistenza.",
+    "logo": "images/partners/consorzio-blu.png",
     "url": "https://www.consorzioblu.it"
   },
   {
     "name": "Contrada dell'Alfiere",
     "type": "associazione",
-    "description": "Associazione per la rievocazione storica, il palio e le tradizioni del territorio di Bagno a Ripoli.",
+    "description": "Associazione culturale fondata nel 1993 per la rievocazione storica rinascimentale con sbandieratori, musici e danze.",
     "logo": "",
-    "url": ""
+    "url": "https://www.contradaalfiere.com"
   },
   {
     "name": "Cooperativa Fontenuova",
     "type": "cooperativa",
-    "description": "Cooperativa sociale che gestisce servizi educativi, di assistenza e di inclusione sociale nell'area fiorentina.",
+    "description": "Cooperativa sociale che gestisce un centro diurno per persone con disabilità, con laboratori di tessitura, orto e piante aromatiche.",
     "logo": "",
-    "url": "https://www.fontenuova.org"
+    "url": "https://www.fontenuovacoop.it"
   },
   {
     "name": "CRC Antella",
     "type": "associazione",
-    "description": "Centro Ricreativo Culturale con attività sociali, sportive e aggregative per la comunità di Antella.",
-    "logo": "",
-    "url": ""
+    "description": "Circolo Ricreativo Culturale fondato nel 1958, con teatro, cinema, corsi e attività aggregative per la comunità di Antella.",
+    "logo": "images/partners/crc-antella.png",
+    "url": "https://crcantella.it"
   },
   {
     "name": "Croce d'Oro Ponte a Ema",
     "type": "associazione",
-    "description": "Associazione di volontariato per il trasporto sanitario, il soccorso e la protezione civile a Ponte a Ema.",
-    "logo": "",
-    "url": ""
+    "description": "Pubblica Assistenza di volontariato per il trasporto sanitario, il soccorso e la protezione civile a Ponte a Ema.",
+    "logo": "images/partners/croce-doro-ponte-ema.png",
+    "url": "https://www.crocedoroponteaema.it"
   },
   {
     "name": "Croce Rossa Italiana",
     "type": "associazione",
     "description": "Organizzazione umanitaria di volontariato impegnata nel soccorso sanitario, nella protezione civile e nell'assistenza sociale.",
-    "logo": "",
+    "logo": "images/partners/croce-rossa-italiana.png",
     "url": "https://www.cri.it"
   },
   {
     "name": "Fondazione Claudio Ciai",
     "type": "associazione",
-    "description": "Fondazione impegnata nel sociale e nel volontariato nel territorio di Bagno a Ripoli.",
-    "logo": "",
-    "url": ""
+    "description": "Fondazione per l'inclusione sociale delle persone con disabilità, nata nel 2014 per la sicurezza stradale e il sostegno alle vittime di incidenti.",
+    "logo": "images/partners/fondazione-ciai.png",
+    "url": "https://www.fondazioneclaudiociai.com"
   },
   {
     "name": "Fondazione CR Firenze",
     "type": "istituzionale",
     "description": "Fondazione bancaria che sostiene progetti culturali, sociali, scientifici e di sviluppo economico nel territorio fiorentino e toscano.",
     "logo": "",
-    "url": "https://www.fondazionecrfirenze.it"
+    "url": "https://fondazionecrfirenze.it"
   },
   {
     "name": "Fratellanza Popolare Grassina",
     "type": "associazione",
-    "description": "Associazione di pubblica assistenza e volontariato per il soccorso sanitario e le attività sociali a Grassina.",
-    "logo": "",
-    "url": ""
+    "description": "Pubblica Assistenza e Croce d'Oro affiliata ANPAS, per soccorso sanitario, poliambulatorio e attività sociali a Grassina.",
+    "logo": "images/partners/fratellanza-grassina.webp",
+    "url": "https://www.fratellanzagrassina.it"
   },
   {
     "name": "Il Teatro dell'Inutile",
     "type": "associazione",
-    "description": "Compagnia teatrale amatoriale attiva nel territorio fiorentino e di Bagno a Ripoli.",
+    "description": "Associazione teatrale che promuove la cultura teatrale con corsi per bambini e giovani, attiva al CRC Antella.",
     "logo": "",
-    "url": ""
+    "url": "https://www.facebook.com/ilteatro.dellinutile/"
   },
   {
     "name": "Intesa Sanpaolo",
@@ -149,16 +149,16 @@
   {
     "name": "Istituto Elsa Morante",
     "type": "scuola",
-    "description": "Istituto di istruzione con indirizzi tecnici e professionali nell'area fiorentina, partner in progetti educativi.",
-    "logo": "",
-    "url": ""
+    "description": "Istituto di istruzione superiore Morante-Ginori Conti con indirizzi socio-sanitari, tecnici e liceali a Firenze.",
+    "logo": "images/partners/elsa-morante.png",
+    "url": "https://www.elsamorante.edu.it"
   },
   {
     "name": "La Lanterna",
     "type": "associazione",
-    "description": "Realtà locale che collabora con l'associazione in attività educative e di inclusione sociale.",
+    "description": "Associazione onlus per il sostegno a persone con disabilità e famiglie, con laboratori esperienziali e gruppi di auto-aiuto.",
     "logo": "",
-    "url": ""
+    "url": "https://www.asslalanterna.it"
   },
   {
     "name": "Legambiente",
@@ -170,16 +170,16 @@
   {
     "name": "Misericordia di Antella",
     "type": "associazione",
-    "description": "Confraternita di Misericordia per servizi di emergenza sanitaria, trasporto sociale e assistenza alla comunità.",
-    "logo": "",
-    "url": ""
+    "description": "Confraternita di Misericordia fondata nel 1852, con poliambulatorio, trasporto sanitario e assistenza alla comunità.",
+    "logo": "images/partners/misericordia-antella.png",
+    "url": "https://misericordia-antella.it"
   },
   {
     "name": "Misericordia di Badia a Ripoli",
     "type": "associazione",
-    "description": "Confraternita di Misericordia per servizi sanitari, sociali e di protezione civile nel territorio ripolese.",
-    "logo": "",
-    "url": ""
+    "description": "Confraternita di Misericordia fondata nel 1968, per servizi sanitari, trasporti sociali e protezione civile.",
+    "logo": "images/partners/misericordia-badia.png",
+    "url": "https://misericordiadibadia.it"
   },
   {
     "name": "Misericordia di Ponte a Ema",
@@ -191,23 +191,23 @@
   {
     "name": "Scuola Francesco Redi",
     "type": "scuola",
-    "description": "Scuola secondaria di primo grado nel Comune di Bagno a Ripoli, partner in progetti educativi e didattici.",
+    "description": "Scuola secondaria di primo grado dell'IC Caponnetto a Bagno a Ripoli, partner in progetti educativi e didattici.",
     "logo": "",
-    "url": ""
+    "url": "https://www.caponnetto.edu.it"
   },
   {
     "name": "SdS Firenze Sud-Est",
     "type": "istituzionale",
-    "description": "Società della Salute per la programmazione e il governo integrato dei servizi socio-sanitari nella zona fiorentina sud-est.",
-    "logo": "",
-    "url": ""
+    "description": "Società della Salute, consorzio pubblico per i servizi socio-sanitari della zona fiorentina sud-est.",
+    "logo": "images/partners/sds-firenze-sudest.png",
+    "url": "https://sds-firenzesudest.055055.it"
   },
   {
     "name": "Trekking BaR",
     "type": "associazione",
-    "description": "Gruppo escursionistico per passeggiate e trekking nel territorio di Bagno a Ripoli e dintorni.",
-    "logo": "",
-    "url": ""
+    "description": "Gruppo escursionistico fondato nel 1987 per passeggiate e trekking nel territorio di Bagno a Ripoli e dintorni.",
+    "logo": "images/partners/trekking-bar.png",
+    "url": "https://www.trekkingbagnoaripoli.it/gtbr/"
   },
   {
     "name": "VAB",
@@ -219,7 +219,7 @@
   {
     "name": "Volontmusic",
     "type": "associazione",
-    "description": "Associazione che promuove la musica come strumento di inclusione sociale e volontariato.",
+    "description": "Associazione che promuove il volontariato attraverso contest musicali tra band emergenti delle associazioni del territorio.",
     "logo": "",
     "url": ""
   }
