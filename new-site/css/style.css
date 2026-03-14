@@ -615,23 +615,6 @@ main {
   .hero {
     min-height: 50vh;
   }
-}
-
-/* ------------------------------------------------------------
-   Responsive — 480px breakpoint
-   ------------------------------------------------------------ */
-@media (max-width: 480px) {
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .feature-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
 
   .navbar-menu {
     display: none;
@@ -656,5 +639,22 @@ main {
 
   .hamburger {
     display: block;
+  }
+}
+
+/* ------------------------------------------------------------
+   Responsive — 480px breakpoint
+   ------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
   }
 }

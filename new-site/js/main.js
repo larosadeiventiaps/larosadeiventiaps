@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
 });
 
+function escapeHTML(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr);
@@ -38,11 +45,11 @@ async function loadLatestProjects() {
     }
     grid.innerHTML = inCorso.map(p => `
       <article class="card">
-        <div class="card-image"><img src="${p.image}" alt="${p.title}"></div>
+        <div class="card-image"><img src="${p.image}" alt="${escapeHTML(p.title)}"></div>
         <div class="card-body">
-          <h3>${p.title}</h3>
+          <h3>${escapeHTML(p.title)}</h3>
           <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
-          <p>${p.description}</p>
+          <p>${escapeHTML(p.description)}</p>
         </div>
       </article>
     `).join('');
@@ -93,11 +100,11 @@ async function loadProjects() {
           section.style.display = 'block';
           grid.innerHTML = items.map(p => `
             <article class="card">
-              <div class="card-image"><img src="${p.image}" alt="${p.title}"></div>
+              <div class="card-image"><img src="${p.image}" alt="${escapeHTML(p.title)}"></div>
               <div class="card-body">
-                <h3>${p.title}</h3>
+                <h3>${escapeHTML(p.title)}</h3>
                 <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
-                <p>${p.description}</p>
+                <p>${escapeHTML(p.description)}</p>
               </div>
             </article>
           `).join('');
@@ -145,9 +152,9 @@ async function loadGallery() {
 
       grid.innerHTML = visiblePhotos.map((p, i) => `
         <div class="gallery-item" data-index="${i}">
-          <img src="${p.image}" alt="${p.title}">
+          <img src="${p.image}" alt="${escapeHTML(p.title)}">
           <div class="gallery-item-info">
-            <h3>${p.title}</h3>
+            <h3>${escapeHTML(p.title)}</h3>
             <p class="date">${formatDate(p.date)}</p>
           </div>
         </div>
@@ -169,10 +176,11 @@ async function loadGallery() {
     }
 
     function updateLightbox() {
+      if (visiblePhotos.length === 0) return;
       const photo = visiblePhotos[currentIndex];
       lbImg.src = photo.image;
       lbImg.alt = photo.title;
-      lbCaption.innerHTML = '<h3>' + photo.title + '</h3><p>' + photo.description + '</p>';
+      lbCaption.innerHTML = '<h3>' + escapeHTML(photo.title) + '</h3><p>' + escapeHTML(photo.description) + '</p>';
     }
 
     function closeLightbox() {
