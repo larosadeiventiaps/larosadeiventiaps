@@ -25,4 +25,7 @@ jobs:
             **/.git*/**
             .github/**
             .claude/**
+            .superpowers/**
+            docs/**
+            new-site/**
             README.md
