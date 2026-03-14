@@ -11,12 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Load stats on home page
+  loadStats();
   // Load latest projects on home page
   loadLatestProjects();
   // Load projects on projects page
   loadProjects();
   // Load gallery on gallery page
   loadGallery();
+  // Load partners on partner page
+  loadPartners();
 });
 
 function escapeHTML(str) {
@@ -30,6 +34,45 @@ function formatDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr);
   return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+async function loadStats() {
+  const grid = document.getElementById('stats-grid');
+  if (!grid) return;
+  try {
+    const res = await fetch('data/projects.json');
+    const projects = await res.json();
+    const totProjects = projects.length;
+    const totIncontri = projects.reduce((s, p) => s + (p.incontri || 0), 0);
+    const totOre = projects.reduce((s, p) => s + (p.ore || 0), 0);
+    const totPartecipanti = projects.reduce((s, p) => s + (p.partecipanti || 0), 0);
+    const totEducatori = projects.reduce((s, p) => s + (p.educatori || 0), 0);
+    const totVolontari = projects.reduce((s, p) => s + (p.volontari || 0), 0);
+    const years = new Set(projects.map(p => new Date(p.startDate).getFullYear()));
+    const totYears = years.size;
+
+    const stats = [
+      { number: totProjects, label: 'Progetti realizzati' },
+      { number: totIncontri, label: 'Incontri organizzati' },
+      { number: Math.round(totOre), label: 'Ore di attività' },
+      { number: totPartecipanti, label: 'Partecipanti coinvolti' },
+      { number: totVolontari, label: 'Volontari impiegati' },
+      { number: totEducatori, label: 'Educatori coinvolti' },
+      { number: totYears, label: 'Anni di attività' },
+      { number: new Set(projects.flatMap(p => [p.collaboratori, p.sponsor].filter(Boolean))).size, label: 'Partner e collaboratori' }
+    ];
+
+    grid.innerHTML = stats.map(s => `
+      <div class="stat-card">
+        <span class="stat-number">${s.number}</span>
+        <span class="stat-label">${escapeHTML(s.label)}</span>
+      </div>
+    `).join('');
+  } catch (e) {
+    console.warn('Could not load stats:', e);
+    const section = document.getElementById('stats-section');
+    if (section) section.style.display = 'none';
+  }
 }
 
 async function loadLatestProjects() {
@@ -214,5 +257,70 @@ async function loadGallery() {
     renderGallery();
   } catch (e) {
     console.warn('Could not load gallery:', e);
+  }
+}
+
+const TYPE_LABELS = {
+  istituzionale: 'Istituzione',
+  associazione: 'Associazione',
+  cooperativa: 'Cooperativa',
+  scuola: 'Scuola',
+  azienda: 'Azienda'
+};
+
+async function loadPartners() {
+  const grid = document.getElementById('partners-grid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('data/partners.json');
+    const allPartners = await res.json();
+
+    const searchInput = document.getElementById('partner-search');
+    const typeFilter = document.getElementById('partner-type-filter');
+
+    function renderPartners() {
+      const query = searchInput.value.toLowerCase();
+      const type = typeFilter.value;
+
+      const filtered = allPartners.filter(p => {
+        if (query && !p.name.toLowerCase().includes(query) && !(p.description || '').toLowerCase().includes(query)) return false;
+        if (type && p.type !== type) return false;
+        return true;
+      });
+
+      grid.innerHTML = filtered.map(p => {
+        const initials = p.name.split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
+        const logoHtml = p.logo
+          ? `<img src="${p.logo}" alt="${escapeHTML(p.name)}">`
+          : `<div class="partner-placeholder">${escapeHTML(initials)}</div>`;
+        const linkHtml = p.url
+          ? `<a href="${p.url}" class="partner-link" target="_blank" rel="noopener noreferrer">Visita il sito ↗</a>`
+          : '';
+        const typeLabel = TYPE_LABELS[p.type] || p.type || '';
+
+        return `
+          <div class="partner-card">
+            <div class="partner-card-logo">${logoHtml}</div>
+            <div class="partner-card-body">
+              <h3>${escapeHTML(p.name)}</h3>
+              ${typeLabel ? `<span class="partner-type">${escapeHTML(typeLabel)}</span>` : ''}
+              <p>${escapeHTML(p.description || '')}</p>
+              ${linkHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="color:#999;text-align:center;grid-column:1/-1;">Nessun partner trovato.</p>';
+      }
+    }
+
+    searchInput.addEventListener('input', renderPartners);
+    typeFilter.addEventListener('change', renderPartners);
+    renderPartners();
+  } catch (e) {
+    console.warn('Could not load partners:', e);
   }
 }

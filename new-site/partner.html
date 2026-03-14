@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Progetti — La Rosa dei Venti APS</title>
-  <meta name="description" content="La Rosa dei Venti APS — Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
-  <meta property="og:title" content="Progetti — La Rosa dei Venti APS">
-  <meta property="og:description" content="Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
+  <title>Partner — La Rosa dei Venti APS</title>
+  <meta name="description" content="La Rosa dei Venti APS — I nostri partner e collaboratori che rendono possibili i nostri progetti.">
+  <meta property="og:title" content="Partner — La Rosa dei Venti APS">
+  <meta property="og:description" content="Scopri le organizzazioni e le realtà che collaborano con noi per realizzare i nostri progetti.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
@@ -19,34 +19,32 @@
     <ul class="navbar-menu">
       <li><a href="index.html">Home</a></li>
       <li><a href="mission.html">Mission</a></li>
-      <li><a href="progetti.html" class="active">Progetti</a></li>
+      <li><a href="progetti.html">Progetti</a></li>
       <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="partner.html">Partner</a></li>
+      <li><a href="partner.html" class="active">Partner</a></li>
       <li><a href="contatti.html">Contatti</a></li>
     </ul>
   </nav>
 
   <main>
-    <div class="filter-bar">
-      <input type="text" id="search-input" placeholder="🔍 Cerca progetti...">
-      <input type="date" id="date-from" title="Da">
-      <input type="date" id="date-to" title="A">
-    </div>
+    <section class="section">
+      <h1 class="section-title">I Nostri Partner</h1>
+      <p style="margin-bottom:1.5rem;color:#666;">Le organizzazioni e le realtà del territorio che collaborano con noi per realizzare i nostri progetti.</p>
 
-    <div id="section-in-corso" class="project-section">
-      <h2 class="project-section-title in-corso">Progetti in Corso</h2>
-      <div class="cards-grid" id="grid-in-corso"></div>
-    </div>
+      <div class="filter-bar" style="position:static;border:none;background:none;padding:0;margin-bottom:1.5rem;">
+        <input type="text" id="partner-search" placeholder="🔍 Cerca partner...">
+        <select id="partner-type-filter">
+          <option value="">Tutti i tipi</option>
+          <option value="istituzionale">Istituzioni</option>
+          <option value="associazione">Associazioni</option>
+          <option value="cooperativa">Cooperative</option>
+          <option value="scuola">Scuole</option>
+          <option value="azienda">Aziende</option>
+        </select>
+      </div>
 
-    <div id="section-futuro" class="project-section">
-      <h2 class="project-section-title futuro">Progetti Futuri</h2>
-      <div class="cards-grid" id="grid-futuro"></div>
-    </div>
-
-    <div id="section-passato" class="project-section">
-      <h2 class="project-section-title passato">Progetti Passati</h2>
-      <div class="cards-grid" id="grid-passato"></div>
-    </div>
+      <div class="partners-grid" id="partners-grid"></div>
+    </section>
   </main>
 
   <footer class="footer">
