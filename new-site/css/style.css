@@ -1,0 +1,660 @@
+/* ============================================================
+   La Rosa dei Venti APS — Main Stylesheet
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CSS Custom Properties
+   ------------------------------------------------------------ */
+:root {
+  --primary: #E8630A;
+  --primary-light: #FFF3E8;
+  --gradient: linear-gradient(135deg, #E8630A, #F4A460);
+  --accent-green: #28a745;
+  --accent-blue: #007bff;
+  --accent-gray: #6c757d;
+  --dark: #333;
+  --radius-card: 8px;
+  --radius-input: 4px;
+}
+
+/* ------------------------------------------------------------
+   Base / Reset
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #333;
+  background: #fff;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--primary);
+}
+
+/* ------------------------------------------------------------
+   Navbar
+   ------------------------------------------------------------ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--primary);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 64px;
+}
+
+.navbar-brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar-menu {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.navbar-menu a.active,
+.navbar-menu a:hover {
+  border-bottom-color: white;
+}
+
+.hamburger {
+  display: none;
+  color: white;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.footer {
+  background: var(--dark);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.footer a {
+  color: #F4A460;
+}
+
+.footer-social {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer-social a {
+  color: white;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------ */
+.hero {
+  min-height: 60vh;
+  background: var(--gradient);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 64px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+.btn-primary {
+  display: inline-block;
+  background: white;
+  color: var(--primary);
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius-card);
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.2s;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+}
+
+/* ------------------------------------------------------------
+   Layout
+   ------------------------------------------------------------ */
+main {
+  margin-top: 64px;
+}
+
+.section {
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--dark);
+}
+
+/* ------------------------------------------------------------
+   Cards Grid
+   ------------------------------------------------------------ */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-body h3 {
+  margin-bottom: 0.5rem;
+}
+
+.card-body .date {
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+/* ------------------------------------------------------------
+   Feature Cards
+   ------------------------------------------------------------ */
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: var(--primary-light);
+  border-radius: var(--radius-card);
+  padding: 2rem;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.feature-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ------------------------------------------------------------
+   Filter Bar
+   ------------------------------------------------------------ */
+.filter-bar {
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  position: sticky;
+  top: 64px;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+
+.filter-bar input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-input);
+  font-size: 0.9rem;
+}
+
+.filter-bar input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ------------------------------------------------------------
+   Project Sections
+   ------------------------------------------------------------ */
+.project-section {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.project-section-title {
+  font-size: 1.4rem;
+  padding-left: 1rem;
+  border-left: 4px solid;
+  margin-bottom: 1.5rem;
+}
+
+.project-section-title.in-corso {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.project-section-title.futuro {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.project-section-title.passato {
+  border-color: var(--accent-gray);
+  color: var(--accent-gray);
+}
+
+/* ------------------------------------------------------------
+   Gallery
+   ------------------------------------------------------------ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  cursor: pointer;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item-info {
+  padding: 0.75rem;
+}
+
+.gallery-item-info h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.gallery-item-info .date {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* ------------------------------------------------------------
+   Lightbox
+   ------------------------------------------------------------ */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: var(--radius-card);
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 1rem;
+}
+
+.lightbox-close {
+  top: 1rem;
+  right: 1rem;
+}
+
+.lightbox-prev {
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-caption {
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  max-width: 600px;
+}
+
+/* ------------------------------------------------------------
+   Contact Page
+   ------------------------------------------------------------ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.contact-info h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.contact-info p {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-input);
+  margin-bottom: 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.contact-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.contact-form button {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background: #d4570a;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 2rem;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  border-radius: var(--radius-card);
+}
+
+/* ------------------------------------------------------------
+   Mission Page
+   ------------------------------------------------------------ */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.value-card {
+  background: var(--primary-light);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.value-card .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.value-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.team-card {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.team-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+}
+
+.team-card h3 {
+  margin-bottom: 0.25rem;
+}
+
+.team-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* ------------------------------------------------------------
+   404 Page
+   ------------------------------------------------------------ */
+.page-404 {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.page-404 h1 {
+  font-size: 4rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.page-404 p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* ------------------------------------------------------------
+   Responsive — 768px breakpoint
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero {
+    min-height: 50vh;
+  }
+}
+
+/* ------------------------------------------------------------
+   Responsive — 480px breakpoint
+   ------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-menu {
+    display: none;
+  }
+
+  .navbar-menu.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: var(--primary);
+    padding: 1rem;
+    gap: 0;
+  }
+
+  .navbar-menu.active a {
+    padding: 0.75rem 1rem;
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
