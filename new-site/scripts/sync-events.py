@@ -157,20 +157,16 @@ def sync(excel_path=None):
 
         events.append(event)
 
-    # Ordina: futuri per data crescente, passati per data decrescente
-    futuri = sorted([e for e in events if e["status"] == "futuro"],
-                    key=lambda e: e.get("startDate", "9999"))
-    passati = sorted([e for e in events if e["status"] == "passato"],
-                     key=lambda e: e.get("startDate", "0000"), reverse=True)
-    events = futuri + passati
+    # Ordina tutti per data decrescente (più recente prima)
+    events.sort(key=lambda e: e.get("startDate", "0000"), reverse=True)
 
     # Salva JSON
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(events, f, ensure_ascii=False, indent=2)
 
-    n_futuri = len(futuri)
-    n_passati = len(passati)
+    n_futuri = sum(1 for e in events if e["status"] == "futuro")
+    n_passati = sum(1 for e in events if e["status"] == "passato")
     print(f"Sincronizzazione eventi completata!")
     print(f"  {len(events)} eventi ({n_futuri} futuri, {n_passati} passati)")
     print(f"  Salvato in: {OUTPUT_PATH}")
