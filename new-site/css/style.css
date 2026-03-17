@@ -327,6 +327,30 @@ main {
   color: var(--accent-blue);
 }
 
+.events-grid {
+  columns: 3;
+  column-gap: 1.5rem;
+}
+
+.events-grid .card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
+}
+
+.events-grid .card-image {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.events-grid .card-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
 .event-meta {
   font-size: 0.85rem;
   color: #666;
@@ -334,6 +358,18 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+}
+
+@media (max-width: 768px) {
+  .events-grid {
+    columns: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .events-grid {
+    columns: 1;
+  }
 }
 
 .project-section-title.passato {
