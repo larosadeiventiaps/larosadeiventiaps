@@ -157,8 +157,13 @@ def sync(excel_path=None):
 
         events.append(event)
 
-    # Ordina tutti per data decrescente (più recente prima)
-    events.sort(key=lambda e: e.get("startDate", "0000"), reverse=True)
+    # Futuri: dal più vicino al più lontano (crescente)
+    # Passati: dal più recente al meno recente (decrescente)
+    futuri = sorted([e for e in events if e["status"] == "futuro"],
+                    key=lambda e: e.get("startDate", "9999"))
+    passati = sorted([e for e in events if e["status"] == "passato"],
+                     key=lambda e: e.get("startDate", "0000"), reverse=True)
+    events = futuri + passati
 
     # Salva JSON
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
