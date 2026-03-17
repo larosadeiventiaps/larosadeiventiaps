@@ -39,6 +39,49 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
+function setupCardLightbox(items) {
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox || items.length === 0) return;
+
+  const lbImg = document.getElementById('lightbox-img');
+  const lbCaption = document.getElementById('lightbox-caption');
+  let currentIndex = 0;
+
+  function open(index) {
+    currentIndex = index;
+    update();
+    lightbox.classList.add('active');
+  }
+
+  function update() {
+    const item = items[currentIndex];
+    lbImg.src = item.image;
+    lbImg.alt = item.title;
+    lbCaption.innerHTML = '<h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description || '') + '</p>';
+  }
+
+  function close() { lightbox.classList.remove('active'); }
+
+  document.getElementById('lightbox-close').addEventListener('click', close);
+  document.getElementById('lightbox-prev').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    update();
+  });
+  document.getElementById('lightbox-next').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % items.length;
+    update();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + items.length) % items.length; update(); }
+    if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % items.length; update(); }
+  });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+
+  return open;
+}
+
 async function loadStats() {
   const grid = document.getElementById('stats-grid');
   if (!grid) return;
@@ -133,6 +176,7 @@ async function loadProjects() {
         return true;
       });
 
+      const allVisible = [];
       ['in_corso', 'futuro', 'passato'].forEach(status => {
         const items = filtered.filter(p => p.status === status);
         const gridId = 'grid-' + status.replace('_', '-');
@@ -144,9 +188,11 @@ async function loadProjects() {
           section.style.display = 'none';
         } else {
           section.style.display = 'block';
-          grid.innerHTML = items.map(p => `
-            <article class="card">
-              <div class="card-image"><img src="${p.image}" alt="${escapeHTML(p.title)}"></div>
+          const startIdx = allVisible.length;
+          items.forEach(p => allVisible.push(p));
+          grid.innerHTML = items.map((p, i) => `
+            <article class="card" data-lb-index="${startIdx + i}">
+              <div class="card-image" style="cursor:pointer"><img src="${p.image}" alt="${escapeHTML(p.title)}"></div>
               <div class="card-body">
                 <h3>${escapeHTML(p.title)}</h3>
                 <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
@@ -156,6 +202,13 @@ async function loadProjects() {
           `).join('');
         }
       });
+
+      const openLb = setupCardLightbox(allVisible);
+      if (openLb) {
+        document.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
+          el.addEventListener('click', () => openLb(parseInt(el.closest('[data-lb-index]').dataset.lbIndex)));
+        });
+      }
     }
 
     searchInput.addEventListener('input', renderProjects);
@@ -339,7 +392,7 @@ function renderEventCard(e) {
 
   return `
     <article class="card">
-      <div class="card-image"><img src="${e.image}" alt="${escapeHTML(e.title)}"></div>
+      <div class="card-image" style="cursor:pointer"><img src="${e.image}" alt="${escapeHTML(e.title)}"></div>
       <div class="card-body">
         <h3>${escapeHTML(e.title)}</h3>
         <div class="event-meta">
@@ -389,6 +442,7 @@ async function loadEvents() {
         return true;
       });
 
+      const allVisible = [];
       ['futuro', 'passato'].forEach(status => {
         const items = filtered.filter(e => e.status === status);
         const grid = document.getElementById('grid-' + status);
@@ -398,9 +452,21 @@ async function loadEvents() {
           section.style.display = 'none';
         } else {
           section.style.display = 'block';
-          grid.innerHTML = items.map(renderEventCard).join('');
+          const startIdx = allVisible.length;
+          items.forEach(e => allVisible.push(e));
+          grid.innerHTML = items.map((e, i) => {
+            const card = renderEventCard(e);
+            return card.replace('<article class="card">', `<article class="card" data-lb-index="${startIdx + i}">`);
+          }).join('');
         }
       });
+
+      const openLb = setupCardLightbox(allVisible);
+      if (openLb) {
+        document.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
+          el.addEventListener('click', () => openLb(parseInt(el.closest('[data-lb-index]').dataset.lbIndex)));
+        });
+      }
     }
 
     searchInput.addEventListener('input', renderEvents);
