@@ -216,7 +216,7 @@ def sync(excel_path):
         if img_val and str(img_val).strip() and str(img_val).strip().lower() != "x":
             image = f"images/projects/{str(img_val).strip()}"
         else:
-            image = "images/projects/placeholder.svg"
+            image = "images/logo.jpg"
 
         project = {"title": title}
 
@@ -286,14 +286,14 @@ def sync(excel_path):
     print(f"  Salvato in: {OUTPUT_PATH}")
 
     # Controlla immagini mancanti
-    img_dir = os.path.join(SITE_DIR, "images", "projects")
     missing = []
     for p in projects:
-        img_file = p["image"].replace("images/projects/", "")
-        if img_file != "placeholder.svg":
-            full_path = os.path.join(img_dir, img_file)
-            if not os.path.exists(full_path):
-                missing.append(img_file)
+        img_path = p["image"]
+        if img_path == "images/logo.jpg":
+            continue  # fallback al logo, sempre presente
+        full_path = os.path.join(SITE_DIR, img_path)
+        if not os.path.exists(full_path):
+            missing.append(img_path)
     if missing:
         print(f"\n  ATTENZIONE — Immagini mancanti in images/projects/:")
         for m in missing:
