@@ -328,15 +328,10 @@ main {
 }
 
 .events-grid {
-  columns: 3;
-  column-gap: 1.5rem;
-}
-
-.events-grid .card {
-  break-inside: avoid;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: start;
 }
 
 .events-grid .card-image {
@@ -362,13 +357,13 @@ main {
 
 @media (max-width: 768px) {
   .events-grid {
-    columns: 2;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
   .events-grid {
-    columns: 1;
+    grid-template-columns: 1fr;
   }
 }
 
