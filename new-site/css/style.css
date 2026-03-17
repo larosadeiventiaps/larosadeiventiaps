@@ -199,10 +199,15 @@ main {
    Cards Grid
    ------------------------------------------------------------ */
 .cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  align-items: start;
+  columns: 3;
+  column-gap: 1.5rem;
+}
+
+.cards-grid .card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
 }
 
 .card {
@@ -329,10 +334,15 @@ main {
 }
 
 .events-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  align-items: start;
+  columns: 3;
+  column-gap: 1.5rem;
+}
+
+.events-grid .card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
 }
 
 .event-meta {
@@ -344,18 +354,6 @@ main {
   gap: 0.15rem;
 }
 
-@media (max-width: 768px) {
-  .events-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .events-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .project-section-title.passato {
   border-color: var(--accent-gray);
   color: var(--accent-gray);
@@ -365,13 +363,18 @@ main {
    Gallery
    ------------------------------------------------------------ */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  columns: 3;
+  column-gap: 1.5rem;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  align-items: start;
+}
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
 }
 
 .gallery-item {
@@ -753,7 +756,15 @@ main {
    ------------------------------------------------------------ */
 @media (max-width: 768px) {
   .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+    columns: 2;
+  }
+
+  .gallery-grid {
+    columns: 2;
+  }
+
+  .events-grid {
+    columns: 2;
   }
 
   .feature-cards {
@@ -815,7 +826,15 @@ main {
    ------------------------------------------------------------ */
 @media (max-width: 480px) {
   .cards-grid {
-    grid-template-columns: 1fr;
+    columns: 1;
+  }
+
+  .gallery-grid {
+    columns: 1;
+  }
+
+  .events-grid {
+    columns: 1;
   }
 
   .feature-cards {
