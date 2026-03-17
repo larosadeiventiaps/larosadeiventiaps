@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
   // Load partners on partner page
   loadPartners();
+  // Load events on events page and homepage
+  loadEvents();
+  loadUpcomingEvents();
 });
 
 function escapeHTML(str) {
@@ -322,5 +325,109 @@ async function loadPartners() {
     renderPartners();
   } catch (e) {
     console.warn('Could not load partners:', e);
+  }
+}
+
+function renderEventCard(e) {
+  const dateStr = formatDate(e.date);
+  const timeStr = e.time ? ` ore ${escapeHTML(e.time)}` : '';
+  const locationStr = e.location ? `<span>📍 ${escapeHTML(e.location)}</span>` : '';
+  const linkHtml = e.link
+    ? `<a href="${e.link}" class="partner-link" target="_blank" rel="noopener noreferrer">Maggiori info ↗</a>`
+    : '';
+
+  return `
+    <article class="card">
+      <div class="card-image"><img src="${e.image}" alt="${escapeHTML(e.title)}"></div>
+      <div class="card-body">
+        <h3>${escapeHTML(e.title)}</h3>
+        <div class="event-meta">
+          <span>📅 ${dateStr}${timeStr}</span>
+          ${locationStr}
+        </div>
+        <p>${escapeHTML(e.description)}</p>
+        ${linkHtml}
+      </div>
+    </article>
+  `;
+}
+
+async function loadEvents() {
+  const gridFuturo = document.getElementById('grid-futuro');
+  if (!gridFuturo) return;
+
+  try {
+    const res = await fetch('data/events.json');
+    const allEvents = await res.json();
+
+    if (allEvents.length === 0) {
+      document.querySelector('.project-section#section-futuro').innerHTML =
+        '<div class="section"><p style="color:#999;text-align:center;">Nessun evento in programma. Torna a trovarci!</p></div>';
+      const passatoSection = document.getElementById('section-passato');
+      if (passatoSection) passatoSection.style.display = 'none';
+      return;
+    }
+
+    const searchInput = document.getElementById('search-input');
+    const dateFrom = document.getElementById('date-from');
+    const dateTo = document.getElementById('date-to');
+
+    function renderEvents() {
+      const query = searchInput.value.toLowerCase();
+      const from = dateFrom.value ? new Date(dateFrom.value) : null;
+      const to = dateTo.value ? new Date(dateTo.value) : null;
+
+      const filtered = allEvents.filter(e => {
+        if (query && !e.title.toLowerCase().includes(query) && !(e.description || '').toLowerCase().includes(query)) return false;
+        if (from || to) {
+          const eDate = new Date(e.date);
+          if (from && eDate < from) return false;
+          if (to && eDate > to) return false;
+        }
+        return true;
+      });
+
+      ['futuro', 'passato'].forEach(status => {
+        const items = filtered.filter(e => e.status === status);
+        const grid = document.getElementById('grid-' + status);
+        const section = document.getElementById('section-' + status);
+
+        if (items.length === 0) {
+          section.style.display = 'none';
+        } else {
+          section.style.display = 'block';
+          grid.innerHTML = items.map(renderEventCard).join('');
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', renderEvents);
+    dateFrom.addEventListener('change', renderEvents);
+    dateTo.addEventListener('change', renderEvents);
+    renderEvents();
+  } catch (e) {
+    console.warn('Could not load events:', e);
+  }
+}
+
+async function loadUpcomingEvents() {
+  const grid = document.getElementById('upcoming-events-grid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('data/events.json');
+    const allEvents = await res.json();
+    const upcoming = allEvents.filter(e => e.status === 'futuro').slice(0, 3);
+
+    if (upcoming.length === 0) {
+      document.getElementById('upcoming-events').style.display = 'none';
+      return;
+    }
+
+    grid.innerHTML = upcoming.map(renderEventCard).join('');
+  } catch (e) {
+    console.warn('Could not load upcoming events:', e);
+    const section = document.getElementById('upcoming-events');
+    if (section) section.style.display = 'none';
   }
 }

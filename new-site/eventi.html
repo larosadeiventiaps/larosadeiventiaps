@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Progetti — La Rosa dei Venti APS</title>
-  <meta name="description" content="La Rosa dei Venti APS — Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
-  <meta property="og:title" content="Progetti — La Rosa dei Venti APS">
-  <meta property="og:description" content="Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
+  <title>Eventi — La Rosa dei Venti APS</title>
+  <meta name="description" content="La Rosa dei Venti APS — I nostri eventi, appuntamenti e iniziative per la comunità.">
+  <meta property="og:title" content="Eventi — La Rosa dei Venti APS">
+  <meta property="og:description" content="Scopri i prossimi eventi e le iniziative passate dell'associazione.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
@@ -19,8 +19,8 @@
     <ul class="navbar-menu">
       <li><a href="index.html">Home</a></li>
       <li><a href="mission.html">Mission</a></li>
-      <li><a href="progetti.html" class="active">Progetti</a></li>
-      <li><a href="eventi.html">Eventi</a></li>
+      <li><a href="progetti.html">Progetti</a></li>
+      <li><a href="eventi.html" class="active">Eventi</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="partner.html">Partner</a></li>
       <li><a href="contatti.html">Contatti</a></li>
@@ -29,25 +29,20 @@
 
   <main>
     <div class="filter-bar">
-      <input type="text" id="search-input" placeholder="🔍 Cerca progetti...">
+      <input type="text" id="search-input" placeholder="🔍 Cerca eventi...">
       <input type="date" id="date-from" title="Da">
       <input type="date" id="date-to" title="A">
     </div>
 
-    <div id="section-in-corso" class="project-section">
-      <h2 class="project-section-title in-corso">Progetti in Corso</h2>
-      <div class="cards-grid" id="grid-in-corso"></div>
-    </div>
-
-    <div id="section-futuro" class="project-section">
-      <h2 class="project-section-title futuro">Progetti Futuri</h2>
+    <section class="project-section" id="section-futuro">
+      <h2 class="project-section-title futuro">Prossimi Eventi</h2>
       <div class="cards-grid" id="grid-futuro"></div>
-    </div>
+    </section>
 
-    <div id="section-passato" class="project-section">
-      <h2 class="project-section-title passato">Progetti Passati</h2>
+    <section class="project-section" id="section-passato">
+      <h2 class="project-section-title passato">Eventi Passati</h2>
       <div class="cards-grid" id="grid-passato"></div>
-    </div>
+    </section>
   </main>
 
   <footer class="footer">
