@@ -254,7 +254,7 @@ async function loadGallery() {
           <img src="${p.image}" alt="${escapeHTML(p.title)}">
           <div class="gallery-item-info">
             <h3>${escapeHTML(p.title)}</h3>
-            <p class="date">${formatDate(p.date)}</p>
+            <p class="date">${formatDate(p.date)}${p.location ? ' — ' + escapeHTML(p.location) : ''}</p>
           </div>
         </div>
       `).join('');
@@ -279,7 +279,8 @@ async function loadGallery() {
       const photo = visiblePhotos[currentIndex];
       lbImg.src = photo.image;
       lbImg.alt = photo.title;
-      lbCaption.innerHTML = '<h3>' + escapeHTML(photo.title) + '</h3><p>' + escapeHTML(photo.description) + '</p>';
+      const locHtml = photo.location ? '<p style="color:#ccc;font-size:0.9rem;">📍 ' + escapeHTML(photo.location) + '</p>' : '';
+      lbCaption.innerHTML = '<h3>' + escapeHTML(photo.title) + '</h3>' + locHtml + '<p>' + escapeHTML(photo.description) + '</p>';
     }
 
     function closeLightbox() {
