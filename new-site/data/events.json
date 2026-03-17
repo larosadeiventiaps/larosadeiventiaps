@@ -1,1 +1,63 @@
-[]
+[
+  {
+    "title": "Prim'Olio",
+    "date": "2025-11-12",
+    "location": "Bagno a Ripoli",
+    "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio.",
+    "image": "images/events/primolio.jpg",
+    "status": "passato",
+    "link": "https://www.oliobagnoaripoli.it/"
+  },
+  {
+    "title": "VolontMusic",
+    "date": "2025-04-12",
+    "location": "CRC Antella",
+    "description": "VolontMusic",
+    "image": "images/events/Volontmusic.png",
+    "status": "passato",
+    "link": "https://www.youtube.com/channel/UCFGszTo63mRTSlNrtNXDiHA/featured"
+  },
+  {
+    "title": "Riforma sulla disabilità",
+    "date": "2025-03-21",
+    "location": "Ospedale Santa Maria Annunziata",
+    "description": "Contest musicale tra band emergenti delle associazioni di volontariato per promuovere la solidarietà attraverso la musica.",
+    "image": "images/events/Disabilita.jpg",
+    "status": "passato"
+  },
+  {
+    "title": "Prim'Olio",
+    "date": "2024-11-12",
+    "location": "Bagno a Ripoli",
+    "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio.",
+    "image": "images/events/primolio.jpg",
+    "status": "passato",
+    "link": "https://www.oliobagnoaripoli.it/"
+  },
+  {
+    "title": "Prim'Olio",
+    "date": "2023-11-12",
+    "location": "Bagno a Ripoli",
+    "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio.",
+    "image": "images/events/primolio.jpg",
+    "status": "passato",
+    "link": "https://www.oliobagnoaripoli.it/"
+  },
+  {
+    "title": "Frittelle alla Pieve di Bagno a Ripoli",
+    "date": "2023-03-01",
+    "location": "Pieve di Bagno a Ripoli",
+    "description": "Laboratorio di cucina e convivialità legato alle tradizioni locali, con preparazione di frittelle e momenti di festa insieme.",
+    "image": "images/logo.jpg",
+    "status": "passato",
+    "link": "https://www.quiantella.it/a-bagno-a-ripoli-torna-la-sagra-delle-frittelle/"
+  },
+  {
+    "title": "Diritto parità di genere",
+    "date": "2021-06-01",
+    "location": "Comune di Bagno a Ripoli",
+    "description": "Incontro di sensibilizzazione sulla parità di genere e i diritti delle persone con disabilità, in collaborazione con il Comune di Bagno a Ripoli.",
+    "image": "images/logo.jpg",
+    "status": "passato"
+  }
+]

@@ -121,7 +121,8 @@ def sync(excel_path=None):
         title = str(title).strip()
 
         date_str = parse_date(row[1]) if len(row) > 1 else None
-        time_str = parse_time(row[2]) if len(row) > 2 else None
+        raw_time = parse_time(row[2]) if len(row) > 2 else None
+        time_str = raw_time if raw_time and raw_time != "00:00" else None
         location = str(row[3]).strip() if len(row) > 3 and row[3] else None
         description = str(row[4]).strip() if len(row) > 4 and row[4] else None
         img_val = row[5] if len(row) > 5 else None
