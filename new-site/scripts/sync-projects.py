@@ -263,8 +263,15 @@ def sync(excel_path):
 
         projects.append(project)
 
-    # Ordina per data inizio decrescente (più recenti prima)
-    projects.sort(key=lambda p: p.get("startDate", "0000"), reverse=True)
+    # In corso e futuri: dal più vicino al più lontano (crescente)
+    # Passati: dal più recente al più vecchio (decrescente)
+    in_corso = sorted([p for p in projects if p["status"] == "in_corso"],
+                      key=lambda p: p.get("startDate", "9999"))
+    futuri = sorted([p for p in projects if p["status"] == "futuro"],
+                    key=lambda p: p.get("startDate", "9999"))
+    passati = sorted([p for p in projects if p["status"] == "passato"],
+                     key=lambda p: p.get("startDate", "0000"), reverse=True)
+    projects = in_corso + futuri + passati
 
     # Salva JSON
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
