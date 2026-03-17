@@ -24,8 +24,16 @@ DEFAULT_EXCEL = os.path.join(
     os.path.expanduser("~"),
     "La Rosa dei Venti Aps",
     "La Rosa dei Venti Aps - Documenti",
-    "Eventi",
+    "Grafica e Merchandising",
     "gallery.xlsx",
+)
+
+IMAGES_ONEDRIVE = os.path.join(
+    os.path.expanduser("~"),
+    "La Rosa dei Venti Aps",
+    "La Rosa dei Venti Aps - Documenti",
+    "Grafica e Merchandising",
+    "Immagini Gallery per sito web",
 )
 
 MESI_IT = {
