@@ -7,7 +7,7 @@ Uso:
 Senza argomenti usa il file predefinito su OneDrive.
 
 Colonne Excel:
-  Titolo | Data | Ora | Luogo | Descrizione | Immagine | Link
+  Titolo | Data Inizio | Data Fine | Luogo | Descrizione | Immagine | Link
 """
 
 import json
@@ -120,13 +120,16 @@ def sync(excel_path=None):
             continue
         title = str(title).strip()
 
-        date_str = parse_date(row[1]) if len(row) > 1 else None
-        raw_time = parse_time(row[2]) if len(row) > 2 else None
-        time_str = raw_time if raw_time and raw_time != "00:00" else None
+        start_str = parse_date(row[1]) if len(row) > 1 else None
+        end_str = parse_date(row[2]) if len(row) > 2 else None
         location = str(row[3]).strip() if len(row) > 3 and row[3] else None
         description = str(row[4]).strip() if len(row) > 4 and row[4] else None
         img_val = row[5] if len(row) > 5 else None
         link = str(row[6]).strip() if len(row) > 6 and row[6] else None
+
+        # Se non c'è data fine, usa data inizio
+        if not end_str and start_str:
+            end_str = start_str
 
         # Immagine
         if img_val and str(img_val).strip():
@@ -134,13 +137,13 @@ def sync(excel_path=None):
         else:
             image = "images/logo.jpg"
 
-        status = determine_status(date_str)
+        status = determine_status(end_str or start_str)
 
         event = {"title": title}
-        if date_str:
-            event["date"] = date_str
-        if time_str:
-            event["time"] = time_str
+        if start_str:
+            event["startDate"] = start_str
+        if end_str:
+            event["endDate"] = end_str
         if location:
             event["location"] = location
         if description:
@@ -156,9 +159,9 @@ def sync(excel_path=None):
 
     # Ordina: futuri per data crescente, passati per data decrescente
     futuri = sorted([e for e in events if e["status"] == "futuro"],
-                    key=lambda e: e.get("date", "9999"))
+                    key=lambda e: e.get("startDate", "9999"))
     passati = sorted([e for e in events if e["status"] == "passato"],
-                     key=lambda e: e.get("date", "0000"), reverse=True)
+                     key=lambda e: e.get("startDate", "0000"), reverse=True)
     events = futuri + passati
 
     # Salva JSON

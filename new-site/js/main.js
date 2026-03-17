@@ -329,8 +329,9 @@ async function loadPartners() {
 }
 
 function renderEventCard(e) {
-  const dateStr = formatDate(e.date);
-  const timeStr = e.time ? ` ore ${escapeHTML(e.time)}` : '';
+  const startStr = formatDate(e.startDate);
+  const endStr = formatDate(e.endDate);
+  const dateDisplay = (e.startDate === e.endDate || !e.endDate) ? startStr : `${startStr} — ${endStr}`;
   const locationStr = e.location ? `<span>📍 ${escapeHTML(e.location)}</span>` : '';
   const linkHtml = e.link
     ? `<a href="${e.link}" class="partner-link" target="_blank" rel="noopener noreferrer">Maggiori info ↗</a>`
@@ -342,7 +343,7 @@ function renderEventCard(e) {
       <div class="card-body">
         <h3>${escapeHTML(e.title)}</h3>
         <div class="event-meta">
-          <span>📅 ${dateStr}${timeStr}</span>
+          <span>📅 ${dateDisplay}</span>
           ${locationStr}
         </div>
         <p>${escapeHTML(e.description)}</p>
@@ -380,9 +381,10 @@ async function loadEvents() {
       const filtered = allEvents.filter(e => {
         if (query && !e.title.toLowerCase().includes(query) && !(e.description || '').toLowerCase().includes(query)) return false;
         if (from || to) {
-          const eDate = new Date(e.date);
-          if (from && eDate < from) return false;
-          if (to && eDate > to) return false;
+          const eStart = new Date(e.startDate);
+          const eEnd = new Date(e.endDate || e.startDate);
+          if (from && eEnd < from) return false;
+          if (to && eStart > to) return false;
         }
         return true;
       });
