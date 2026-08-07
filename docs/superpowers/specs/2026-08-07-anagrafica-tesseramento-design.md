@@ -2,9 +2,18 @@
 
 Specifica di design. Stato: **da approvare**. Data: 07/08/2026.
 
-Questo documento copre il primo dei quattro sotto-progetti del sistema di gestione
-dell'associazione. Gli altri tre (progetti/presenze, sito pubblico, app mobile) avranno
-ciascuno la propria specifica e il proprio piano, e si appoggiano a quanto costruito qui.
+Questo documento copre il primo dei sei sotto-progetti del sistema di gestione
+dell'associazione. Gli altri avranno ciascuno la propria specifica e il proprio piano, e si
+appoggiano a quanto costruito qui.
+
+1. **Anagrafica, consensi e tesseramento** ← questo documento
+2. **Amministrazione** — incassi extra (donazioni, sponsorizzazioni), spese, fornitori,
+   educatori (CV, contratti, costi), importazione dei movimenti BCC e quadratura, rendiconto
+3. **Progetti** — archivio, iscrizioni, calendario, presenze, media
+4. **Bandi e sponsor** — ricerca finanziamenti, anagrafiche degli enti eroganti,
+   rendicontazione per progetto (richiede 2 e 3)
+5. **Sito pubblico** — pubblicazione, donazioni online, 5x1000, gallery, archivio progetti
+6. **App mobile** — educatori, genitori, partecipanti
 
 ---
 
@@ -14,10 +23,14 @@ Il perimetro richiesto dall'associazione contiene quattro sistemi che possono vi
 separati: gestione soci, gestione progetti, sito pubblico, app mobile a tre ambiti.
 Specificarli insieme produce un documento che non regge alla prima riga di codice.
 
-L'ordine scelto è: **anagrafica → progetti → sito → app**, e il motivo è che tesseramento,
-iscrizioni ai progetti, donazioni e accesso all'app pescano tutti dalla stessa domanda —
-chi è questa persona, è in regola, cosa ha acconsentito. Costruita quella, il resto costa
-molto meno.
+L'anagrafica viene per prima perché tesseramento, iscrizioni ai progetti, donazioni,
+rendiconto e accesso all'app pescano tutti dalla stessa domanda — chi è questa controparte,
+è in regola, cosa ha acconsentito. Costruita quella, il resto costa molto meno.
+
+L'amministrazione viene subito dopo perché non dipende da nient'altro, e perché è ciò che
+produce il rendiconto. Bandi e sponsor vengono invece **dopo i progetti**, non prima: un
+finanziatore vuole vedere i costi imputati a un progetto, e senza progetti la
+rendicontazione non ha a cosa attaccarsi.
 
 **L'app è l'ultimo pezzo, non il primo.** Costruirla prima che l'API sia stabile significa
 riscriverla, e ogni correzione passa da una revisione di uno store. Nella fase 2 le presenze
@@ -28,7 +41,9 @@ settimane, e l'app quando arriva è una scorciatoia comoda su qualcosa che già 
 
 ### Dentro
 
-- Anagrafica delle persone, con i ruoli: socio, genitore, partecipante, educatore, volontario.
+- Anagrafica dei **soggetti** — persone fisiche e organizzazioni — con i ruoli: socio,
+  genitore, partecipante, educatore, volontario, e in prospettiva fornitore, sponsor,
+  donatore.
 - Nuclei familiari, per collegare genitore e partecipante.
 - Registro dei consensi, per persona e per canale.
 - Campagna di tesseramento annuale con pagamento online.
@@ -40,9 +55,18 @@ settimane, e l'app quando arriva è una scorciatoia comoda su qualcosa che già 
 
 ### Fuori, per adesso
 
-Archivio progetti e documentazione; iscrizioni ai progetti e pagamento delle attività;
-calendario e registro presenze; caricamento di foto e video; attestati e badge; app mobile;
-accesso dei partecipanti (arriva con l'app, fase 4); pubblicazione del sito pubblico (fase 3).
+Incassi extra e spese, fornitori, contratti e costi degli educatori, importazione dei
+movimenti bancari, rendiconto (fase 2); archivio progetti, iscrizioni, calendario, presenze,
+foto e video, attestati e badge (fase 3); bandi, sponsor e rendicontazione (fase 4);
+pubblicazione del sito e donazioni online (fase 5); app mobile e accesso dei partecipanti
+(fase 6).
+
+### Ciò che la fase 1 deve comunque anticipare
+
+Due scelte del modello dati **non sono rinviabili**, perché ritrovarle dopo significa una
+migrazione con dati veri dentro: la controparte economica generalizzata (`soggetto`) e il
+movimento generalizzato (`movimento`). Sono descritte in §5. La fase 1 ne usa una piccola
+parte — solo la quota associativa — ma le tabelle nascono nella forma definitiva.
 
 ## 3. Vincoli
 
@@ -145,14 +169,36 @@ annuale che le si attacca sopra, non una copia dell'anagrafica. Chi è socio da 
 resta una persona con cinque tesseramenti: lo storico regge, i duplicati non nascono, e le
 statistiche per il bilancio si calcolano senza incrociare fogli.
 
+### La controparte è un soggetto, non una persona
+
+Il tesseramento riguarda persone fisiche. Tutto il resto del denaro che attraversa
+l'associazione no: gli sponsor sono banche, aziende e fondazioni; i fornitori sono aziende;
+un educatore può fatturare come ditta individuale; un ente erogatore è un comune o una
+fondazione bancaria. Se l'anagrafica nasce come "tabella delle persone", donazioni e
+fornitori diventano una seconda tabella e da quel momento *chi è la controparte* si chiede
+in due posti — con due grafie dello stesso nome e nessun modo di sommare quanto ha dato la
+stessa banca fra sponsorizzazione e contributo.
+
+Quindi la radice è il **soggetto**, e la persona ne è una specializzazione.
+
 ### Tabelle
+
+**`soggetto`** — `tipo` (persona fisica / organizzazione), denominazione oppure nome e
+cognome, codice fiscale, partita IVA, email, telefono, indirizzo, stato (attivo /
+archiviato). È la controparte di ogni movimento di denaro.
+
+**`persona`** — estensione 1:1 di `soggetto` per le persone fisiche: data e luogo di
+nascita, `nucleo_id` (facoltativo). Tesseramenti e consensi si attaccano **qui**, non al
+soggetto: riguardano persone, e attaccarli alla radice permetterebbe di tesserare una banca.
+
+**`organizzazione`** — estensione 1:1 per aziende, banche, fondazioni ed enti: forma
+giuridica, referente, note.
 
 **`nucleo`** — cognome di riferimento, contatto principale, indirizzo, note.
 
-**`persona`** — nome, cognome, data di nascita, codice fiscale, email, telefono,
-`nucleo_id` (facoltativo), stato (attiva / archiviata). I **ruoli** sono una relazione a
-parte (`persona_ruolo`): una stessa persona può essere insieme genitore e volontaria, ed è
-il caso normale in questa associazione.
+**`soggetto_ruolo`** — i ruoli sono una relazione, non una colonna: la stessa persona è
+spesso insieme genitore e volontaria, e la stessa azienda può essere fornitore e sponsor.
+Elenco chiuso, esteso una fase alla volta.
 
 **`consenso`** — `persona_id`, `canale` (interno · sito · social · stampa), `concesso`
 (sì/no), `data`, `origine` (modulo online / cartaceo), riferimento al documento firmato.
@@ -170,9 +216,17 @@ che può cambiare ogni anno, e non deve richiedere un rilascio.
 della tessera, date. Vincolo di unicità su `(persona_id, anno)` fra i tesseramenti non
 annullati.
 
-**`pagamento`** — `tesseramento_id`, importo, data, metodo (online / bonifico / contanti),
-riferimento del gateway, riferimento al documento della ricevuta. Separato dal tesseramento
-perché una quota può essere incassata fuori dal sito e va comunque registrata.
+**`movimento`** — la tabella che in un progetto meno attento si chiamerebbe `pagamento` e
+poi verrebbe duplicata cinque volte. Una quota associativa, una donazione, una
+sponsorizzazione, un premio assicurativo e il compenso di un educatore **hanno la stessa
+forma**: data, importo con segno, `soggetto_id` della controparte, categoria, metodo
+(online / bonifico / contanti), riferimento del gateway, riferimento al documento
+giustificativo, e — facoltativo — il fatto che l'ha generato (`tesseramento_id` in fase 1;
+iscrizione, contratto o bando nelle fasi successive) e il progetto a cui è imputato.
+
+La fase 1 crea movimenti di un solo tipo, la quota. Ma nasce già così, perché una donazione
+registrata in una tabella diversa non entra nello stesso rendiconto senza un'unione scritta
+a mano, e quell'unione è il posto dove i conti smettono di quadrare.
 
 **`documento`** — `driveItem id` (la chiave), nome e percorso leggibile al momento del
 caricamento, tipo (tessera / ricevuta / foto / allegato), riga a cui si riferisce, data,
@@ -187,6 +241,26 @@ lo stesso evento, ed è normale, non un guasto.
 data di invio, esito per singolo destinatario.
 
 **`audit`** — chi, quando, cosa, su quale riga. Su ogni scrittura.
+
+### Le categorie del movimento guardano al rendiconto
+
+L'associazione è iscritta al RUNTS e il suo bilancio è un **rendiconto per cassa**. Se
+l'elenco delle categorie di `movimento` è costruito per **sommare direttamente nelle voci
+di quel rendiconto**, il bilancio lo produce il sistema invece di ricostruirlo ogni anno in
+un foglio a parte. Se invece le categorie nascono per comodità di chi le digita, il
+rendiconto resterà per sempre un lavoro manuale a valle.
+
+È una scelta da fare quando si scrive l'elenco — cioè nel piano della fase 1, perché la
+quota associativa è già una voce di quel rendiconto — e va confermata con chi tiene il
+bilancio. L'elenco è dato, non codice: si estende senza un rilascio.
+
+### Cosa aggiunge la fase 2, e perché non serve toccare quanto sopra
+
+Movimenti bancari importati dall'estratto BCC (tabella propria, con la chiave anti-duplicato
+di §12), proposte di aggancio fra riga di banca e movimento, contratti e costi degli
+educatori, e i ruoli fornitore e sponsor su `soggetto_ruolo`. Nessuna di queste tocca la
+forma di `soggetto`, `movimento` o `documento`: è la verifica che le fondamenta siano quelle
+giuste.
 
 ### Un dato che non entra
 
@@ -209,7 +283,7 @@ che i soldi siano arrivati.
 3. Creazione del tesseramento in stato **in_attesa** e apertura della sessione di pagamento
    sulla pagina ospitata dal fornitore.
 4. **Webhook**: il gateway avvisa il *server*, non il browser. Il tesseramento passa ad
-   **attivo**, viene assegnato il numero di tessera e registrato il pagamento.
+   **attivo**, viene assegnato il numero di tessera e registrato il movimento in entrata.
 5. **Consegna**: generazione di tessera e ricevuta in PDF e invio via email.
 
 ### Perché la conferma deve arrivare al server
@@ -233,8 +307,8 @@ database. È una classe di difetto che il progetto Kuoyo ha già pagato: non va 
 
 ### Pagamenti fuori dal sito
 
-Chi paga per bonifico o in contanti viene registrato dal backoffice: si crea il pagamento
-con il metodo giusto e il tesseramento passa ad attivo per la stessa strada. Tessera e
+Chi paga per bonifico o in contanti viene registrato dal backoffice: si registra il
+movimento con il metodo giusto e il tesseramento passa ad attivo per la stessa strada. Tessera e
 ricevuta partono identiche. Il sistema non presume che l'unico canale sia quello online.
 
 ## 7. Accesso e ruoli
@@ -341,22 +415,52 @@ le tratta come dati o configurazione, non come struttura.
    partecipanti pagano la quota associativa oltre alle attività? Il modello regge entrambe
    le risposte: cambia il contenuto della tabella `quota`.
 3. **Chi entra nel backoffice.** Tutto il direttivo o solo chi tiene i conti.
+4. **L'elenco delle categorie di movimento**, da confermare con chi tiene il bilancio
+   (Francesca Fantappiè). Non è una tassonomia di comodo: è la griglia su cui si somma il
+   rendiconto per cassa. Va confermata prima di registrare la prima quota, perché
+   ricategorizzare movimenti già rendicontati è lavoro manuale.
 
 Le ultime due sono lavoro nostro, e vanno chiuse **prima del rilascio**.
 
-4. **Capienza dell'host — rischio dichiarato, non risolto.** CPU, memoria e disco liberi
+5. **Capienza dell'host — rischio dichiarato, non risolto.** CPU, memoria e disco liberi
    sulla macchina OVH non sono stati misurati: non esistono credenziali di accesso al
    server nel vault. Nel frattempo sullo stesso host sta per atterrare la piattaforma
    Kuoyo, che non è leggera (1.314 ordini, 11.826 fasi, viste materializzate rinfrescate
    ogni 60 secondi). La Rosa dei Venti è minuscola al confronto — ottanta soci — ma va
    misurato prima del primo rilascio. Vale il precedente del server T440 di Kuoyo, che
    sembrava adeguato e aveva 4 CPU libere su 10.
-5. **Nomina a responsabile del trattamento.** Portando i dati sui server BE Care, BE Care
+6. **Nomina a responsabile del trattamento.** Portando i dati sui server BE Care, BE Care
    diventa responsabile del trattamento per conto dell'associazione. Su dati di persone con
    disabilità serve l'atto scritto previsto dall'art. 28 GDPR, firmato dalla Presidente.
    È più pulito dell'ambiguità attuale, ma va firmato prima di caricare il primo socio.
 
-## 13. Nota di stato sul sito attuale
+## 13. Appendice — lezioni già pagate sull'import BCC
+
+Non servono alla fase 1, ma vanno registrate adesso perché la fase 2 non le ripaghi. La
+stessa banca è già stata affrontata due volte: nel gestionale del Tennis Antella e
+nell'archivio banca di BE Care (repository `archivio-banca`). Entrambi i progetti hanno
+sbagliato le stesse cose.
+
+- **L'identità di un movimento** è l'impronta di data contabile, data valuta, importo **a
+  due decimali** e descrizione, **più un contatore di occorrenza per file d'origine**.
+  Senza il contatore, due export che si sovrappongono trasformano la stessa riga in un
+  duplicato fantasma; con la scala del decimale sbagliata `1E+3` non aggancia `1000.00` e
+  l'anti-duplicato non aggancia niente.
+- **Si importano solo giornate complete.** Il giorno in corso e i movimenti non
+  contabilizzati restano fuori: entrando, fanno slittare i contatori del giro successivo.
+- **Niente scarti silenziosi.** Ogni riga non interpretabile, file mancante o quadratura
+  fallita finisce in un elenco di eccezioni. Nell'archivio banca le revisioni hanno trovato
+  quattro violazioni di questa regola in altrettanti task: è il difetto che si ripresenta.
+- **L'export BCC è un `.xls` OLE2 vero** (BIFF): le librerie moderne non lo leggono. Il
+  portale offre anche EXCEL, CBI e XML, e vanno confrontati prima di scegliere.
+- **La riga di banca non decide da sola a cosa si riferisce.** L'aggancio fra un bonifico e
+  la quota che l'ha generato si **propone** e si conferma: un aggancio automatico sbagliato
+  sporca il rendiconto senza fare rumore, ed è la classe di difetto peggiore perché il
+  sistema riferisce un successo.
+- **L'estratto conto è la verità su quanto c'è, il sistema è la verità sul perché.** La
+  quadratura confronta le due e segnala le differenze; non fa vincere né l'uno né l'altro.
+
+## 14. Nota di stato sul sito attuale
 
 Verificato il 07/08/2026 sul sito vero: **il sito nuovo non è mai andato online.**
 All'indirizzo dell'associazione risponde ancora WordPress (`wp-login.php` raggiungibile,
