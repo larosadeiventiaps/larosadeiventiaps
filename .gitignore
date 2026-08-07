@@ -26,3 +26,6 @@ desktop.ini
 .idea/
 *.swp
 *.swo
+
+# artefatti di lavoro delle skill, non fanno parte del sito
+.superpowers/
