@@ -1,0 +1,92 @@
+<h2>Pagina Progetti - Come organizziamo le 3 sezioni?</h2>
+<p class="subtitle">In corso, Futuri, Passati — con filtri per testo e data</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;padding:0;border-radius:8px;overflow:hidden;font-size:11px;line-height:1.3">
+        <!-- Navbar -->
+        <div style="background:#E8630A;color:white;padding:6px 10px;font-size:10px;display:flex;justify-content:space-between">
+          <strong>🌹 La Rosa dei Venti</strong>
+          <span>Home Mission <u>Progetti</u> Gallery Contatti</span>
+        </div>
+        <!-- Filtri -->
+        <div style="background:#FFF3E8;padding:6px 10px;display:flex;gap:4px;align-items:center">
+          <input style="flex:1;padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:9px" placeholder="🔍 Cerca progetti..." disabled>
+          <input style="width:70px;padding:3px 4px;border:1px solid #ddd;border-radius:4px;font-size:8px" placeholder="Da data" disabled>
+          <input style="width:70px;padding:3px 4px;border:1px solid #ddd;border-radius:4px;font-size:8px" placeholder="A data" disabled>
+        </div>
+        <!-- Tabs -->
+        <div style="display:flex;border-bottom:2px solid #eee;font-size:9px;text-align:center">
+          <div style="flex:1;padding:5px;border-bottom:2px solid #E8630A;color:#E8630A;font-weight:bold;margin-bottom:-2px">🟢 In Corso (3)</div>
+          <div style="flex:1;padding:5px;color:#999">🔵 Futuri (2)</div>
+          <div style="flex:1;padding:5px;color:#999">⚪ Passati (5)</div>
+        </div>
+        <!-- Cards griglia -->
+        <div style="padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px">
+          <div style="border:1px solid #eee;border-radius:4px;overflow:hidden">
+            <div style="background:#F4A460;height:28px;display:flex;align-items:center;justify-content:center;font-size:8px;color:white">📷 Immagine</div>
+            <div style="padding:3px;font-size:8px">
+              <div style="font-weight:bold">Progetto Alpha</div>
+              <div style="color:#999;font-size:7px">Gen 2026 - Mar 2026</div>
+            </div>
+          </div>
+          <div style="border:1px solid #eee;border-radius:4px;overflow:hidden">
+            <div style="background:#E8630A;height:28px;display:flex;align-items:center;justify-content:center;font-size:8px;color:white">📷 Immagine</div>
+            <div style="padding:3px;font-size:8px">
+              <div style="font-weight:bold">Progetto Beta</div>
+              <div style="color:#999;font-size:7px">Feb 2026 - Mag 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A - Tab con Griglia</h3>
+      <p>Filtri in alto, 3 tab per passare tra le sezioni, progetti in griglia di cards. Compatto e navigabile.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;padding:0;border-radius:8px;overflow:hidden;font-size:11px;line-height:1.3">
+        <!-- Navbar -->
+        <div style="background:#E8630A;color:white;padding:6px 10px;font-size:10px;display:flex;justify-content:space-between">
+          <strong>🌹 La Rosa dei Venti</strong>
+          <span>Home Mission <u>Progetti</u> Gallery Contatti</span>
+        </div>
+        <!-- Filtri -->
+        <div style="padding:6px 10px;display:flex;gap:4px;align-items:center;background:#fafafa;border-bottom:1px solid #eee">
+          <input style="flex:1;padding:3px 6px;border:1px solid #ddd;border-radius:4px;font-size:9px" placeholder="🔍 Cerca..." disabled>
+          <input style="width:60px;padding:3px 4px;border:1px solid #ddd;border-radius:4px;font-size:8px" placeholder="Da" disabled>
+          <input style="width:60px;padding:3px 4px;border:1px solid #ddd;border-radius:4px;font-size:8px" placeholder="A" disabled>
+        </div>
+        <!-- Sezione In Corso -->
+        <div style="padding:4px 10px">
+          <div style="font-size:10px;font-weight:bold;color:#E8630A;border-left:3px solid #E8630A;padding-left:6px;margin:4px 0">🟢 Progetti in Corso</div>
+          <div style="display:flex;gap:4px;margin-bottom:6px">
+            <div style="flex:1;background:#FFF3E8;border-radius:4px;padding:4px;font-size:8px">
+              <div style="font-weight:bold">Progetto Alpha</div>
+              <div style="color:#999;font-size:7px">Gen - Mar 2026</div>
+            </div>
+            <div style="flex:1;background:#FFF3E8;border-radius:4px;padding:4px;font-size:8px">
+              <div style="font-weight:bold">Progetto Beta</div>
+              <div style="color:#999;font-size:7px">Feb - Mag 2026</div>
+            </div>
+          </div>
+          <div style="font-size:10px;font-weight:bold;color:#666;border-left:3px solid #999;padding-left:6px;margin:4px 0">🔵 Progetti Futuri</div>
+          <div style="display:flex;gap:4px">
+            <div style="flex:1;background:#f0f0f0;border-radius:4px;padding:4px;font-size:8px">
+              <div style="font-weight:bold">Progetto Gamma</div>
+              <div style="color:#999;font-size:7px">Giu 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B - Sezioni Verticali</h3>
+      <p>Tutte le sezioni visibili nella stessa pagina con scroll. Filtri globali che agiscono su tutte le sezioni contemporaneamente.</p>
+    </div>
+  </div>
+</div>

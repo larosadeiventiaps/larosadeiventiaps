@@ -42,35 +42,6 @@
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
   },
   {
-    "title": "Case d'Artista",
-    "image": "images/logo.jpg",
-    "startDate": "2026-01-10",
-    "endDate": "2026-03-21",
-    "status": "in_corso",
-    "incontri": 3,
-    "ore": 7.5,
-    "partecipanti": 7,
-    "educatori": 2,
-    "volontari": 2,
-    "professionisti": 4,
-    "sponsor": "Publiacqua",
-    "collaboratori": "Associazione Nomya",
-    "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme"
-  },
-  {
-    "title": "Colori in libertà",
-    "image": "images/logo.jpg",
-    "startDate": "2026-01-17",
-    "endDate": "2026-03-22",
-    "status": "in_corso",
-    "incontri": 4,
-    "ore": 8.0,
-    "partecipanti": 5,
-    "educatori": 2,
-    "collaboratori": "Cooperativa Fontenuova",
-    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
-  },
-  {
     "title": "Musica ed Espressione corporea",
     "image": "images/logo.jpg",
     "startDate": "2026-02-07",
@@ -153,6 +124,35 @@
     "professionisti": 3,
     "collaboratori": "Angeli del bello",
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
+  },
+  {
+    "title": "Colori in libertà",
+    "image": "images/logo.jpg",
+    "startDate": "2026-01-17",
+    "endDate": "2026-03-22",
+    "status": "passato",
+    "incontri": 4,
+    "ore": 8.0,
+    "partecipanti": 5,
+    "educatori": 2,
+    "collaboratori": "Cooperativa Fontenuova",
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+  },
+  {
+    "title": "Case d'Artista",
+    "image": "images/logo.jpg",
+    "startDate": "2026-01-10",
+    "endDate": "2026-03-21",
+    "status": "passato",
+    "incontri": 3,
+    "ore": 7.5,
+    "partecipanti": 7,
+    "educatori": 2,
+    "volontari": 2,
+    "professionisti": 4,
+    "sponsor": "Publiacqua",
+    "collaboratori": "Associazione Nomya",
+    "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme"
   },
   {
     "title": "Settimana dei Diritti",

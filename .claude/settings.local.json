@@ -41,7 +41,32 @@
       "Bash(/c/Users/g.corso/AppData/Local/Python/bin/python.exe -c \"\nimport shutil\nsrc = r'C:\\\\Users\\\\g.corso\\\\La Rosa dei Venti Aps\\\\La Rosa dei Venti Aps - Documenti\\\\Progetti\\\\Lista Progetti.xlsx'\ndst = r'C:\\\\Development\\\\LaRosadeiVenti\\\\temp_lista.xlsx'\nshutil.copy2\\(src, dst\\)\nprint\\('Copied'\\)\n\")",
       "Bash(/c/Users/g.corso/AppData/Local/Python/bin/python.exe C:/Development/LaRosadeiVenti/new-site/scripts/sync-projects.py \"C:/Development/LaRosadeiVenti/temp_lista.xlsx\")",
       "WebFetch(domain:www.larosadeiventiaps.org)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "WebSearch",
+      "WebFetch(domain:www.angelidelbello.org)",
+      "WebFetch(domain:www.comune.bagno-a-ripoli.fi.it)",
+      "WebFetch(domain:fondazionecrfirenze.it)",
+      "WebFetch(domain:www.cri.it)",
+      "WebFetch(domain:www.vab.it)",
+      "WebFetch(domain:misericordia-antella.it)",
+      "WebFetch(domain:misericordiadibadia.it)",
+      "WebFetch(domain:www.fratellanzagrassina.it)",
+      "WebFetch(domain:crcantella.it)",
+      "WebFetch(domain:www.contradaalfiere.com)",
+      "WebFetch(domain:www.trekkingbagnoaripoli.it)",
+      "WebFetch(domain:www.fondazioneclaudiociai.com)",
+      "WebFetch(domain:www.fontenuovacoop.it)",
+      "WebFetch(domain:www.consorzioblu.it)",
+      "WebFetch(domain:www.casadelpopolo.fi.it)",
+      "WebFetch(domain:www.crocedoroponteaema.it)",
+      "WebFetch(domain:www.becare.it)",
+      "WebFetch(domain:www.elsamorante.edu.it)",
+      "WebFetch(domain:www.caponnetto.edu.it)",
+      "WebFetch(domain:sds-firenzesudest.055055.it)",
+      "Bash(ls:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(start:*)",
+      "Bash(python:*)"
     ]
   }
 }

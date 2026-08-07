@@ -207,9 +207,19 @@ ma non a quelle sul sito ha due righe con esiti diversi. Le modifiche non sovras
 si chiude la riga precedente e se ne apre una nuova, perché la domanda a cui il sistema
 deve saper rispondere è *chi ha detto sì a cosa, e quando*.
 
-**`quota`** — `anno`, `tipo` (ordinario / genitore / partecipante / volontario / …),
-`importo`. Tabella, non costante: la struttura della quota è una decisione del direttivo
-che può cambiare ogni anno, e non deve richiedere un rilascio.
+**`quota`** — `anno`, `importo`, con **una sola riga per anno**: la quota associativa è unica
+per tutti (deciso dal direttivo il 07/08/2026). Tabella e non costante perché l'importo cambia
+di anno in anno senza dover rilasciare una versione.
+
+Le **eccezioni** — quota ridotta o azzerata per una singola persona — non sono un secondo tipo
+di quota: sono un `importoApplicato` facoltativo sul tesseramento, con la motivazione accanto.
+La differenza conta: con i tipi di quota si perde la traccia del fatto che quella persona ha
+pagato meno del dovuto e perché; con l'eccezione esplicita il rendiconto mostra la quota
+ordinaria e, separatamente, quanto l'associazione ha rinunciato a incassare.
+
+Le **quote dei progetti** — per progetto oppure mensili — sono un'altra cosa e nascono nella
+fase 3: non danno lo status di socio e non vanno sommate a questa. Nel modello sono movimenti
+di categoria `QUOTE_ATTIVITA` legati a un'iscrizione, non a un tesseramento.
 
 **`tesseramento`** — `persona_id`, `anno`, `quota_id`, `stato`
 (in_attesa · attivo · scaduto · annullato), `numero_tessera`, riferimento al documento
@@ -313,20 +323,29 @@ ricevuta partono identiche. Il sistema non presume che l'unico canale sia quello
 
 ## 7. Accesso e ruoli
 
-Genitori, soci ed educatori **non sono utenti del tenant Microsoft**, quindi serve un
-accesso proprio.
+Ci sono **due platee con due esigenze opposte**, e per questo due strade d'accesso.
 
-**Accesso senza password, con link via email.** La persona inserisce l'indirizzo, riceve un
-link a scadenza breve, entra. Niente password da scegliere, dimenticare o riusare — e
-niente credenziali da custodire per noi, che è la parte che conta trattando dati di persone
-fragili. Il link è a uso singolo e legato al dispositivo che l'ha chiesto.
+**Le famiglie: accesso senza password, con link via email.** Genitori, soci ed educatori non
+sono utenti del tenant Microsoft. La persona inserisce l'indirizzo, riceve un link a scadenza
+breve, entra. Niente password da scegliere, dimenticare o riusare — e niente credenziali da
+custodire per noi, che è la parte che conta trattando dati di persone fragili. Il link è a uso
+singolo e legato al dispositivo che l'ha chiesto.
 
-**I partecipanti non hanno accesso in fase 1.** Il loro ambito nasce con l'app (fase 4) e
-va progettato per l'accessibilità, non ereditato dall'area genitori.
+**Il backoffice: account Microsoft dell'associazione** (deciso dal direttivo il 07/08/2026).
+Vi accedono soltanto alcuni membri del direttivo, quelli che hanno una casella
+`@larosadeiventiaps.org`. L'autenticazione passa da Entra ID: password, secondo fattore,
+revoca e blocco li governa il tenant, non il nostro sistema — che è esattamente ciò che si
+vuole per chi vede l'anagrafica completa di ottanta famiglie.
 
-**Il direttivo** usa lo stesso meccanismo, ristretto a un ruolo assegnato in anagrafica.
-Chi entra nel backoffice è quindi un dato, non una configurazione: si aggiunge e si toglie
-senza un rilascio.
+Chi entra resta comunque **un dato e non una configurazione**: l'accesso richiede sia un
+account del tenant sia il ruolo `DIRETTIVO` assegnato in anagrafica. Togliere il ruolo basta a
+chiudere la porta senza toccare Microsoft; togliere l'account la chiude anche se il ruolo
+resta. Due condizioni, entrambe necessarie.
+
+**I partecipanti non hanno accesso in fase 1.** Il loro ambito nasce con l'app (fase 6) e va
+progettato per l'accessibilità, non ereditato dall'area genitori.
+
+I permessi si valutano **sempre lato API**, per entrambe le strade.
 
 I permessi si valutano **sempre lato API**: nascondere un pulsante nel browser non è un
 controllo di accesso.
@@ -403,36 +422,31 @@ canale. Il sistema non chiederà a un educatore di ricordarsene.
 - **Nessuna prova viene fatta sui soci reali**, e nessuna email di prova raggiunge un
   indirizzo vero.
 
-## 12. Decisioni aperte
+## 12. Decisioni — chiuse il 07/08/2026
 
-Le prime tre sono del direttivo e **non bloccano la scrittura del piano**, perché il design
-le tratta come dati o configurazione, non come struttura.
-
-1. **Quale gateway.** Proposta: pagina di pagamento ospitata dal fornitore, con l'eventuale
-   aggiunta in seguito di un canale molto diffuso fra le famiglie. Serve comunque l'apertura
-   di un conto commerciante intestato all'associazione, firmata dalla Presidente.
-2. **Importo e struttura della quota.** Unica per tutti, o distinta per tipo di socio? I
-   partecipanti pagano la quota associativa oltre alle attività? Il modello regge entrambe
-   le risposte: cambia il contenuto della tabella `quota`.
-3. **Chi entra nel backoffice.** Tutto il direttivo o solo chi tiene i conti.
-4. **L'elenco delle categorie di movimento**, da confermare con chi tiene il bilancio
-   (Francesca Fantappiè). Non è una tassonomia di comodo: è la griglia su cui si somma il
-   rendiconto per cassa. Va confermata prima di registrare la prima quota, perché
-   ricategorizzare movimenti già rendicontati è lavoro manuale.
-
-Le ultime due sono lavoro nostro, e vanno chiuse **prima del rilascio**.
-
-5. **Capienza dell'host — rischio dichiarato, non risolto.** CPU, memoria e disco liberi
-   sulla macchina OVH non sono stati misurati: non esistono credenziali di accesso al
-   server nel vault. Nel frattempo sullo stesso host sta per atterrare la piattaforma
-   Kuoyo, che non è leggera (1.314 ordini, 11.826 fasi, viste materializzate rinfrescate
-   ogni 60 secondi). La Rosa dei Venti è minuscola al confronto — ottanta soci — ma va
-   misurato prima del primo rilascio. Vale il precedente del server T440 di Kuoyo, che
-   sembrava adeguato e aveva 4 CPU libere su 10.
-6. **Nomina a responsabile del trattamento.** Portando i dati sui server BE Care, BE Care
-   diventa responsabile del trattamento per conto dell'associazione. Su dati di persone con
-   disabilità serve l'atto scritto previsto dall'art. 28 GDPR, firmato dalla Presidente.
-   È più pulito dell'ambiguità attuale, ma va firmato prima di caricare il primo socio.
+1. **Gateway: Stripe.** Pagina di pagamento ospitata dal fornitore. L'associazione non tocca
+   mai i dati della carta e la conformità PCI non ci riguarda. Resta da aprire il conto
+   commerciante intestato all'associazione, con la firma della Presidente.
+2. **Quota: unica per tutti, con eccezioni.** Una quota associativa annuale fissa; le
+   eccezioni si registrano sul singolo tesseramento con la motivazione (§5). Le quote dei
+   progetti — per progetto o mensili — sono cosa distinta e arrivano in fase 3.
+3. **Backoffice: alcuni membri del direttivo, con account Microsoft** dell'associazione.
+   Autenticazione via Entra ID più ruolo `DIRETTIVO` in anagrafica: due condizioni, entrambe
+   necessarie (§7).
+4. **Categorie di movimento: proposta consegnata** — ventisei voci, ciascuna agganciata a una
+   voce del rendiconto per cassa, in
+   `Amministrazione\Sistema di gestione\Categorie di movimento - proposta.xlsx`. Va integrata
+   e confermata da chi tiene il bilancio **prima di registrare la prima quota**:
+   ricategorizzare movimenti già rendicontati è lavoro manuale. L'aggancio alle voci del
+   rendiconto è l'unica parte che non ho potuto verificare da solo e va controllata sul
+   modello in uso.
+5. **Capienza dell'host: nessun problema**, confermato dal titolare dell'infrastruttura.
+6. **Nomina a responsabile del trattamento: documento redatto**, in
+   `Amministrazione\Sistema di gestione\Nomina a Responsabile del trattamento - BE Care Srl.docx`
+   (otto pagine, con Allegato A sulle misure tecniche e organizzative e Allegato B sui
+   sub-responsabili). Va firmato dalla Presidente e dall'amministratore di BE Care **prima di
+   caricare il primo socio**. È una bozza operativa, non un parere legale: va fatta leggere a
+   chi assiste l'associazione prima della firma.
 
 ## 13. Appendice — lezioni già pagate sull'import BCC
 

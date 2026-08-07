@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- **Lingua**: identificatori del codice in inglese, testi utente e messaggi di errore in **italiano**. Accenti tipografici corretti (`à è é ì ò ù`), mai apostrofi finali.
+- **Lingua**: gli identificatori del **dominio** — tabelle, colonne, classi, servizi, metodi — sono in **italiano** (`Soggetto`, `Tesseramento`, `numeroTessera`): parlano la stessa lingua della spec, dello statuto e di chi userà il sistema. Restano in inglese solo i termini di framework e infrastruttura (`module`, `service`, `guard`, `health`, `dto`). Testi utente e messaggi di errore in italiano, con accenti tipografici corretti (`à è é ì ò ù`), mai apostrofi finali.
 - **Importi**: sempre `€ 25,00` nell'interfaccia — simbolo davanti, separatore migliaia `.`, decimali `,`. In database `Decimal(10,2)`. Mai `float`.
 - **Moduli web**: etichetta **sopra** il campo, campo sotto. Il campo **Nome viene sempre prima di Cognome**.
 - **Acronimi societari senza punti**: `Srl`, `Spa`, `SA`. Mai `S.r.l.`.
@@ -45,7 +45,7 @@
 ```bash
 mkdir C:/Development/RosaDeiVentiPiattaforma
 cd C:/Development/RosaDeiVentiPiattaforma
-git init
+# il repository esiste gia e il ramo di lavoro e fase-1-anagrafica: NON eseguire git init
 mkdir api web docker docs docs/spec docs/plan
 cp "C:/Development/LaRosadeiVenti/docs/superpowers/specs/2026-08-07-anagrafica-tesseramento-design.md" docs/spec/
 cp "C:/Development/LaRosadeiVenti/docs/superpowers/plans/2026-08-07-fase-1-anagrafica-tesseramento.md" docs/plan/
@@ -184,20 +184,38 @@ describe('health', () => {
 }
 ```
 
-`api/test/setup-test-db.js` — crea il database di test e applica le migrazioni:
+`api/test/setup-test-db.js` — crea il database di test e applica le migrazioni.
+
+⚠️ **Usa il client `pg`, non `psql`**: su questa macchina `psql` non è installato (verificato il 07/08/2026) e Postgres gira solo dentro il container. Un `execSync('psql …')` fallirebbe con un errore che parla di comando non trovato e sembrerebbe un problema di database.
 
 ```js
 const { execSync } = require('node:child_process')
+const { Client } = require('pg')
 
-const name = process.env.TEST_DB_NAME || 'rdv_test'
-const admin = process.env.ADMIN_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/postgres'
-const url = admin.replace(/\/[^/]*$/, `/${name}`)
+const nome = process.env.TEST_DB_NAME || 'rdv_test'
+const admin = process.env.ADMIN_DATABASE_URL || 'postgresql://rdv:rdv@localhost:5432/postgres'
+const url = admin.replace(/\/[^/]*$/, `/${nome}`)
 
-execSync(`psql "${admin}" -c "DROP DATABASE IF EXISTS ${name}"`, { stdio: 'inherit' })
-execSync(`psql "${admin}" -c "CREATE DATABASE ${name}"`, { stdio: 'inherit' })
-execSync('npx prisma migrate deploy', { stdio: 'inherit', env: { ...process.env, DATABASE_URL: url } })
-console.log(`database di test pronto: ${name}`)
+async function main() {
+  const client = new Client({ connectionString: admin })
+  await client.connect()
+  // Le connessioni residue di un giro precedente impediscono il DROP: si chiudono prima.
+  await client.query(
+    `SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = $1 AND pid <> pg_backend_pid()`,
+    [nome],
+  )
+  await client.query(`DROP DATABASE IF EXISTS ${nome}`)
+  await client.query(`CREATE DATABASE ${nome}`)
+  await client.end()
+
+  execSync('npx prisma migrate deploy', { stdio: 'inherit', env: { ...process.env, DATABASE_URL: url } })
+  console.log(`database di test pronto: ${nome}`)
+}
+
+main().catch((e) => { console.error('preparazione del database di test fallita:', e.message); process.exit(1) })
 ```
+
+Il database di sviluppo deve essere in esecuzione prima dei test e2e: `cd docker && docker compose up -d db`. Il `DATABASE_URL` usato dai test è quello del database `rdv_test` appena creato — va esportato nell'ambiente prima di `npm run test:e2e`, oppure scritto in `api/.env`.
 
 - [ ] **Step 5: Eseguire il test e verificare che fallisca**
 
@@ -339,7 +357,7 @@ DATABASE_URL=postgresql://rdv:cambiami@db:5432/rdv
 
 - [ ] **Step 9: Verificare che lo stack parta**
 
-Run: `cd docker && cp .env.example .env && docker compose up -d --build && curl -s localhost:3000/health`
+Run: `cd docker && cp .env.example .env && docker compose up -d --build && curl -s localhost:3000/api/health`
 Expected: `{"stato":"ok"}`
 
 - [ ] **Step 10: Commit**
@@ -899,11 +917,9 @@ enum CategoriaMovimento {
 
 model Quota {
   id      String  @id @default(uuid())
-  anno    Int
-  tipo    String
+  anno    Int     @unique
   importo Decimal @db.Decimal(10, 2)
 
-  @@unique([anno, tipo])
   @@map("quota")
 }
 
@@ -963,18 +979,20 @@ export class MovimentiService {
 
 - [ ] **Step 5: Seed delle quote**
 
-`api/prisma/seed.ts` crea le quote dell'anno corrente. Gli importi sono **provvisori** finché il direttivo non decide (decisione aperta 2):
+`api/prisma/seed.ts` crea la quota dell'anno corrente. **Una sola riga per anno**: il direttivo ha deciso il 07/08/2026 che la quota associativa è unica per tutti. L'importo è provvisorio finché non viene deliberato.
 
 ```ts
 const anno = new Date().getFullYear()
-for (const tipo of ['ORDINARIO', 'GENITORE', 'PARTECIPANTE', 'VOLONTARIO']) {
-  await prisma.quota.upsert({
-    where: { anno_tipo: { anno, tipo } },
-    update: {},
-    create: { anno, tipo, importo: new Prisma.Decimal('25.00') },
-  })
-}
+await prisma.quota.upsert({
+  where: { anno },
+  update: {},
+  create: { anno, importo: new Prisma.Decimal('25.00') },
+})
 ```
+
+⚠️ **Le eccezioni non sono un secondo tipo di quota.** Quota ridotta o azzerata per una singola persona si registra sul tesseramento (`importoApplicato` + `motivoEccezione`, Task 5), non aggiungendo righe a `quota`. Con i tipi si perderebbe la traccia del fatto che quella persona ha pagato meno del dovuto e perché; con l'eccezione esplicita il rendiconto mostra la quota ordinaria e, separatamente, quanto l'associazione ha rinunciato a incassare.
+
+Le quote dei **progetti** — per progetto o mensili — non stanno qui: nascono in fase 3 come movimenti di categoria `QUOTE_ATTIVITA` legati a un'iscrizione, e non danno lo status di socio.
 
 - [ ] **Step 6: Eseguire i test**
 
@@ -1029,15 +1047,19 @@ Expected: FAIL — `NumerazioneService` non esiste.
 enum StatoTesseramento { IN_ATTESA ATTIVO SCADUTO ANNULLATO }
 
 model Tesseramento {
-  id            String            @id @default(uuid())
-  personaId     String            @map("persona_id")
-  anno          Int
-  quotaId       String            @map("quota_id")
-  stato         StatoTesseramento @default(IN_ATTESA)
-  numeroTessera String?           @unique @map("numero_tessera")
-  documentoId   String?           @map("documento_id")
-  apertoIl      DateTime          @default(now()) @map("aperto_il") @db.Timestamptz(3)
-  attivatoIl    DateTime?         @map("attivato_il") @db.Timestamptz(3)
+  id              String            @id @default(uuid())
+  personaId       String            @map("persona_id")
+  anno            Int
+  quotaId         String            @map("quota_id")
+  stato           StatoTesseramento @default(IN_ATTESA)
+  numeroTessera   String?           @unique @map("numero_tessera")
+  documentoId     String?           @map("documento_id")
+  // Eccezione alla quota ordinaria: importo effettivamente richiesto e perche'.
+  // Nullo = si applica l'importo della quota dell'anno.
+  importoApplicato Decimal?         @map("importo_applicato") @db.Decimal(10, 2)
+  motivoEccezione  String?          @map("motivo_eccezione")
+  apertoIl        DateTime          @default(now()) @map("aperto_il") @db.Timestamptz(3)
+  attivatoIl      DateTime?         @map("attivato_il") @db.Timestamptz(3)
 
   @@index([personaId, anno])
   @@map("tesseramento")
@@ -1111,6 +1133,24 @@ it('attivare assegna numero, data e movimento in entrata', async () => {
   expect(mov.importo.toFixed(2)).toBe('25.00')
 })
 
+it('una quota in eccezione registra l\'importo ridotto, non quello ordinario', async () => {
+  const { tesseramentoId } = await tesseramenti.apriDomanda({
+    ...datiDiGiulia, importoApplicato: '10.00', motivoEccezione: 'Delibera del direttivo del 07/08/2026',
+  })
+  await tesseramenti.attiva(tesseramentoId, 'CONTANTI')
+  const mov = await prisma.movimento.findFirst({ where: { tesseramentoId } })
+  expect(mov.importo.toFixed(2)).toBe('10.00')
+  const t = await prisma.tesseramento.findUnique({ where: { id: tesseramentoId } })
+  expect(t.motivoEccezione).toMatch(/delibera/i)   // l'eccezione resta motivata, non anonima
+})
+
+it('senza eccezione si applica l\'importo della quota dell\'anno', async () => {
+  const { tesseramentoId } = await tesseramenti.apriDomanda(datiDiGiulia)
+  await tesseramenti.attiva(tesseramentoId, 'CONTANTI')
+  const mov = await prisma.movimento.findFirst({ where: { tesseramentoId } })
+  expect(mov.importo.toFixed(2)).toBe('25.00')
+})
+
 it('attivare due volte non emette un secondo numero né un secondo movimento', async () => {
   const { tesseramentoId } = await tesseramenti.apriDomanda(datiDiGiulia)
   const primo = await tesseramenti.attiva(tesseramentoId, 'BONIFICO')
@@ -1134,9 +1174,11 @@ async attiva(tesseramentoId: string, metodo: MetodoPagamento, riferimentoGateway
     }
     const numero = await this.numerazione.prossimoNumero(t.anno)
     const quota = await tx.quota.findUniqueOrThrow({ where: { id: t.quotaId } })
+    // L'eccezione vince sull'importo ordinario. Nulla = quota piena.
+    const importo = t.importoApplicato ?? quota.importo
     await tx.movimento.create({
       data: {
-        soggettoId: t.personaId, importo: quota.importo,
+        soggettoId: t.personaId, importo,
         categoria: 'QUOTE_ASSOCIATIVE', metodo, riferimentoGateway, tesseramentoId,
       },
     })
@@ -1289,13 +1331,33 @@ L'idempotenza è la **chiave primaria**, non un controllo applicativo: due conse
 
 - [ ] **Step 4: Corpo grezzo per la verifica della firma**
 
-In `main.ts`, prima di `useGlobalPipes`:
+⚠️ **Non in `main.ts`.** I test e2e costruiscono l'applicazione da `AppModule` e non passano mai da `main.ts`: un `app.use(...)` scritto lì non verrebbe applicato durante i test, e la verifica della firma fallirebbe in un modo che sembra un problema del fornitore. Il middleware si registra nel modulo, dove vale in entrambi i contesti — e il percorso si scrive **senza** il prefisso `api`, perché `MiddlewareConsumer` lavora sulle rotte del modulo e il prefisso globale viene applicato dopo.
 
 ```ts
-app.use('/api/pagamenti/webhook', express.raw({ type: 'application/json' }))
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
+import { raw } from 'express'
+
+@Module({ controllers: [WebhookController], providers: [RiconciliazioneService] })
+export class PagamentiModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(raw({ type: 'application/json' }))
+      .forRoutes({ path: 'pagamenti/webhook', method: RequestMethod.POST })
+  }
+}
 ```
 
-⚠️ La firma si verifica sui **byte esatti** ricevuti. Se il JSON viene analizzato e riserializzato prima della verifica, la firma non torna mai e il webhook fallisce in un modo che sembra un problema del fornitore.
+La firma si verifica sui **byte esatti** ricevuti: se il JSON viene analizzato e riserializzato prima della verifica, la firma non torna mai. Nel controller il corpo arriva quindi come `Buffer`, e va letto con `@Req()` — non con `@Body()`, che lo passerebbe attraverso il `ValidationPipe` globale.
+
+Aggiungere un test che protegge proprio questo, altrimenti la regressione è invisibile:
+
+```ts
+it('il corpo del webhook arriva come Buffer, non come oggetto analizzato', async () => {
+  const spia = jest.spyOn(porta, 'verificaFirma')
+  await inviaEvento(evento)
+  expect(Buffer.isBuffer(spia.mock.calls[0][0])).toBe(true)
+})
+```
 
 - [ ] **Step 5: Implementare controller e riconciliazione**
 
@@ -1559,7 +1621,11 @@ git add -A && git commit -m "feat: email via Graph e comunicazioni ai soci con e
 - Test: `api/test/auth.e2e-spec.ts`
 
 **Interfaces:**
-- Produces: `POST /auth/richiedi-link`, `POST /auth/entra`, decoratore `@Ruoli(Ruolo.DIRETTIVO)`, `RuoliGuard`.
+- Produces: `POST /auth/richiedi-link`, `POST /auth/entra` (famiglie); `GET /auth/microsoft` e `GET /auth/microsoft/callback` (direttivo); decoratore `@Ruoli(Ruolo.DIRETTIVO)`, `RuoliGuard`.
+
+**Due strade, non una.** Il direttivo ha deciso il 07/08/2026 che al backoffice si accede con l'**account Microsoft dell'associazione**, mentre le famiglie continuano col link via email. Sono platee con esigenze opposte: chi vede l'anagrafica completa di ottanta famiglie deve stare dietro le politiche del tenant — password, secondo fattore, revoca, blocco — che non vogliamo reimplementare; chi deve solo scaricare la tessera del figlio non deve inventarsi l'ennesima password.
+
+L'accesso al backoffice richiede **due condizioni, entrambe necessarie**: un account valido del tenant `larosadeiventiaps.org` **e** il ruolo `DIRETTIVO` in anagrafica. Togliere il ruolo chiude la porta senza toccare Microsoft; togliere l'account la chiude anche se il ruolo resta.
 
 - [ ] **Step 1: Test**
 
@@ -1582,7 +1648,24 @@ it('richiedere un link per un indirizzo sconosciuto risponde uguale a uno noto',
 it('una famiglia non entra nel backoffice del direttivo', async () => {
   await request(server).get('/direttivo/soci').set('Authorization', `Bearer ${tokenFamiglia}`).expect(403)
 })
+
+it('un account Microsoft valido senza il ruolo DIRETTIVO non entra', async () => {
+  const token = await accediConMicrosoft('m.pratesi@larosadeiventiaps.org')  // nessun ruolo assegnato
+  await request(server).get('/direttivo/soci').set('Authorization', `Bearer ${token}`).expect(403)
+})
+
+it('un account fuori dal tenant dell\'associazione non entra, anche col ruolo assegnato', async () => {
+  await assegnaRuolo('estraneo@gmail.com', 'DIRETTIVO')
+  await expect(accediConMicrosoft('estraneo@gmail.com')).rejects.toThrow(/tenant/i)
+})
+
+it('il token Microsoft si verifica contro le chiavi del tenant, non si crede sulla parola', async () => {
+  const contraffatto = firmaConChiaveNostra({ preferred_username: 'g.corso@larosadeiventiaps.org' })
+  await request(server).get('/direttivo/soci').set('Authorization', `Bearer ${contraffatto}`).expect(401)
+})
 ```
+
+Gli ultimi tre test sono la ragione per cui questa strada esiste: un controllo che si limita a leggere l'indirizzo dentro il token, senza verificarne la firma contro le chiavi pubbliche del tenant e senza controllare l'emittente, lascia entrare chiunque sappia scrivere un JSON.
 
 Il terzo test è una difesa concreta: risposte diverse trasformerebbero il modulo di accesso in un elenco di chi è socio.
 
@@ -1606,6 +1689,14 @@ model LinkAccesso {
 ```
 
 Nel database va l'**impronta** del token, non il token: chi legge una copia del database non deve poter entrare come una famiglia. Consumo con `updateMany({ where: { hashToken, usatoIl: null, scadeIl: { gt: now } }, data: { usatoIl: now } })` e controllo che abbia aggiornato esattamente una riga — atomico, quindi due usi simultanei non passano entrambi.
+
+**Lato direttivo**: flusso OpenID Connect authorization code con PKCE verso Entra ID, applicazione registrata sul tenant `larosadeiventiaps.org`. Il token d'identità si verifica con le chiavi pubbliche del tenant (`jwks_uri` del documento di configurazione), controllando emittente, destinatario e scadenza. Dal token si legge l'indirizzo, si cerca il soggetto in anagrafica e si verifica il ruolo `DIRETTIVO`. Entrambi i controlli sull'API, mai sul client.
+
+```bash
+cd api && npm i openid-client jose
+```
+
+Il risultato di entrambe le strade è **la stessa sessione applicativa**: un token nostro, di breve durata, che porta l'id del soggetto e i suoi ruoli. `RuoliGuard` non sa e non deve sapere da quale porta è entrato chi lo sta usando — è ciò che evita due insiemi di regole di autorizzazione che divergono.
 
 - [ ] **Step 4: Eseguire i test**
 
