@@ -52,6 +52,7 @@ accesso dei partecipanti (arriva con l'app, fase 4); pubblicazione del sito pubb
 | Consolidamento sui server BE Care | Obiettivo aziendale: ridurre Ergonet, Serverplan e Register a soli registrar | Niente hosting condiviso: API, database e sito sull'host Docker |
 | Nessun gateway di pagamento oggi attivo | Oggi si incassa per bonifico e in contanti | Va aperto un conto commerciante intestato all'associazione |
 | Liberatoria foto cartacea e indifferenziata | Prassi attuale | Il consenso va ricostruito come dato, per persona e per canale |
+| I file devono restare usabili con Microsoft 365 | Richiesta dell'associazione: il direttivo e gli educatori lavorano da Teams e OneDrive | Documenti, foto e allegati su SharePoint, non su un volume del server |
 | Un solo manutentore | Gionatan, volontario | Stack unico con gli altri progetti BE Care; niente tecnologie a sé |
 | I partecipanti sono in buona parte autonomi col telefono | Verificato con l'associazione | L'ambito partecipante (fase 4) è giustificato e va progettato accessibile |
 
@@ -69,8 +70,10 @@ già in esercizio per la piattaforma Kuoyo — `docs/runbook-deploy.md` del repo
   sotto `/api`. Contiene tutte le regole di dominio. Non produce HTML.
 - **`web`** — client React/Vite: le pagine pubbliche di tesseramento, l'area riservata
   della famiglia e il backoffice del direttivo. Nessuna logica di dominio nel browser.
-- **`file`** — volume host `/srv/rosadeiventi/files`: i byte di tessere, ricevute e, dalla
-  fase 2, le foto. Nel database resta solo il percorso.
+- **`documenti`** — libreria SharePoint dedicata sul sito `/sites/LaRosadeiVentiAps`, con
+  struttura a cartelle per anno e per progetto: tessere, ricevute e, dalla fase 2, le foto.
+  Ci si lavora anche da Teams, da OneDrive e da Esplora risorse, ed è la ragione della
+  scelta.
 
 Il codice vive in un repository nuovo, `RosaDeiVentiPiattaforma`, con la stessa forma di
 `KuoyoPAK`: `api/`, `web/`, `docker/`. Il repository attuale `LaRosadeiVenti` conserva il
@@ -80,14 +83,45 @@ sito finché la fase 3 non lo porta dentro la piattaforma.
 Web, backoffice e domani l'app Flutter non parlano mai al database — usano gli stessi
 endpoint con permessi diversi. È ciò che permette alla fase 4 di non riaprire nulla.
 
-### Cosa resta fuori dal perimetro applicativo
+### Microsoft 365
 
 - **Le email partono da `info@larosadeiventiaps.org` via Microsoft Graph**, non dal server:
   è ciò che evita la cartella spam.
-- **SharePoint esce dall'architettura.** Era previsto come archivio dei media solo perché
-  l'hosting condiviso aveva poco disco; con un volume nostro quel motivo non esiste più.
-  Resta quello che è sempre stato: la libreria dei documenti del direttivo, che il sistema
-  non legge e non scrive.
+- **I file stanno su SharePoint**, per scelta esplicita: devono essere utilizzabili con gli
+  strumenti di Microsoft 365 che l'associazione già usa. Il sistema li scrive e li legge
+  via Graph.
+- **Accesso con privilegio minimo**: per l'API si registra un'applicazione dedicata con
+  **`Sites.Selected`** concesso sul solo sito dell'associazione, non si riusa quella
+  esistente che ha `Sites.FullControl.All` su tutto il tenant. Il consenso va dato dal
+  Global Admin `admin@larosadeiventiaps.org`.
+
+### Conseguenze della scelta, e come si governano
+
+Tenere i file fuori dal database è ciò che l'associazione vuole, ma cambia tre proprietà
+del sistema. Vanno progettate qui, non scoperte dopo.
+
+**Un file lo può spostare o rinominare una persona.** È il senso stesso di tenerlo su
+SharePoint. Perciò il database conserva **l'identificativo dell'elemento** (`driveItem id`),
+non il percorso: l'identificativo sopravvive a rinomina e spostamento dentro la libreria.
+Il percorso si conserva solo come etichetta leggibile, e non è mai la chiave.
+
+**Le due metà non si salvano più insieme.** Il database lo salviamo noi, i file li conserva
+Microsoft con versioni e cestino. Un ripristino del database a ieri non riavvolge
+SharePoint: l'effetto sono file orfani, non righe che puntano al nulla — il verso meno
+grave dei due. Una **riconciliazione notturna** elenca entrambe le anomalie: elementi citati
+dal database e non più presenti, file presenti senza una riga che li nomini. Un collegamento
+rotto lo deve scoprire un rapporto, non una famiglia.
+
+**Graph può non rispondere.** Generazione del PDF e caricamento sono passi separati e
+ripetibili: la tessera esiste comunque, il caricamento si ripete. Vale lo stesso principio
+già adottato per le email — una funzione di contorno non blocca mai un socio. I caricamenti
+rispettano il `Retry-After` in caso di limitazione, e i file oltre 4 MB usano una sessione
+di caricamento.
+
+**Cancellare significa cancellare davvero.** Alla revoca di un consenso o all'esercizio del
+diritto alla cancellazione, versioni e cestino a due livelli vanno svuotati per quell'
+elemento: su SharePoint un file eliminato resta recuperabile per novanta giorni, e questo
+va gestito, non ignorato.
 
 ### Convenzioni ereditate dal modello Kuoyo, e perché
 
@@ -132,12 +166,18 @@ deve saper rispondere è *chi ha detto sì a cosa, e quando*.
 che può cambiare ogni anno, e non deve richiedere un rilascio.
 
 **`tesseramento`** — `persona_id`, `anno`, `quota_id`, `stato`
-(in_attesa · attivo · scaduto · annullato), `numero_tessera`, percorso del PDF, date.
-Vincolo di unicità su `(persona_id, anno)` fra i tesseramenti non annullati.
+(in_attesa · attivo · scaduto · annullato), `numero_tessera`, riferimento al documento
+della tessera, date. Vincolo di unicità su `(persona_id, anno)` fra i tesseramenti non
+annullati.
 
 **`pagamento`** — `tesseramento_id`, importo, data, metodo (online / bonifico / contanti),
-riferimento del gateway, percorso della ricevuta PDF. Separato dal tesseramento perché una
-quota può essere incassata fuori dal sito e va comunque registrata.
+riferimento del gateway, riferimento al documento della ricevuta. Separato dal tesseramento
+perché una quota può essere incassata fuori dal sito e va comunque registrata.
+
+**`documento`** — `driveItem id` (la chiave), nome e percorso leggibile al momento del
+caricamento, tipo (tessera / ricevuta / foto / allegato), riga a cui si riferisce, data,
+stato del caricamento (in attesa / caricato / fallito). È l'unico punto in cui il sistema
+sa dove vive un file: nessun'altra tabella conserva un percorso.
 
 **`evento_gateway`** — id dell'evento del fornitore (**unico**), tipo, payload, esito
 dell'elaborazione. È ciò che rende il webhook idempotente: i gateway consegnano più volte
@@ -246,6 +286,10 @@ Il contratto che la fase 1 deve garantire alla fase 2:
   già pubblicate, non solo su quelle future.
 - Il consenso è **storicizzato**: si sa cosa valeva alla data in cui una foto è stata
   pubblicata.
+- **Le foto non escono mai come collegamenti di SharePoint.** Il sito pubblico riceve i
+  byte dall'API, che controlla i consensi a ogni richiesta. Un collegamento di condivisione,
+  una volta creato, vive di vita propria e non sa nulla di chi ha revocato: sarebbe una
+  fuga di dati con la data di scadenza sbagliata.
 
 Basterà una persona senza consenso, fra quelle ritratte, per fermare una foto su quel
 canale. Il sistema non chiederà a un educatore di ricordarsene.
@@ -257,13 +301,17 @@ canale. Il sistema non chiederà a un educatore di ricordarsene.
 - **La mail con la tessera non parte.** Generazione del PDF e invio sono passi separati e
   ripetibili: se Graph è irraggiungibile il tesseramento resta attivo e la mail si rimanda
   dal backoffice. Un problema di posta non blocca mai un socio.
-- **Il server perde i dati.** Backup notturno che prende **nello stesso giro** il dump del
-  database e l'archivio del volume file, e scrive un marcatore di completamento solo se
-  sono riusciti entrambi: una copia a metà è peggio di una copia assente, perché sembra
-  utilizzabile. Le copie escono dalla macchina.
-- **Un ripristino del solo database** restituirebbe righe che puntano a PDF inesistenti, e
-  il danno si scoprirebbe mesi dopo. Per questo le due copie si prendono e si ripristinano
-  insieme.
+- **Il server perde i dati.** Backup notturno del database, con marcatore di completamento
+  e copie che escono dalla macchina: un backup che vive sullo stesso disco che sta
+  proteggendo non è un backup.
+- **I file no**: quelli li conserva Microsoft, con versioni e cestino. È il rovescio della
+  scelta di tenerli su SharePoint, ed è accettato — ma significa che **un ripristino del
+  database a una data precedente non riavvolge i file**. L'esito sono elementi orfani su
+  SharePoint, non righe che puntano al nulla, e la riconciliazione notturna li elenca.
+- **Qualcuno sposta o rinomina un file dalla libreria.** Non succede niente: il legame è
+  l'identificativo dell'elemento, non il percorso. Se invece lo *cancella*, la
+  riconciliazione lo segnala il mattino dopo e il documento si rigenera — tessere e
+  ricevute sono riproducibili dal dato, le foto no.
 
 ## 11. Come si verifica che funzioni
 
@@ -274,6 +322,10 @@ canale. Il sistema non chiederà a un educatore di ricordarsene.
   con carte finte, prima di aprire alle famiglie.
 - Il webhook si prova anche nei casi sgradevoli: evento duplicato, evento fuori ordine,
   firma non valida, pagamento fallito.
+- Il legame con SharePoint si prova **spostando e rinominando davvero** un file nella
+  libreria di collaudo: se il documento resta raggiungibile, la chiave è quella giusta.
+  Si prova anche il caso in cui Graph risponde con una limitazione e quello in cui non
+  risponde affatto — la tessera deve esistere lo stesso.
 - **Nessuna prova viene fatta sui soci reali**, e nessuna email di prova raggiunge un
   indirizzo vero.
 
