@@ -1209,3 +1209,150 @@ main {
     margin: 0.4rem 0;
   }
 }
+
+/* ------------------------------------------------------------
+   Le due azioni sotto la hero (22/08/2026)
+   ------------------------------------------------------------ */
+.fascia-azioni {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  padding: 0 1rem;
+}
+
+.azione {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.3rem;
+  border-radius: var(--radius-card);
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.2s;
+}
+
+.azione:hover,
+.azione:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* ⚠️ Il verde e' quello di WhatsApp, non un verde a caso: su un pulsante
+   che porta a WhatsApp il colore fa meta' del riconoscimento, e uno
+   diverso costringerebbe a leggere per capire dove si va. */
+.azione-whatsapp {
+  background: #128c7e;
+}
+
+.azione-dona {
+  background: var(--primary);
+}
+
+.azione-icona {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.azione strong {
+  display: block;
+  font-size: 1.15rem;
+}
+
+.azione small {
+  display: block;
+  font-size: 1rem;
+  opacity: 0.92;
+  margin-top: 0.15rem;
+}
+
+/* ------------------------------------------------------------
+   Le tre schede grandi della home (22/08/2026)
+   ------------------------------------------------------------ */
+.schede-grandi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.2rem;
+  max-width: 1100px;
+  margin: 2.5rem auto;
+  padding: 0 1rem;
+}
+
+.scheda-grande {
+  position: relative;
+  display: block;
+  min-height: 20rem;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.25s;
+}
+
+.scheda-grande:hover,
+.scheda-grande:focus-visible {
+  transform: translateY(-3px);
+}
+
+.scheda-grande img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.scheda-grande:hover img {
+  transform: scale(1.05);
+}
+
+/* La velatura: scura in basso, dove sta il testo; quasi assente in alto,
+   dove la fotografia deve restare fotografia. */
+.scheda-grande::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 10, 4, 0.05) 0%, rgba(20, 10, 4, 0.55) 55%, rgba(20, 10, 4, 0.88) 100%);
+}
+
+.scheda-grande-testo {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding: 1.3rem 1.4rem 1.5rem;
+}
+
+.scheda-grande-testo strong {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  margin-bottom: 0.4rem;
+}
+
+.scheda-grande-testo small {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.45;
+  opacity: 0.93;
+}
+
+.scheda-grande-testo em {
+  display: block;
+  margin-top: 0.7rem;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* ⛔ Chi ha chiesto meno animazioni non deve vedere l'ingrandimento della
+   fotografia al passaggio del dito: su un telefono quel movimento parte
+   anche solo sfiorando. */
+@media (prefers-reduced-motion: reduce) {
+  .scheda-grande,
+  .scheda-grande img,
+  .scheda-grande:hover img {
+    transition: none;
+    transform: none;
+  }
+}
