@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load events on events page and homepage
   loadEvents();
   loadUpcomingEvents();
+  // Load direttivo on mission page
+  loadDirettivo();
+  // Load documenti on documenti page
+  loadDocumenti();
 });
 
 function escapeHTML(str) {
@@ -498,5 +502,153 @@ async function loadUpcomingEvents() {
     console.warn('Could not load upcoming events:', e);
     const section = document.getElementById('upcoming-events');
     if (section) section.style.display = 'none';
+  }
+}
+
+/* ------------------------------------------------------------
+   Direttivo (team) — "Chi siamo" / Mission page
+   ------------------------------------------------------------ */
+
+// Colori già in uso nel sito (vedi :root in css/style.css): niente palette nuova.
+const TEAM_PALETTE = ['#E8630A', '#007bff', '#28a745', '#6c757d', '#F4A460'];
+
+// Segnaposto disegnato: cerchio colorato + motivo a "rosa dei venti" (8 direzioni) + iniziali.
+// Si usa SOLO finché in direttivo.json il campo "foto" è vuoto o il file indicato non si trova.
+function compassRosePlaceholder(nome, colorHex) {
+  const initials = (nome || '').split(/\s+/).filter(Boolean).map(w => w[0]).join('').substring(0, 2).toUpperCase();
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="60" fill="${colorHex}"/>
+    <g stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round">
+      <line x1="60" y1="8" x2="60" y2="112"/>
+      <line x1="8" y1="60" x2="112" y2="60"/>
+      <line x1="24" y1="24" x2="96" y2="96"/>
+      <line x1="96" y1="24" x2="24" y2="96"/>
+    </g>
+    <circle cx="60" cy="60" r="27" fill="#ffffff" fill-opacity="0.18"/>
+    <text x="60" y="71" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#ffffff" text-anchor="middle">${initials}</text>
+  </svg>`;
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+
+async function loadDirettivo() {
+  const grid = document.getElementById('team-grid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('data/direttivo.json');
+    const members = await res.json();
+
+    if (!members || members.length === 0) {
+      grid.innerHTML = '<p style="color:#999;">Elenco del direttivo in aggiornamento.</p>';
+      return;
+    }
+
+    grid.innerHTML = members.map((m, i) => {
+      const color = TEAM_PALETTE[i % TEAM_PALETTE.length];
+      const initialSrc = m.foto ? m.foto : compassRosePlaceholder(m.nome, color);
+      const cellulareHtml = m.cellulare
+        ? `<p class="team-contact">📱 <a href="tel:${escapeHTML(m.cellulare.replace(/\s+/g, ''))}">${escapeHTML(m.cellulare)}</a></p>`
+        : '';
+      const emailHtml = m.email
+        ? `<p class="team-contact">✉️ <a href="mailto:${escapeHTML(m.email)}">${escapeHTML(m.email)}</a></p>`
+        : '';
+
+      return `
+        <div class="team-card">
+          <img src="${initialSrc}" alt="${escapeHTML(m.nome)}" loading="lazy">
+          <h3>${escapeHTML(m.nome)}</h3>
+          <p class="team-role">${escapeHTML(m.ruolo || '')}</p>
+          ${cellulareHtml}
+          ${emailHtml}
+        </div>
+      `;
+    }).join('');
+
+    // Se il file indicato in "foto" non si trova (404, percorso sbagliato...),
+    // si passa comunque al segnaposto invece di lasciare l'icona di immagine rotta.
+    grid.querySelectorAll('.team-card img').forEach((img, i) => {
+      if (!members[i].foto) return; // qui si mostra già il segnaposto
+      const color = TEAM_PALETTE[i % TEAM_PALETTE.length];
+      img.addEventListener('error', () => {
+        img.src = compassRosePlaceholder(members[i].nome, color);
+      }, { once: true });
+    });
+  } catch (e) {
+    console.warn('Could not load direttivo:', e);
+    const section = document.getElementById('direttivo');
+    if (section) section.style.display = 'none';
+  }
+}
+
+/* ------------------------------------------------------------
+   Documenti dell'associazione
+   ------------------------------------------------------------ */
+
+function formatBytes(bytes) {
+  if (bytes === null || bytes === undefined || isNaN(bytes)) return '';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return Math.round(bytes / 1024) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+async function loadDocumenti() {
+  const list = document.getElementById('documenti-list');
+  if (!list) return;
+
+  try {
+    const res = await fetch('data/documenti.json');
+    const docs = await res.json();
+
+    if (!docs || docs.length === 0) {
+      list.innerHTML = '<p style="color:#999;">Nessun documento disponibile al momento.</p>';
+      return;
+    }
+
+    list.innerHTML = docs.map((d, i) => `
+      <div class="document-item" id="doc-${i}">
+        <div class="document-icon" aria-hidden="true">📄</div>
+        <div class="document-body">
+          <h3>${escapeHTML(d.titolo)}</h3>
+          <p>${escapeHTML(d.descrizione || '')}</p>
+          <div class="document-meta">
+            ${d.anno ? `<span class="document-year">${escapeHTML(String(d.anno))}</span>` : ''}
+            <span class="document-size" id="doc-size-${i}">Verifica del file in corso…</span>
+          </div>
+        </div>
+        <a class="btn-solid document-download" id="doc-link-${i}" href="${d.file}" download>Scarica</a>
+      </div>
+    `).join('');
+
+    // Ogni voce verifica DA SOLA se il file esiste davvero (richiesta HEAD) e ne legge il peso:
+    // niente peso da scrivere a mano nel json, e nessun collegamento rotto se il file manca ancora.
+    docs.forEach((d, i) => {
+      const sizeEl = document.getElementById(`doc-size-${i}`);
+      const linkEl = document.getElementById(`doc-link-${i}`);
+      const itemEl = document.getElementById(`doc-${i}`);
+
+      fetch(d.file, { method: 'HEAD' })
+        .then(r => {
+          if (!r.ok) throw new Error('File non trovato');
+          const len = r.headers.get('Content-Length');
+          if (len) {
+            sizeEl.textContent = formatBytes(parseInt(len, 10));
+          } else {
+            sizeEl.style.display = 'none';
+          }
+        })
+        .catch(() => {
+          itemEl.classList.add('document-missing');
+          sizeEl.textContent = 'File non ancora disponibile';
+          sizeEl.classList.add('document-missing-badge');
+          linkEl.removeAttribute('href');
+          linkEl.removeAttribute('download');
+          linkEl.classList.add('disabled');
+          linkEl.setAttribute('aria-disabled', 'true');
+          linkEl.textContent = 'Non disponibile';
+        });
+    });
+  } catch (e) {
+    console.warn('Could not load documenti:', e);
+    list.innerHTML = '<p style="color:#999;">Impossibile caricare l\'elenco dei documenti.</p>';
   }
 }

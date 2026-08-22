@@ -1,0 +1,23 @@
+[
+  {
+    "nome": "Valentina Spinelli",
+    "ruolo": "Presidente",
+    "email": "valentina.s@larosadeiventiaps.org",
+    "cellulare": "328 842 4884",
+    "foto": ""
+  },
+  {
+    "nome": "Gionatan Corso",
+    "ruolo": "Vice Presidente",
+    "email": "g.corso@larosadeiventiaps.org",
+    "cellulare": "339 628 6360",
+    "foto": ""
+  },
+  {
+    "nome": "Marco Pratesi",
+    "ruolo": "Consigliere",
+    "email": "marco.p@larosadeiventiaps.org",
+    "cellulare": "320 468 8662",
+    "foto": ""
+  }
+]

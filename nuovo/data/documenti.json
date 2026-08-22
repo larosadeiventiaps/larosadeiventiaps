@@ -1,0 +1,32 @@
+[
+  {
+    "titolo": "Statuto dell'associazione",
+    "descrizione": "Il documento che definisce scopi, organi e regole di funzionamento dell'associazione.",
+    "anno": "",
+    "file": "documenti/statuto.pdf"
+  },
+  {
+    "titolo": "Atto costitutivo",
+    "descrizione": "L'atto con cui è stata fondata l'associazione.",
+    "anno": "",
+    "file": "documenti/atto-costitutivo.pdf"
+  },
+  {
+    "titolo": "Bilancio",
+    "descrizione": "Il rendiconto economico e finanziario annuale dell'associazione.",
+    "anno": "",
+    "file": "documenti/bilancio.pdf"
+  },
+  {
+    "titolo": "Rendiconto delle attività",
+    "descrizione": "Il resoconto delle attività svolte nel corso dell'anno.",
+    "anno": "",
+    "file": "documenti/rendiconto.pdf"
+  },
+  {
+    "titolo": "Informativa privacy",
+    "descrizione": "Come vengono trattati i dati personali di soci, volontari e sostenitori.",
+    "anno": "",
+    "file": "documenti/informativa-privacy.pdf"
+  }
+]
