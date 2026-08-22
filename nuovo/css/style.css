@@ -1094,3 +1094,118 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ------------------------------------------------------------
+   La hero con le fotografie che si avvicendano (22/08/2026)
+   ------------------------------------------------------------
+   ⚠️ Nessun JavaScript: una sola animazione, sfalsata di 6 secondi per
+   immagine. Il vantaggio non è l'eleganza — è che con lo scorrimento in
+   CSS non c'è nessun temporizzatore da fermare quando si cambia pagina,
+   e niente che possa restare acceso a consumare batteria sul telefono.
+
+   ⚠️ Le fotografie non sostituiscono il gradiente: gli stanno SOPRA, e
+   sotto al testo c'è una velatura scura. Il bianco su una foto chiara
+   sparisce, e sparirebbe solo su alcune delle sette — cioè a
+   intermittenza, che è il modo peggiore in cui un difetto si presenta.
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-sfondo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-sfondo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: heroAvvicenda 42s infinite;
+}
+
+/* La velatura che tiene leggibile il testo su qualunque fotografia. */
+.hero-sfondo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 10, 4, 0.35) 0%, rgba(20, 10, 4, 0.62) 100%);
+}
+
+.hero h1,
+.hero p,
+.hero .btn-primary {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 12px rgba(20, 10, 4, 0.45);
+}
+
+/* Sette immagini, 42 secondi in tutto: sei secondi ciascuna. */
+.hero-sfondo img:nth-child(1) { animation-delay: 0s; }
+.hero-sfondo img:nth-child(2) { animation-delay: 6s; }
+.hero-sfondo img:nth-child(3) { animation-delay: 12s; }
+.hero-sfondo img:nth-child(4) { animation-delay: 18s; }
+.hero-sfondo img:nth-child(5) { animation-delay: 24s; }
+.hero-sfondo img:nth-child(6) { animation-delay: 30s; }
+.hero-sfondo img:nth-child(7) { animation-delay: 36s; }
+
+@keyframes heroAvvicenda {
+  0% { opacity: 0; transform: scale(1.06); }
+  3% { opacity: 1; }
+  14% { opacity: 1; }
+  17% { opacity: 0; }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+/* ⛔ Chi ha chiesto meno animazioni al proprio telefono vede la prima
+   fotografia e basta: ferma, senza dissolvenze e senza ingrandimento. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-sfondo img {
+    animation: none;
+    transform: none;
+  }
+  .hero-sfondo img:first-child {
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------
+   «Dona ora» in ogni pagina (22/08/2026)
+   ------------------------------------------------------------
+   ⚠️ È una voce di menu come le altre nel codice, ma non deve sembrarlo:
+   il fondo pieno la stacca dalle sette voci di navigazione, che sono
+   tutte «vai a vedere» mentre questa è «fai una cosa». Sta in fondo, non
+   in testa: chi arriva deve prima capire chi siamo — un sito che chiede
+   soldi nella prima voce del menu si legge come una questua.
+   ------------------------------------------------------------ */
+.navbar-menu .voce-dona a {
+  background: #ffffff;
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.4rem 1.05rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.navbar-menu .voce-dona a:hover,
+.navbar-menu .voce-dona a:focus-visible {
+  background: #fff3e8;
+  color: var(--primary-dark, var(--primary));
+}
+
+/* ⚠️ Nel menu a tendina del telefono le voci stanno su fondo chiaro, e un
+   pulsante bianco su bianco sparirebbe: lì si gira, fondo pieno d'accento
+   e scritta bianca. */
+@media (max-width: 768px) {
+  .navbar-menu .voce-dona a {
+    background: var(--primary);
+    color: #ffffff;
+    display: inline-block;
+    margin: 0.4rem 0;
+  }
+}

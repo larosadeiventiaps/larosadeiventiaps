@@ -15,9 +15,23 @@
   },
   {
     "nome": "Marco Pratesi",
-    "ruolo": "Consigliere",
+    "ruolo": "Tesoriere",
     "email": "marco.p@larosadeiventiaps.org",
     "cellulare": "320 468 8662",
+    "foto": ""
+  },
+  {
+    "nome": "Francesca Fantappiè",
+    "ruolo": "Segretaria",
+    "email": "francesca.f@larosadeiventiaps.org",
+    "cellulare": "393 947 4951",
+    "foto": ""
+  },
+  {
+    "nome": "Rossana De Leo",
+    "ruolo": "Social Media Manager",
+    "email": "rossana.d@larosadeiventiaps.org",
+    "cellulare": "333 363 6001",
     "foto": ""
   }
 ]

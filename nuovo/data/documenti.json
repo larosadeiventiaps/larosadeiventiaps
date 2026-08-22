@@ -1,27 +1,51 @@
 [
   {
-    "titolo": "Statuto dell'associazione",
-    "descrizione": "Il documento che definisce scopi, organi e regole di funzionamento dell'associazione.",
-    "anno": "",
+    "titolo": "Statuto",
+    "descrizione": "Scopi, organi e regole di funzionamento dell'associazione.",
+    "anno": "2020",
     "file": "documenti/statuto.pdf"
   },
   {
-    "titolo": "Atto costitutivo",
-    "descrizione": "L'atto con cui è stata fondata l'associazione.",
-    "anno": "",
+    "titolo": "Atto costitutivo e statuto registrati",
+    "descrizione": "L'atto con cui l'associazione è stata fondata, nella copia registrata.",
+    "anno": "2020",
     "file": "documenti/atto-costitutivo.pdf"
   },
   {
-    "titolo": "Bilancio",
-    "descrizione": "Il rendiconto economico e finanziario annuale dell'associazione.",
-    "anno": "",
-    "file": "documenti/bilancio.pdf"
+    "titolo": "Iscrizione al Registro Regionale APS",
+    "descrizione": "Atto Dirigenziale della Regione Toscana n. 3432 del 26/11/2021, sezione B, n. 1086.",
+    "anno": "2021",
+    "file": "documenti/iscrizione-registro-aps.pdf"
   },
   {
-    "titolo": "Rendiconto delle attività",
-    "descrizione": "Il resoconto delle attività svolte nel corso dell'anno.",
-    "anno": "",
-    "file": "documenti/rendiconto.pdf"
+    "titolo": "Rendiconto per cassa 2025",
+    "descrizione": "Il modello D depositato: entrate e uscite dell'anno, voce per voce.",
+    "anno": "2025",
+    "file": "documenti/rendiconto-per-cassa-2025.pdf"
+  },
+  {
+    "titolo": "Relazione al bilancio consuntivo 2025",
+    "descrizione": "Che cosa è stato fatto nell'anno e come sono stati impiegati i fondi.",
+    "anno": "2025",
+    "file": "documenti/relazione-consuntivo-2025.pdf"
+  },
+  {
+    "titolo": "Relazione al bilancio consuntivo 2024",
+    "descrizione": "Che cosa è stato fatto nell'anno e come sono stati impiegati i fondi.",
+    "anno": "2024",
+    "file": "documenti/relazione-consuntivo-2024.pdf"
+  },
+  {
+    "titolo": "Relazione al bilancio consuntivo 2023",
+    "descrizione": "Che cosa è stato fatto nell'anno e come sono stati impiegati i fondi.",
+    "anno": "2023",
+    "file": "documenti/relazione-consuntivo-2023.pdf"
+  },
+  {
+    "titolo": "Bilancio preventivo 2025",
+    "descrizione": "Le risorse previste per l'anno e come si pensava di impiegarle.",
+    "anno": "2025",
+    "file": "documenti/bilancio-preventivo-2025.pdf"
   },
   {
     "titolo": "Informativa privacy",
