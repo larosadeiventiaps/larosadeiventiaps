@@ -102,22 +102,25 @@ async function loadStats() {
     const totYears = years.size;
 
     const stats = [
-      { number: totProjects, label: 'Progetti realizzati' },
-      { number: totIncontri, label: 'Incontri organizzati' },
-      { number: Math.round(totOre), label: 'Ore di attività' },
-      { number: totPartecipanti, label: 'Partecipanti coinvolti' },
-      { number: totVolontari, label: 'Volontari impiegati' },
-      { number: totEducatori, label: 'Educatori coinvolti' },
-      { number: totYears, label: 'Anni di attività' },
-      { number: new Set(projects.flatMap(p => [p.collaboratori, p.sponsor].filter(Boolean))).size, label: 'Partner e collaboratori' }
+      { number: totProjects, label: 'Progetti realizzati', icona: '📋' },
+      { number: totIncontri, label: 'Incontri organizzati', icona: '🗓️' },
+      { number: Math.round(totOre), label: 'Ore di attività', icona: '⏱️' },
+      { number: totPartecipanti, label: 'Partecipanti coinvolti', icona: '🧑‍🤝‍🧑' },
+      { number: totVolontari, label: 'Volontari impiegati', icona: '🤝' },
+      { number: totEducatori, label: 'Educatori coinvolti', icona: '🎓' },
+      { number: totYears, label: 'Anni di attività', icona: '📅' },
+      { number: new Set(projects.flatMap(p => [p.collaboratori, p.sponsor].filter(Boolean))).size, label: 'Partner e collaboratori', icona: '🏛️' }
     ];
 
     grid.innerHTML = stats.map(s => `
       <div class="stat-card">
-        <span class="stat-number">${s.number}</span>
+        <span class="stat-icona" aria-hidden="true">${s.icona}</span>
+        <span class="stat-number" data-valore="${s.number}">0</span>
         <span class="stat-label">${escapeHTML(s.label)}</span>
       </div>
     `).join('');
+
+    animaNumeri(grid);
   } catch (e) {
     console.warn('Could not load stats:', e);
     const section = document.getElementById('stats-section');
@@ -651,4 +654,52 @@ async function loadDocumenti() {
     console.warn('Could not load documenti:', e);
     list.innerHTML = '<p style="color:#999;">Impossibile caricare l\'elenco dei documenti.</p>';
   }
+}
+
+/**
+ * Fa salire i numeri da zero al loro valore, la prima volta che entrano
+ * nello schermo.
+ *
+ * ⚠️ **Partono quando si vedono, non al caricamento della pagina.** I numeri
+ * stanno a metà pagina: farli correre subito significherebbe che chi scorre
+ * fin lì trova l'animazione già finita, cioè nessuna animazione — e in
+ * cambio si sarebbe pagato il lavoro del browser.
+ *
+ * ⚠️ **Si osserva una volta sola** (`unobserve` appena parte): un numero che
+ * riparte da zero ogni volta che si scorre su e giù diventa un tic nervoso,
+ * non un'animazione.
+ *
+ * ⛔ **Chi ha chiesto meno animazioni al proprio telefono vede subito il
+ * numero finito.** Non è un dettaglio di cortesia: per certe persone il
+ * movimento sullo schermo è un sintomo, non un effetto.
+ */
+function animaNumeri(contenitore) {
+  const numeri = contenitore.querySelectorAll('.stat-number[data-valore]');
+  const fermo = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (fermo || typeof IntersectionObserver === 'undefined') {
+    numeri.forEach(n => { n.textContent = Number(n.dataset.valore).toLocaleString('it-IT'); });
+    return;
+  }
+
+  const DURATA = 1400;
+  const osservatore = new IntersectionObserver((voci, oss) => {
+    voci.forEach(voce => {
+      if (!voce.isIntersecting) return;
+      oss.unobserve(voce.target);
+      const arrivo = Number(voce.target.dataset.valore) || 0;
+      const partenza = performance.now();
+      const passo = (ora) => {
+        const avanzamento = Math.min((ora - partenza) / DURATA, 1);
+        // Frenata dolce: veloce all'inizio, lenta alla fine. Un conteggio
+        // lineare sembra un contatore rotto.
+        const morbido = 1 - Math.pow(1 - avanzamento, 3);
+        voce.target.textContent = Math.round(arrivo * morbido).toLocaleString('it-IT');
+        if (avanzamento < 1) requestAnimationFrame(passo);
+      };
+      requestAnimationFrame(passo);
+    });
+  }, { threshold: 0.35 });
+
+  numeri.forEach(n => osservatore.observe(n));
 }

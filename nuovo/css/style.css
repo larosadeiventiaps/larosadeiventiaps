@@ -624,24 +624,68 @@ main {
   gap: 1.5rem;
 }
 
+/* ⚠️ I numeri salgono da zero quando entrano nello schermo (`animaNumeri`
+   in `js/main.js`): fermi sembravano una tabella, e una tabella non la
+   guarda nessuno. Il riquadro resta chiaro e il numero grande e' la cosa
+   che si vede per prima da lontano. */
 .stat-card {
-  background: var(--primary-light);
-  border-radius: var(--radius-card);
-  padding: 1.5rem;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #f0e2d5;
+  border-radius: 16px;
+  padding: 1.6rem 1.2rem 1.4rem;
   text-align: center;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(20, 10, 4, 0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: linear-gradient(90deg, #f6b26b 0%, var(--primary) 100%);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(20, 10, 4, 0.12);
+}
+
+.stat-card .stat-icona {
+  display: block;
+  font-size: 1.7rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
 }
 
 .stat-card .stat-number {
-  font-size: 2.5rem;
+  font-size: 2.7rem;
   font-weight: bold;
   color: var(--primary);
   display: block;
+  line-height: 1.05;
+  /* ⚠️ Cifre a larghezza fissa: mentre il numero sale, senza questo la
+     scritta si allarga e si stringe a ogni fotogramma e balla. */
+  font-variant-numeric: tabular-nums;
 }
 
+/* ⚠️ Era 0.9rem, cioe' 14 pixel: sotto la soglia di leggibilita' che vale
+   per tutto questo sito. */
 .stat-card .stat-label {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 0.25rem;
+  font-size: 1rem;
+  color: #5b4f46;
+  margin-top: 0.35rem;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .stat-card:hover {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -1212,58 +1256,136 @@ main {
 
 /* ------------------------------------------------------------
    Le due azioni sotto la hero (22/08/2026)
+   ------------------------------------------------------------
+   ⛔ **Il verde è quello vero di WhatsApp, #25D366**, e non un verde
+   scelto a occhio: su un riquadro che porta a WhatsApp il colore fa metà
+   del riconoscimento, e uno diverso costringe a leggere per capire dove
+   si va. Il primo tentativo usava #128C7E — il verde scuro della vecchia
+   identità: giusto come famiglia, sbagliato come tinta.
+
+   ⚠️ **Su quel verde il testo è SCURO, non bianco.** Bianco su #25D366 fa
+   1,8 di contrasto: si legge finché lo schermo è al massimo e sei
+   all'ombra, cioè quasi mai su un telefono al sole. Il quasi-nero fa 9,3
+   ed è anche il modo in cui WhatsApp stessa scrive dentro i fumetti
+   verdi.
    ------------------------------------------------------------ */
 .fascia-azioni {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
+  gap: 1.1rem;
   max-width: 1100px;
-  margin: 2rem auto 0;
+  margin: 2.2rem auto 0;
   padding: 0 1rem;
 }
 
 .azione {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'simbolo testo'
+    'vai vai';
   align-items: center;
-  gap: 1rem;
-  padding: 1.15rem 1.3rem;
-  border-radius: var(--radius-card);
+  gap: 0.35rem 1.1rem;
+  padding: 1.35rem 1.4rem 1.15rem;
+  border-radius: 18px;
   text-decoration: none;
-  color: #ffffff;
-  transition: transform 0.2s;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(20, 10, 4, 0.13);
+  transition: transform 0.22s, box-shadow 0.22s;
 }
 
 .azione:hover,
 .azione:focus-visible {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(20, 10, 4, 0.2);
 }
 
-/* ⚠️ Il verde e' quello di WhatsApp, non un verde a caso: su un pulsante
-   che porta a WhatsApp il colore fa meta' del riconoscimento, e uno
-   diverso costringerebbe a leggere per capire dove si va. */
+/* La sfumatura tiene il riquadro dall'essere una campitura piatta; la
+   luce in alto a destra è la stessa in tutti e due, così sembrano una
+   coppia e non due pulsanti presi da due posti diversi. */
+.azione::before {
+  content: '';
+  position: absolute;
+  top: -45%;
+  right: -18%;
+  width: 65%;
+  height: 180%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
 .azione-whatsapp {
-  background: #128c7e;
+  background: linear-gradient(135deg, #25d366 0%, #1ebe5a 100%);
+  color: #0b2016;
 }
 
 .azione-dona {
-  background: var(--primary);
+  background: linear-gradient(135deg, #e8722a 0%, var(--primary) 100%);
+  color: #ffffff;
 }
 
-.azione-icona {
-  font-size: 2rem;
-  line-height: 1;
+.azione-simbolo {
+  grid-area: simbolo;
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
 }
 
-.azione strong {
+.azione-whatsapp .azione-simbolo {
+  color: #128c7e;
+}
+
+.azione-dona .azione-simbolo {
+  color: var(--primary);
+}
+
+.azione-testo {
+  grid-area: testo;
+}
+
+.azione-testo strong {
   display: block;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
 
-.azione small {
+.azione-testo small {
   display: block;
   font-size: 1rem;
-  opacity: 0.92;
-  margin-top: 0.15rem;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+  opacity: 0.88;
+}
+
+.azione-vai {
+  grid-area: vai;
+  justify-self: end;
+  margin-top: 0.6rem;
+  padding: 0.42rem 1.05rem;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.azione-whatsapp .azione-vai {
+  color: #0b2016;
+}
+
+.azione-dona .azione-vai {
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .azione,
+  .azione:hover {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -1355,4 +1477,22 @@ main {
     transition: none;
     transform: none;
   }
+}
+
+/* Le schede dei valori (mission): stessa forma di quelle della home, ma
+   sono affermazioni e non collegamenti — niente sollevamento al passaggio
+   del dito, niente ingrandimento della fotografia. Guardarle non promette
+   che portino da qualche parte. */
+.schede-valori .scheda-grande {
+  cursor: default;
+  margin: 0;
+}
+
+.schede-valori .scheda-grande:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.schede-valori .scheda-grande:hover img {
+  transform: none;
 }
