@@ -43,47 +43,163 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-function setupCardLightbox(items) {
+/**
+ * Rende una miniatura (scheda progetto/evento o foto della gallery) apribile
+ * anche da tastiera — Invio/Spazio fanno la stessa cosa del clic — e le dà
+ * un posto vero dove il fuoco può tornare quando l'ingranditore si chiude:
+ * un <div> senza tabindex non può riprendere il fuoco, quindi senza questo
+ * chi naviga da tastiera lo perderebbe e si ritroverebbe in cima alla
+ * pagina invece che dov'era rimasto.
+ */
+function makeLightboxTrigger(el, label, onActivate) {
+  el.setAttribute('tabindex', '0');
+  el.setAttribute('role', 'button');
+  el.setAttribute('aria-label', label);
+  el.addEventListener('click', onActivate);
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onActivate();
+    }
+  });
+}
+
+/**
+ * Ingranditore (lightbox) condiviso da progetti, eventi e gallery (22/08/2026).
+ *
+ * ⛔ Uno solo per tutto il sito: prima la gallery aveva la sua copia interna
+ * di questa stessa logica, duplicata rispetto a quella usata da progetti ed
+ * eventi. Tenerne due voleva dire due comportamenti leggermente diversi per
+ * lo stesso gesto — qui si è tenuta una sola implementazione e la gallery è
+ * stata riportata a usarla.
+ *
+ * ⚠️ Si chiama UNA volta sola per pagina (è idempotente: le chiamate
+ * successive restituiscono la stessa istanza via `lightbox._lightboxApi`).
+ * Chi la usa aggiorna l'elenco corrente con `setItems()` a ogni filtro,
+ * invece di richiamare questa funzione a ogni digitazione — altrimenti ogni
+ * ricerca impilerebbe un nuovo ascoltatore sugli stessi tre pulsanti
+ * (chiudi/prev/next) senza mai togliere quelli vecchi, e con più filtri di
+ * fila un solo clic su "next" avrebbe fatto scorrere l'indice più volte.
+ *
+ * Ogni voce di `items` è: { image, alt, title, meta, description }.
+ * `meta` e `description` sono opzionali (niente riga se mancano).
+ */
+function setupCardLightbox() {
   const lightbox = document.getElementById('lightbox');
-  if (!lightbox || items.length === 0) return;
+  if (!lightbox) return null;
+  if (lightbox._lightboxApi) return lightbox._lightboxApi;
 
   const lbImg = document.getElementById('lightbox-img');
   const lbCaption = document.getElementById('lightbox-caption');
-  let currentIndex = 0;
+  const btnClose = document.getElementById('lightbox-close');
+  const btnPrev = document.getElementById('lightbox-prev');
+  const btnNext = document.getElementById('lightbox-next');
+  const focusOrder = [btnClose, btnPrev, btnNext];
 
-  function open(index) {
-    currentIndex = index;
-    update();
-    lightbox.classList.add('active');
-  }
+  let items = [];
+  let currentIndex = 0;
+  let triggerEl = null;
 
   function update() {
+    if (!items.length) return;
     const item = items[currentIndex];
     lbImg.src = item.image;
-    lbImg.alt = item.title;
-    lbCaption.innerHTML = '<h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.description || '') + '</p>';
+    lbImg.alt = item.alt || item.title || '';
+    const metaHtml = item.meta ? '<p class="lightbox-meta">' + escapeHTML(item.meta) + '</p>' : '';
+    const descHtml = item.description ? '<p>' + escapeHTML(item.description) + '</p>' : '';
+    lbCaption.innerHTML = '<h3>' + escapeHTML(item.title || '') + '</h3>' + metaHtml + descHtml;
+    const showArrows = items.length > 1;
+    btnPrev.style.display = showArrows ? '' : 'none';
+    btnNext.style.display = showArrows ? '' : 'none';
   }
 
-  function close() { lightbox.classList.remove('active'); }
+  // Il fuoco non deve restare intrappolato in mezzo alla pagina: mentre
+  // l'ingranditore è aperto il resto (nav, contenuto, footer) esce dalla
+  // lettura per chi usa uno screen reader, non solo dal giro del Tab.
+  function setBackgroundHidden(hidden) {
+    Array.from(document.body.children).forEach((el) => {
+      if (el === lightbox || el.tagName === 'SCRIPT') return;
+      if (hidden) el.setAttribute('aria-hidden', 'true');
+      else el.removeAttribute('aria-hidden');
+    });
+  }
 
-  document.getElementById('lightbox-close').addEventListener('click', close);
-  document.getElementById('lightbox-prev').addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
+  function open(index, fromEl) {
+    if (!items.length) return;
+    currentIndex = ((index % items.length) + items.length) % items.length;
+    triggerEl = fromEl || document.activeElement;
     update();
-  });
-  document.getElementById('lightbox-next').addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % items.length;
-    update();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + items.length) % items.length; update(); }
-    if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % items.length; update(); }
-  });
+    lightbox.classList.add('active');
+    setBackgroundHidden(true);
+    btnClose.focus();
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function close() {
+    lightbox.classList.remove('active');
+    setBackgroundHidden(false);
+    document.removeEventListener('keydown', onKeydown);
+    // Il fuoco torna a chi ha aperto l'ingranditore, non si perde in cima
+    // alla pagina.
+    if (triggerEl && typeof triggerEl.focus === 'function') triggerEl.focus();
+    triggerEl = null;
+  }
+
+  function goPrev() { currentIndex = (currentIndex - 1 + items.length) % items.length; update(); }
+  function goNext() { currentIndex = (currentIndex + 1) % items.length; update(); }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key === 'ArrowLeft') { goPrev(); return; }
+    if (e.key === 'ArrowRight') { goNext(); return; }
+    if (e.key === 'Tab') {
+      // Trappola del fuoco fra i tre pulsanti: non c'è altro da
+      // raggiungere dentro l'ingranditore.
+      const pos = focusOrder.indexOf(document.activeElement);
+      if (e.shiftKey) {
+        if (pos <= 0) { e.preventDefault(); focusOrder[focusOrder.length - 1].focus(); }
+      } else if (pos === -1 || pos === focusOrder.length - 1) {
+        e.preventDefault();
+        focusOrder[0].focus();
+      }
+    }
+  }
+
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', goPrev);
+  btnNext.addEventListener('click', goNext);
+  // Si chiude anche cliccando fuori dall'immagine (sullo sfondo scuro).
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
 
-  return open;
+  // Trascinamento laterale sul telefono: solo se il gesto è più
+  // orizzontale che verticale, per non litigare con uno scorrimento
+  // verticale involontario.
+  let touchStartX = null;
+  let touchStartY = null;
+  const SOGLIA_TRASCINAMENTO = 40;
+  lightbox.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    touchStartX = null;
+    touchStartY = null;
+    if (Math.abs(dx) > SOGLIA_TRASCINAMENTO && Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 0) goPrev(); else goNext();
+    }
+  }, { passive: true });
+
+  const api = {
+    setItems(newItems) { items = newItems || []; },
+    open
+  };
+  lightbox._lightboxApi = api;
+  return api;
 }
 
 async function loadStats() {
@@ -166,6 +282,7 @@ async function loadProjects() {
     const searchInput = document.getElementById('search-input');
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
+    const lightbox = setupCardLightbox();
 
     function renderProjects() {
       const query = searchInput.value.toLowerCase();
@@ -193,13 +310,18 @@ async function loadProjects() {
 
         if (items.length === 0) {
           section.style.display = 'none';
+          // Niente scheda resta cliccabile qui, ma senza svuotarla restano
+          // schede vecchie con un data-lb-index ormai sbagliato: al filtro
+          // successivo si sarebbero riattaccati ascoltatori di clic su
+          // elementi nascosti, uno in più a ogni ricerca.
+          grid.innerHTML = '';
         } else {
           section.style.display = 'block';
           const startIdx = allVisible.length;
           items.forEach(p => allVisible.push(p));
           grid.innerHTML = items.map((p, i) => `
             <article class="card" data-lb-index="${startIdx + i}">
-              <div class="card-image" style="cursor:pointer"><img src="${p.image}" alt="${escapeHTML(p.title)}"></div>
+              <div class="card-image" style="cursor:pointer"><img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy"></div>
               <div class="card-body">
                 <h3>${escapeHTML(p.title)}</h3>
                 <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
@@ -210,10 +332,20 @@ async function loadProjects() {
         }
       });
 
-      const openLb = setupCardLightbox(allVisible);
-      if (openLb) {
+      // Lo scorrimento nell'ingranditore resta dentro le sole schede
+      // mostrate qui — cioè quelle già passate dal filtro sopra.
+      if (lightbox) {
+        lightbox.setItems(allVisible.map(p => ({
+          image: p.image,
+          alt: p.title,
+          title: p.title,
+          meta: `${formatDate(p.startDate)} — ${formatDate(p.endDate)}`,
+          description: p.description
+        })));
         document.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
-          el.addEventListener('click', () => openLb(parseInt(el.closest('[data-lb-index]').dataset.lbIndex)));
+          const idx = parseInt(el.closest('[data-lb-index]').dataset.lbIndex, 10);
+          const img = el.querySelector('img');
+          makeLightboxTrigger(el, 'Ingrandisci: ' + (img ? img.alt : ''), () => lightbox.open(idx, el));
         });
       }
     }
@@ -227,6 +359,30 @@ async function loadProjects() {
   }
 }
 
+/**
+ * Riga di data/luogo(/orario) sotto una foto della gallery — usata sia
+ * nella griglia sia nell'ingranditore, così le due non possono disallinearsi.
+ *
+ * ⚠️ Alcune foto non hanno più `date` o `location`: chi cura l'elenco ha
+ * deciso che un'informazione che non si conosce non si scrive (niente
+ * segnaposto, niente «Invalid Date»). Qui si compone SOLO con i pezzi che
+ * ci sono davvero — se non ce n'è nessuno la riga sparisce del tutto,
+ * invece di lasciare uno spazio vuoto o un trattino solitario.
+ */
+function formatGalleryMeta(photo) {
+  const pieces = [];
+  if (photo.date) {
+    let dt = formatDate(photo.date);
+    if (photo.ora) dt += ' · ' + photo.ora;
+    pieces.push(dt);
+  } else if (photo.ora) {
+    // Orario senza una data: raro, ma se c'è si mostra comunque.
+    pieces.push(photo.ora);
+  }
+  if (photo.location) pieces.push('📍 ' + photo.location);
+  return pieces.join(' — ');
+}
+
 async function loadGallery() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
@@ -234,21 +390,25 @@ async function loadGallery() {
   try {
     const res = await fetch('data/gallery.json');
     const allPhotos = await res.json();
-    let currentIndex = 0;
-    let visiblePhotos = [];
 
     const searchInput = document.getElementById('search-input');
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
+    const lightbox = setupCardLightbox();
 
     function renderGallery() {
       const query = searchInput.value.toLowerCase();
       const from = dateFrom.value ? new Date(dateFrom.value) : null;
       const to = dateTo.value ? new Date(dateTo.value) : null;
 
-      visiblePhotos = allPhotos.filter(p => {
-        if (query && !p.title.toLowerCase().includes(query) && !p.description.toLowerCase().includes(query)) return false;
-        if (from || to) {
+      const visiblePhotos = allPhotos.filter(p => {
+        if (query && !p.title.toLowerCase().includes(query) && !(p.description || '').toLowerCase().includes(query)) return false;
+        // Il filtro per data si applica SOLO alle foto che una data ce
+        // l'hanno. Scelta esplicita (non un effetto collaterale): una foto
+        // senza data resta SEMPRE visibile — non sappiamo se cade
+        // nell'intervallo scelto, e farla sparire in silenzio sarebbe
+        // l'errore peggiore, perché nessuno se ne accorgerebbe.
+        if ((from || to) && p.date) {
           const pDate = new Date(p.date);
           if (from && pDate < from) return false;
           if (to && pDate > to) return false;
@@ -256,64 +416,39 @@ async function loadGallery() {
         return true;
       });
 
-      grid.innerHTML = visiblePhotos.map((p, i) => `
+      // L'ordine è quello di data/gallery.json, invariato: non c'è nessun
+      // ordinamento per data qui, quindi una foto senza data non "salta"
+      // da nessuna parte — resta dov'è stata messa da chi cura l'elenco.
+      grid.innerHTML = visiblePhotos.map((p, i) => {
+        const meta = formatGalleryMeta(p);
+        return `
         <div class="gallery-item" data-index="${i}">
-          <img src="${p.image}" alt="${escapeHTML(p.title)}">
+          <img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy">
           <div class="gallery-item-info">
             <h3>${escapeHTML(p.title)}</h3>
-            <p class="date">${formatDate(p.date)}${p.location ? ' — ' + escapeHTML(p.location) : ''}</p>
+            ${meta ? `<p class="date">${escapeHTML(meta)}</p>` : ''}
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
 
-      grid.querySelectorAll('.gallery-item').forEach(item => {
-        item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
-      });
+      // Lo scorrimento nell'ingranditore resta dentro le sole foto mostrate
+      // qui — cioè quelle già passate dal filtro sopra.
+      if (lightbox) {
+        lightbox.setItems(visiblePhotos.map(p => ({
+          image: p.image,
+          alt: p.title,
+          title: p.title,
+          meta: formatGalleryMeta(p),
+          description: p.description
+        })));
+        grid.querySelectorAll('.gallery-item').forEach(item => {
+          const idx = parseInt(item.dataset.index, 10);
+          const img = item.querySelector('img');
+          makeLightboxTrigger(item, 'Ingrandisci: ' + (img ? img.alt : ''), () => lightbox.open(idx, item));
+        });
+      }
     }
-
-    const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lightbox-img');
-    const lbCaption = document.getElementById('lightbox-caption');
-
-    function openLightbox(index) {
-      currentIndex = index;
-      updateLightbox();
-      lightbox.classList.add('active');
-    }
-
-    function updateLightbox() {
-      if (visiblePhotos.length === 0) return;
-      const photo = visiblePhotos[currentIndex];
-      lbImg.src = photo.image;
-      lbImg.alt = photo.title;
-      const locHtml = photo.location ? '<p style="color:#ccc;font-size:0.9rem;">📍 ' + escapeHTML(photo.location) + '</p>' : '';
-      lbCaption.innerHTML = '<h3>' + escapeHTML(photo.title) + '</h3>' + locHtml + '<p>' + escapeHTML(photo.description) + '</p>';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-    }
-
-    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-    document.getElementById('lightbox-prev').addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + visiblePhotos.length) % visiblePhotos.length;
-      updateLightbox();
-    });
-    document.getElementById('lightbox-next').addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % visiblePhotos.length;
-      updateLightbox();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + visiblePhotos.length) % visiblePhotos.length; updateLightbox(); }
-      if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % visiblePhotos.length; updateLightbox(); }
-    });
-
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
 
     searchInput.addEventListener('input', renderGallery);
     dateFrom.addEventListener('change', renderGallery);
@@ -389,10 +524,14 @@ async function loadPartners() {
   }
 }
 
-function renderEventCard(e) {
+function eventDateDisplay(e) {
   const startStr = formatDate(e.startDate);
   const endStr = formatDate(e.endDate);
-  const dateDisplay = (e.startDate === e.endDate || !e.endDate) ? startStr : `${startStr} — ${endStr}`;
+  return (e.startDate === e.endDate || !e.endDate) ? startStr : `${startStr} — ${endStr}`;
+}
+
+function renderEventCard(e) {
+  const dateDisplay = eventDateDisplay(e);
   const locationStr = e.location ? `<span>📍 ${escapeHTML(e.location)}</span>` : '';
   const linkHtml = e.link
     ? `<a href="${e.link}" class="partner-link" target="_blank" rel="noopener noreferrer">Maggiori info ↗</a>`
@@ -400,7 +539,7 @@ function renderEventCard(e) {
 
   return `
     <article class="card">
-      <div class="card-image" style="cursor:pointer"><img src="${e.image}" alt="${escapeHTML(e.title)}"></div>
+      <div class="card-image" style="cursor:pointer"><img src="${e.image}" alt="${escapeHTML(e.title)}" loading="lazy"></div>
       <div class="card-body">
         <h3>${escapeHTML(e.title)}</h3>
         <div class="event-meta">
@@ -414,8 +553,22 @@ function renderEventCard(e) {
   `;
 }
 
+/**
+ * ⚠️ 22/08/2026 — bug preesistente scoperto lavorando su questa pagina, non
+ * introdotto qui: progetti.html ed eventi.html usavano GLI STESSI id
+ * (`grid-futuro`, `grid-passato`, `section-futuro`, `section-passato`).
+ * Siccome `loadProjects()` e `loadEvents()` girano entrambe su ogni
+ * pagina (si fermano solo se non trovano il loro elemento "ancora"), su
+ * progetti.html anche `loadEvents()` trovava questi id e in certi ordini
+ * di caricamento sovrascriveva "Progetti Futuri/Passati" con le schede
+ * degli eventi — una corsa fra due `fetch`, silenziosa, mai segnalata da
+ * un errore. Qui gli id degli eventi sono stati resi unici
+ * (`grid-eventi-…`, `section-eventi-…`) per togliere la collisione alla
+ * radice: senza, non potevo garantire che lo scorrimento nell'ingranditore
+ * restasse dentro le schede giuste.
+ */
 async function loadEvents() {
-  const gridFuturo = document.getElementById('grid-futuro');
+  const gridFuturo = document.getElementById('grid-eventi-futuro');
   if (!gridFuturo) return;
 
   try {
@@ -423,9 +576,9 @@ async function loadEvents() {
     const allEvents = await res.json();
 
     if (allEvents.length === 0) {
-      document.querySelector('.project-section#section-futuro').innerHTML =
+      document.querySelector('.project-section#section-eventi-futuro').innerHTML =
         '<div class="section"><p style="color:#999;text-align:center;">Nessun evento in programma. Torna a trovarci!</p></div>';
-      const passatoSection = document.getElementById('section-passato');
+      const passatoSection = document.getElementById('section-eventi-passato');
       if (passatoSection) passatoSection.style.display = 'none';
       return;
     }
@@ -433,6 +586,7 @@ async function loadEvents() {
     const searchInput = document.getElementById('search-input');
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
+    const lightbox = setupCardLightbox();
 
     function renderEvents() {
       const query = searchInput.value.toLowerCase();
@@ -453,11 +607,12 @@ async function loadEvents() {
       const allVisible = [];
       ['futuro', 'passato'].forEach(status => {
         const items = filtered.filter(e => e.status === status);
-        const grid = document.getElementById('grid-' + status);
-        const section = document.getElementById('section-' + status);
+        const grid = document.getElementById('grid-eventi-' + status);
+        const section = document.getElementById('section-eventi-' + status);
 
         if (items.length === 0) {
           section.style.display = 'none';
+          grid.innerHTML = '';
         } else {
           section.style.display = 'block';
           const startIdx = allVisible.length;
@@ -469,10 +624,20 @@ async function loadEvents() {
         }
       });
 
-      const openLb = setupCardLightbox(allVisible);
-      if (openLb) {
+      // Lo scorrimento nell'ingranditore resta dentro le sole schede
+      // mostrate qui — cioè quelle già passate dal filtro sopra.
+      if (lightbox) {
+        lightbox.setItems(allVisible.map(e => ({
+          image: e.image,
+          alt: e.title,
+          title: e.title,
+          meta: [eventDateDisplay(e), e.location ? '📍 ' + e.location : ''].filter(Boolean).join(' — '),
+          description: e.description
+        })));
         document.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
-          el.addEventListener('click', () => openLb(parseInt(el.closest('[data-lb-index]').dataset.lbIndex)));
+          const idx = parseInt(el.closest('[data-lb-index]').dataset.lbIndex, 10);
+          const img = el.querySelector('img');
+          makeLightboxTrigger(el, 'Ingrandisci: ' + (img ? img.alt : ''), () => lightbox.open(idx, el));
         });
       }
     }
