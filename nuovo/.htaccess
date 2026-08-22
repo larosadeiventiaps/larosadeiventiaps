@@ -1,0 +1,50 @@
+# Error pages
+ErrorDocument 404 /404.html
+
+# Disable directory listing
+Options -Indexes
+
+# Enable gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 year"
+</IfModule>
+
+# ------------------------------------------------------------------
+# Indirizzo provvisorio — 22/08/2026
+# ------------------------------------------------------------------
+# Il sito nuovo vive in questa sottocartella SENZA sostituire quello
+# principale: chi non conosce l'indirizzo non ci arriva, perche' nessuna
+# pagina del sito vecchio lo nomina. Ma «non collegato» non vuol dire «non
+# trovabile»: senza la direttiva qui sotto un motore di ricerca che
+# incontrasse l'indirizzo una volta sola indicizzerebbe tutto, foto
+# comprese, e toglierlo dai risultati non sarebbe piu' una cosa che si
+# decide da qui.
+<IfModule mod_headers.c>
+	Header set X-Robots-Tag "noindex, nofollow, noarchive, noimageindex"
+</IfModule>
+
+# ⚠️ La pagina 404 sopra punta alla radice del dominio, dove c'e' ancora
+# WordPress: finche' il sito sta in sottocartella deve puntare qui dentro.
+# Quando prendera' il posto del sito principale, va rimessa a /404.html.
+ErrorDocument 404 /nuovo/404.html
+
+# ⚠️ Le pagine e i dati NON si tengono in cache. Questa e' una versione che
+# si guarda per correggerla: con la cache si rivedrebbe sempre la stessa
+# pagina vecchia senza capire perche'. Le immagini invece restano tenute,
+# come sopra: sono le stesse e pesano.
+<IfModule mod_headers.c>
+	<FilesMatch "\.(html|json)$">
+		Header set Cache-Control "no-store, must-revalidate"
+	</FilesMatch>
+</IfModule>
