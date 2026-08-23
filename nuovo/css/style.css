@@ -2206,3 +2206,33 @@ main {
     transform: none;
   }
 }
+
+/* Il 5x1000: il codice fiscale a sinistra, la grafica dell'associazione a
+   destra. ⚠️ L'immagine non porta informazioni che non ci siano gia' nel
+   testo — il codice fiscale si legge e si copia dal riquadro accanto: chi
+   non vede l'immagine non perde niente. */
+.cinque-riquadro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 1rem 0 1.5rem;
+}
+
+.cinque-immagine {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(20, 10, 4, 0.12);
+}
+
+.social-riga {
+  font-size: 1.05rem;
+  margin: 0.45rem 0;
+}
+
+@media (max-width: 760px) {
+  .cinque-riquadro {
+    grid-template-columns: 1fr;
+  }
+}
