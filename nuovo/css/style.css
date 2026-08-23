@@ -198,16 +198,35 @@ main {
 /* ------------------------------------------------------------
    Cards Grid
    ------------------------------------------------------------ */
+/* ⚠️ Quattro per riga, chiesto dal committente (23/08/2026).
+   Prima era un impaginato a tre COLONNE (`columns: 3`), che è una cosa
+   diversa da una griglia: le schede scorrevano per colonna, quindi la
+   seconda scheda in ordine di data finiva a metà pagina invece che
+   accanto alla prima. Con la griglia l'ordine si legge da sinistra a
+   destra, come chiunque si aspetta. */
 .cards-grid {
-  columns: 3;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  align-items: start;
 }
 
-.cards-grid .card {
-  break-inside: avoid;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-  width: 100%;
+@media (max-width: 1100px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -222,16 +241,65 @@ main {
   transform: translateY(-4px);
 }
 
+/* ⚠️ Riquadro d'immagine con proporzione FISSA (3:4, verticale come una
+   locandina): senza, ogni scheda era alta quanto la sua immagine e la
+   riga veniva a scalini. Adesso le quattro schede di una riga cominciano
+   e finiscono insieme. */
 .card-image {
   width: 100%;
-  height: auto;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
+  background: #f6efe7;
+  position: relative;
 }
 
 .card-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.card:hover .card-image img {
+  transform: scale(1.04);
+}
+
+/* ⛔ Una LOCANDINA non si taglia: è fatta di scritte, e ritagliarla per
+   riempire il riquadro le porta via il titolo o le date — cioè proprio
+   quello per cui esiste. Si mostra intera, sul fondo chiaro. Le
+   fotografie invece riempiono, che è come si guardano.
+   Il riconoscimento è il prefisso `loc-` nel nome del file: è la stessa
+   convenzione con cui le locandine sono state separate dalle fotografie
+   in archivio. */
+.card-image img.locandina {
+  object-fit: contain;
+  padding: 0.4rem;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 14px rgba(20, 10, 4, 0.09);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(20, 10, 4, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card:hover,
+  .card-image img,
+  .card:hover .card-image img {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* Miniature che aprono l'ingranditore (progetti, eventi, gallery): sono
@@ -726,10 +794,29 @@ main {
 /* ------------------------------------------------------------
    Partners Page
    ------------------------------------------------------------ */
+/* ⚠️ Quattro per riga, chiesto dal committente (23/08/2026). Erano tante
+   quante ne entravano da 280px in su: su uno schermo largo diventavano
+   cinque o sei strette, su uno medio tre — cioè un numero diverso a ogni
+   finestra, e trentadue schede sparse senza un ritmo.
+   ⚠️ Il numero fisso vale finché c'è spazio: sotto le due soglie qui in
+   fondo si scende a due e poi a una. Quattro schede da 90 pixel su un
+   telefono sarebbero quattro francobolli. */
 .partners-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .partners-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .partner-card {

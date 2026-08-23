@@ -257,7 +257,7 @@ async function loadLatestProjects() {
     }
     grid.innerHTML = inCorso.map(p => `
       <article class="card">
-        <div class="card-image"><img src="${p.image}" alt="${escapeHTML(p.title)}"></div>
+        <div class="card-image"><img src="${p.image}" alt="${escapeHTML(p.title)}" class="${classeImmagine(p.image)}"></div>
         <div class="card-body">
           <h3>${escapeHTML(p.title)}</h3>
           <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
@@ -321,7 +321,7 @@ async function loadProjects() {
           items.forEach(p => allVisible.push(p));
           grid.innerHTML = items.map((p, i) => `
             <article class="card" data-lb-index="${startIdx + i}">
-              <div class="card-image" style="cursor:pointer"><img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy"></div>
+              <div class="card-image" style="cursor:pointer"><img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}"></div>
               <div class="card-body">
                 <h3>${escapeHTML(p.title)}</h3>
                 <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
@@ -423,7 +423,7 @@ async function loadGallery() {
         const meta = formatGalleryMeta(p);
         return `
         <div class="gallery-item" data-index="${i}">
-          <img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy">
+          <img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}">
           <div class="gallery-item-info">
             <h3>${escapeHTML(p.title)}</h3>
             ${meta ? `<p class="date">${escapeHTML(meta)}</p>` : ''}
@@ -867,4 +867,17 @@ function animaNumeri(contenitore) {
   }, { threshold: 0.35 });
 
   numeri.forEach(n => osservatore.observe(n));
+}
+
+/**
+ * «locandina» quando l'immagine è un manifesto, stringa vuota quando è una
+ * fotografia.
+ *
+ * ⚠️ Il riconoscimento è il prefisso `loc-` nel nome del file, la stessa
+ * convenzione con cui locandine e fotografie sono state separate quando
+ * sono state archiviate. ⛔ Non è una supposizione sul contenuto: è un
+ * nome che diamo noi, e quindi si può fare affidamento.
+ */
+function classeImmagine(percorso) {
+  return typeof percorso === 'string' && percorso.includes('/loc-') ? 'locandina' : ''
 }
