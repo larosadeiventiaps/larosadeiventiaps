@@ -410,16 +410,35 @@ main {
   color: var(--accent-blue);
 }
 
+/* ⚠️ Quattro per riga (23/08/2026). Era un impaginato a COLONNE, come lo
+   erano i progetti: le schede scorrevano per colonna, quindi il secondo
+   evento in ordine di data finiva a meta' pagina invece che accanto al
+   primo. Stessa griglia e stesse soglie di `.cards-grid`, cosi' le due
+   pagine si comportano allo stesso modo — erano due regole diverse per
+   la stessa cosa, ed e' cosi' che una delle due resta indietro. */
 .events-grid {
-  columns: 3;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  align-items: start;
 }
 
-.events-grid .card {
-  break-inside: avoid;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-  width: 100%;
+@media (max-width: 1100px) {
+  .events-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .event-meta {
@@ -1312,10 +1331,6 @@ main {
    ------------------------------------------------------------ */
 @media (max-width: 768px) {
   .cards-grid {
-    columns: 2;
-  }
-
-  .events-grid {
     columns: 2;
   }
 
