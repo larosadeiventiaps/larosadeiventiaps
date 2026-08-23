@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load stats on home page
   loadStats();
+  // Fasce di numeri in cima a progetti/eventi/partner (ognuna esce subito
+  // se il suo contenitore non è in pagina, come loadStats fa già sopra)
+  loadProjectStats();
+  loadEventStats();
+  loadPartnerStats();
   // Load latest projects on home page
   loadLatestProjects();
   // Load projects on projects page
@@ -35,6 +40,27 @@ function escapeHTML(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+/**
+ * Mescola una COPIA dell'array con Fisher-Yates, usando `Math.random()`
+ * vero, non seminato.
+ *
+ * ⚠️ È l'opposto apposta di `mescola()` in `hero.js`: lì il seme è il
+ * giorno, perché due persone che si scambiano il link nella stessa
+ * giornata devono vedere le stesse fotografie. Qui invece (elenco
+ * partner) il committente vuole che l'ordine cambi a OGNI apertura della
+ * pagina, per dare l'impressione di partner sempre nuovi — quindi niente
+ * seme. Se un giorno qualcuno pensa che le due funzioni siano in
+ * contraddizione e "corregge" quella sbagliata, il motivo è scritto qui.
+ */
+function mescolaCasuale(elenco) {
+  const copia = elenco.slice();
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
 }
 
 function formatDate(dateStr) {
@@ -202,6 +228,24 @@ function setupCardLightbox() {
   return api;
 }
 
+/**
+ * Disegna le schede `.stat-card` dentro `contenitore` e avvia il conteggio
+ * animato (`animaNumeri`). Condiviso da `loadStats` (home) e dalle fasce
+ * gemelle di progetti/eventi/partner, così il markup delle schede resta
+ * uno solo invece di essere copiato quattro volte.
+ */
+function renderStatCards(grid, stats) {
+  grid.innerHTML = stats.map(s => `
+    <div class="stat-card">
+      <span class="stat-icona" aria-hidden="true">${s.icona}</span>
+      <span class="stat-number" data-valore="${s.number}">0</span>
+      <span class="stat-label">${escapeHTML(s.label)}</span>
+    </div>
+  `).join('');
+
+  animaNumeri(grid);
+}
+
 async function loadStats() {
   const grid = document.getElementById('stats-grid');
   if (!grid) return;
@@ -228,19 +272,104 @@ async function loadStats() {
       { number: new Set(projects.flatMap(p => [p.collaboratori, p.sponsor].filter(Boolean))).size, label: 'Partner e collaboratori', icona: '🏛️' }
     ];
 
-    grid.innerHTML = stats.map(s => `
-      <div class="stat-card">
-        <span class="stat-icona" aria-hidden="true">${s.icona}</span>
-        <span class="stat-number" data-valore="${s.number}">0</span>
-        <span class="stat-label">${escapeHTML(s.label)}</span>
-      </div>
-    `).join('');
-
-    animaNumeri(grid);
+    renderStatCards(grid, stats);
   } catch (e) {
     console.warn('Could not load stats:', e);
     const section = document.getElementById('stats-section');
     if (section) section.style.display = 'none';
+  }
+}
+
+/**
+ * Fascia numeri in cima a progetti.html. Stessi campi che il committente
+ * ha indicato esserci nei dati (incontri, ore, partecipanti, educatori,
+ * volontari) più il totale progetti: sei numeri, tutti calcolati da
+ * `data/projects.json`, mai scritti a mano.
+ */
+async function loadProjectStats() {
+  const grid = document.getElementById('progetti-stats-grid');
+  if (!grid) return;
+  try {
+    const res = await fetch('data/projects.json');
+    const projects = await res.json();
+    const totProjects = projects.length;
+    const totIncontri = projects.reduce((s, p) => s + (p.incontri || 0), 0);
+    const totOre = projects.reduce((s, p) => s + (p.ore || 0), 0);
+    const totPartecipanti = projects.reduce((s, p) => s + (p.partecipanti || 0), 0);
+    const totEducatori = projects.reduce((s, p) => s + (p.educatori || 0), 0);
+    const totVolontari = projects.reduce((s, p) => s + (p.volontari || 0), 0);
+
+    const stats = [
+      { number: totProjects, label: 'Progetti realizzati', icona: '📋' },
+      { number: totIncontri, label: 'Incontri organizzati', icona: '🗓️' },
+      { number: Math.round(totOre), label: 'Ore di attività', icona: '⏱️' },
+      { number: totPartecipanti, label: 'Partecipanti coinvolti', icona: '🧑‍🤝‍🧑' },
+      { number: totEducatori, label: 'Educatori coinvolti', icona: '🎓' },
+      { number: totVolontari, label: 'Volontari coinvolti', icona: '🤝' }
+    ];
+
+    renderStatCards(grid, stats);
+  } catch (e) {
+    console.warn('Could not load project stats:', e);
+  }
+}
+
+/**
+ * Fascia numeri in cima a eventi.html.
+ *
+ * ⛔ Niente "eventi di quest'anno": nei dati reali sono tutti passati e
+ * nessuno cade nell'anno corrente, quindi sarebbe uno zero vero ma
+ * fuorviante in cima a una fascia che vuole raccontare il percorso.
+ * Meglio tre numeri sinceri e tutti positivi (quello che i dati permettono
+ * davvero di dire) che un quarto che scoraggia chi guarda.
+ */
+async function loadEventStats() {
+  const grid = document.getElementById('eventi-stats-grid');
+  if (!grid) return;
+  try {
+    const res = await fetch('data/events.json');
+    const events = await res.json();
+    const anni = new Set(events.map(e => new Date(e.startDate).getFullYear()));
+    const luoghi = new Set(events.map(e => e.location).filter(Boolean));
+
+    const stats = [
+      { number: events.length, label: 'Eventi realizzati', icona: '🎉' },
+      { number: anni.size, label: 'Anni di eventi', icona: '📅' },
+      { number: luoghi.size, label: 'Luoghi coinvolti', icona: '📍' }
+    ];
+
+    renderStatCards(grid, stats);
+  } catch (e) {
+    console.warn('Could not load event stats:', e);
+  }
+}
+
+/**
+ * Fascia numeri in cima a partner.html: il totale e quanti per ciascun
+ * tipo (`type` in `data/partners.json`), le stesse categorie del filtro
+ * qui sotto.
+ */
+async function loadPartnerStats() {
+  const grid = document.getElementById('partner-stats-grid');
+  if (!grid) return;
+  try {
+    const res = await fetch('data/partners.json');
+    const partners = await res.json();
+    const perTipo = {};
+    partners.forEach(p => { perTipo[p.type] = (perTipo[p.type] || 0) + 1; });
+
+    const stats = [
+      { number: partners.length, label: 'Partner totali', icona: '🤝' },
+      { number: perTipo.associazione || 0, label: 'Associazioni', icona: '👥' },
+      { number: perTipo.istituzionale || 0, label: 'Istituzioni', icona: '🏛️' },
+      { number: perTipo.azienda || 0, label: 'Aziende', icona: '🏢' },
+      { number: perTipo.cooperativa || 0, label: 'Cooperative', icona: '🌻' },
+      { number: perTipo.scuola || 0, label: 'Scuole', icona: '🎓' }
+    ];
+
+    renderStatCards(grid, stats);
+  } catch (e) {
+    console.warn('Could not load partner stats:', e);
   }
 }
 
@@ -473,7 +602,14 @@ async function loadPartners() {
 
   try {
     const res = await fetch('data/partners.json');
-    const allPartners = await res.json();
+    const datiPartner = await res.json();
+    // Mescolati SUBITO, prima di ogni filtro/render — non riordinando il
+    // DOM dopo: così le schede nascono già nell'ordine giusto, e la
+    // ricerca/il filtro per tipo (che usano Array.filter, che non cambia
+    // l'ordine di ciò che passa) restano mescolati ma non perdono nessun
+    // partner. Vedi `mescolaCasuale()` sul perché non è seminato come la
+    // hero.
+    const allPartners = mescolaCasuale(datiPartner);
 
     const searchInput = document.getElementById('partner-search');
     const typeFilter = document.getElementById('partner-type-filter');

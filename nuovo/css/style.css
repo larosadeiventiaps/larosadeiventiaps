@@ -442,15 +442,41 @@ main {
 /* ⚠️ Miniature piccole (22/08/2026): prima erano a piena colonna (masonry
    su 3 colonne), se ne vedevano poche per schermata. Ora è una griglia di
    caselle piccole e uniformi — restano leggibili e cliccabili anche sul
-   telefono (vedi i due breakpoint più sotto), ma se ne vede molte di più
-   in una volta. */
+   telefono, ma se ne vede molte di più in una volta. */
+/* ⚠️ Cinque per riga, chiesto dal committente (23/08/2026), che scendono
+   con lo stesso criterio di `.cards-grid` (soglie 1100/860/520). Sul
+   telefono NON restano cinque: sarebbero francobolli illeggibili per chi
+   non ci vede bene — a 520px scende a due, mai a una sola perché una
+   galleria a un'immagine per riga scorre all'infinito. */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    padding: 1rem;
+  }
 }
 
 .gallery-item {
@@ -725,6 +751,13 @@ main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+}
+
+/* ⚠️ La fascia di eventi.html ha solo tre numeri sinceri (vedi il commento
+   su `loadEventStats()` in js/main.js) — a quattro colonne di default ne
+   sarebbe rimasta una vuota. */
+#eventi-stats-grid {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 /* ⚠️ I numeri salgono da zero quando entrano nello schermo (`animaNumeri`
@@ -1145,17 +1178,141 @@ main {
 }
 
 /* ------------------------------------------------------------
+   Moduli di candidatura (volontario / educatore) — sostienici.html
+   ------------------------------------------------------------ */
+/* ⚠️ Campi alti, etichetta SEMPRE sopra il campo, testo mai sotto i 16px:
+   il committente non vede bene. Colori solo dalle variabili di :root — per
+   gli errori non esiste un rosso dichiarato, quindi si usa `--primary`
+   (già usato altrove per i richiami, es. `.placeholder-box`) insieme al
+   simbolo ⚠️, mai il colore da solo, così il segnale arriva anche a chi
+   non distingue bene i colori. */
+.modulo-candidatura {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-top: 1.25rem;
+}
+
+.campo-modulo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo-modulo label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--dark);
+}
+
+.campo-modulo input,
+.campo-modulo textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px solid #ccc;
+  border-radius: var(--radius-input);
+  font-family: inherit;
+  font-size: 1rem;
+  min-height: 3.2rem;
+  background: #fff;
+  color: var(--dark);
+}
+
+.campo-modulo input[type="file"] {
+  padding: 0.7rem 1rem;
+}
+
+.campo-modulo textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.campo-modulo input:focus,
+.campo-modulo textarea:focus {
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+.campo-modulo input[aria-invalid="true"],
+.campo-modulo textarea[aria-invalid="true"] {
+  border-color: var(--primary);
+  border-width: 2px;
+}
+
+.campo-errore {
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 1.3em;
+}
+
+.campo-errore:empty {
+  display: none;
+}
+
+.campo-consenso {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.campo-consenso input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  min-height: 0;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  accent-color: var(--primary);
+}
+
+.campo-consenso label {
+  font-size: 1rem;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.modulo-nota {
+  background: var(--primary-light);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-input);
+  padding: 1rem 1.15rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--dark);
+}
+
+.modulo-esito {
+  display: none;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-input);
+  line-height: 1.5;
+}
+
+.modulo-esito.visibile {
+  display: block;
+}
+
+.modulo-esito.ok {
+  background: var(--primary-light);
+  color: var(--dark);
+  border: 2px solid var(--accent-green);
+}
+
+.modulo-esito.errore {
+  background: var(--primary-light);
+  color: var(--dark);
+  border: 2px solid var(--primary);
+}
+
+/* ------------------------------------------------------------
    Responsive — 768px breakpoint
    ------------------------------------------------------------ */
 @media (max-width: 768px) {
   .cards-grid {
     columns: 2;
-  }
-
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 0.75rem;
-    padding: 1.25rem;
   }
 
   .events-grid {
@@ -1170,7 +1327,8 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .stats-grid {
+  .stats-grid,
+  #eventi-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1242,12 +1400,6 @@ main {
     columns: 1;
   }
 
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 0.6rem;
-    padding: 1rem;
-  }
-
   .gallery-item-info {
     padding: 0.5rem;
   }
@@ -1264,7 +1416,8 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .stats-grid {
+  .stats-grid,
+  #eventi-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -1455,6 +1608,17 @@ main {
   color: #ffffff;
 }
 
+/* ⚠️ Terza tessera della fascia (pagina partner, 23/08/2026): niente
+   colore nuovo, solo `--primary-light`/`--primary`/`--dark` già in
+   `:root`. Testo scuro su fondo chiaro invece del bianco su tinta piena
+   delle altre due — qui il contrasto passa largamente il minimo, e per il
+   committente che non vede bene conta più della coerenza cromatica. */
+.azione-partner {
+  background: var(--primary-light);
+  color: var(--dark);
+  border: 2px solid var(--primary);
+}
+
 .azione-simbolo {
   grid-area: simbolo;
   display: grid;
@@ -1470,6 +1634,10 @@ main {
 }
 
 .azione-dona .azione-simbolo {
+  color: var(--primary);
+}
+
+.azione-partner .azione-simbolo {
   color: var(--primary);
 }
 
@@ -1508,6 +1676,13 @@ main {
 
 .azione-dona .azione-vai {
   color: var(--primary);
+}
+
+/* Testo scuro sulla pillola quasi bianca, non l'arancio di `.azione-dona`:
+   var(--dark) su bianco passa largamente il 4,5:1 richiesto, l'arancio su
+   bianco no — e su questa tessera non c'è motivo di rischiarlo. */
+.azione-partner .azione-vai {
+  color: var(--dark);
 }
 
 @media (prefers-reduced-motion: reduce) {

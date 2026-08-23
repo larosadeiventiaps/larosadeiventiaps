@@ -73,17 +73,100 @@
       <div class="support-grid">
         <div class="support-card" id="form-volontario">
           <h3>🤝 Volontario</h3>
-          <p>Se vuoi dare una mano nelle attività, nelle uscite e nei laboratori con i ragazzi, ci fa piacere conoscerti.</p>
-          <p class="form-coming-soon">Il modulo di candidatura online sarà disponibile qui a breve. Nel frattempo scrivici:</p>
-          <p>✉️ <a href="mailto:info@larosadeiventiaps.org?subject=Candidatura%20volontario">info@larosadeiventiaps.org</a></p>
-          <p>📞 Valentina: <a href="tel:3288424884">328 8424884</a></p>
+          <p>Se vuoi dare una mano nelle attività, nelle uscite e nei laboratori con i ragazzi, ci fa piacere conoscerti. Raccontaci due cose di te qui sotto.</p>
+
+          <div class="modulo-nota">
+            ✉️ Il modulo online non è ancora collegato al nostro gestionale: quando premi «Invia candidatura» si apre il tuo programma di posta con un'email già scritta verso <strong>info@larosadeiventiaps.org</strong>. Controlla che si apra e invia da lì — è quello il passaggio che ci fa davvero arrivare la tua candidatura.
+          </div>
+
+          <form class="modulo-candidatura" id="modulo-volontario" data-tipo="volontario" novalidate>
+            <div class="campo-modulo">
+              <label for="volontario-nome">Nome</label>
+              <input type="text" id="volontario-nome" name="nome" autocomplete="given-name" data-obbligatorio aria-describedby="volontario-nome-errore">
+              <p class="campo-errore" id="volontario-nome-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="volontario-cognome">Cognome</label>
+              <input type="text" id="volontario-cognome" name="cognome" autocomplete="family-name" data-obbligatorio aria-describedby="volontario-cognome-errore">
+              <p class="campo-errore" id="volontario-cognome-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="volontario-email">Email</label>
+              <input type="email" id="volontario-email" name="email" autocomplete="email" data-obbligatorio aria-describedby="volontario-email-errore">
+              <p class="campo-errore" id="volontario-email-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="volontario-telefono">Telefono</label>
+              <input type="tel" id="volontario-telefono" name="telefono" autocomplete="tel" data-obbligatorio aria-describedby="volontario-telefono-errore">
+              <p class="campo-errore" id="volontario-telefono-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="volontario-presentazione">Due righe di presentazione</label>
+              <textarea id="volontario-presentazione" name="presentazione" rows="3" data-obbligatorio aria-describedby="volontario-presentazione-errore"></textarea>
+              <p class="campo-errore" id="volontario-presentazione-errore"></p>
+            </div>
+            <div class="campo-modulo campo-consenso">
+              <input type="checkbox" id="volontario-consenso" name="consenso" data-obbligatorio aria-describedby="volontario-consenso-errore">
+              <label for="volontario-consenso">Ho letto e accetto l'<a href="documenti/informativa-privacy.pdf" target="_blank" rel="noopener noreferrer">informativa sulla privacy</a> per il trattamento dei miei dati.</label>
+            </div>
+            <p class="campo-errore" id="volontario-consenso-errore"></p>
+
+            <button type="submit" class="btn-solid">Invia candidatura</button>
+            <p class="modulo-esito" id="volontario-esito" role="status" aria-live="polite"></p>
+          </form>
+
+          <p>📞 Oppure chiama Valentina: <a href="tel:3288424884">328 8424884</a></p>
         </div>
 
         <div class="support-card" id="form-educatore">
           <h3>🎓 Educatore</h3>
-          <p>Se sei un educatore professionale o hai un titolo affine e vuoi mettere le tue competenze al servizio dei nostri progetti, mandaci il tuo curriculum.</p>
-          <p class="form-coming-soon">Il modulo online (con possibilità di allegare il CV) sarà disponibile qui a breve. Nel frattempo scrivici:</p>
-          <p>✉️ <a href="mailto:info@larosadeiventiaps.org?subject=Candidatura%20educatore">info@larosadeiventiaps.org</a> — allega il tuo CV</p>
+          <p>Se sei un educatore professionale o hai un titolo affine e vuoi mettere le tue competenze al servizio dei nostri progetti, raccontaci di te e mandaci il tuo curriculum.</p>
+
+          <div class="modulo-nota">
+            ✉️ Anche qui il modulo online non è ancora collegato: quando premi «Invia candidatura» si apre il tuo programma di posta con un'email già scritta verso <strong>info@larosadeiventiaps.org</strong> — <strong>allega il curriculum lì</strong>, prima di inviare, perché il modulo non può farlo al posto tuo.
+          </div>
+
+          <form class="modulo-candidatura" id="modulo-educatore" data-tipo="educatore" novalidate>
+            <div class="campo-modulo">
+              <label for="educatore-nome">Nome</label>
+              <input type="text" id="educatore-nome" name="nome" autocomplete="given-name" data-obbligatorio aria-describedby="educatore-nome-errore">
+              <p class="campo-errore" id="educatore-nome-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="educatore-cognome">Cognome</label>
+              <input type="text" id="educatore-cognome" name="cognome" autocomplete="family-name" data-obbligatorio aria-describedby="educatore-cognome-errore">
+              <p class="campo-errore" id="educatore-cognome-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="educatore-email">Email</label>
+              <input type="email" id="educatore-email" name="email" autocomplete="email" data-obbligatorio aria-describedby="educatore-email-errore">
+              <p class="campo-errore" id="educatore-email-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="educatore-telefono">Telefono</label>
+              <input type="tel" id="educatore-telefono" name="telefono" autocomplete="tel" data-obbligatorio aria-describedby="educatore-telefono-errore">
+              <p class="campo-errore" id="educatore-telefono-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="educatore-presentazione">Due righe di presentazione</label>
+              <textarea id="educatore-presentazione" name="presentazione" rows="3" data-obbligatorio aria-describedby="educatore-presentazione-errore"></textarea>
+              <p class="campo-errore" id="educatore-presentazione-errore"></p>
+            </div>
+            <div class="campo-modulo">
+              <label for="educatore-curriculum">Curriculum (PDF o Word)</label>
+              <input type="file" id="educatore-curriculum" name="curriculum" accept=".pdf,.doc,.docx" data-obbligatorio aria-describedby="educatore-curriculum-errore educatore-curriculum-nota">
+              <p class="campo-errore" id="educatore-curriculum-errore"></p>
+              <p id="educatore-curriculum-nota" style="font-size:1rem;color:#555;">Il file scelto qui NON parte da solo: lo dovrai allegare tu nell'email che si apre.</p>
+            </div>
+            <div class="campo-modulo campo-consenso">
+              <input type="checkbox" id="educatore-consenso" name="consenso" data-obbligatorio aria-describedby="educatore-consenso-errore">
+              <label for="educatore-consenso">Ho letto e accetto l'<a href="documenti/informativa-privacy.pdf" target="_blank" rel="noopener noreferrer">informativa sulla privacy</a> per il trattamento dei miei dati.</label>
+            </div>
+            <p class="campo-errore" id="educatore-consenso-errore"></p>
+
+            <button type="submit" class="btn-solid">Invia candidatura</button>
+            <p class="modulo-esito" id="educatore-esito" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
@@ -125,5 +208,6 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/candidature.js"></script>
 </body>
 </html>
