@@ -1837,3 +1837,239 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ------------------------------------------------------------
+   Sostienici (23/08/2026) — la pagina che chiede
+   ------------------------------------------------------------
+   ⚠️ È l'unica pagina del sito che si giudica da quanto convince, e per
+   questo è l'unica con un'apertura sua invece del solito titolo su fondo
+   bianco. Tutto il resto del sito resta com'è: un'apertura così su ogni
+   pagina non sarebbe carattere, sarebbe rumore.
+   ------------------------------------------------------------ */
+.sostieni-apertura {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: stretch;
+  margin-top: 64px;
+  background: #16110e;
+  color: #f7efe6;
+}
+
+.sostieni-apertura-foto {
+  width: 100%;
+  height: 100%;
+  min-height: 20rem;
+  object-fit: cover;
+}
+
+.sostieni-apertura-testo {
+  padding: 3rem 2.2rem;
+  align-self: center;
+}
+
+.sostieni-occhiello {
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ff9a5e;
+  margin: 0 0 0.8rem;
+}
+
+.sostieni-apertura h1 {
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+.sostieni-apertura h1 em {
+  font-style: normal;
+  color: #ff9a5e;
+}
+
+.sostieni-apertura p {
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba(247, 239, 230, 0.86);
+  max-width: 34rem;
+}
+
+.sostieni-apertura-azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.sostieni-bottone {
+  display: inline-block;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.05rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.sostieni-bottone:hover,
+.sostieni-bottone:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.07);
+}
+
+.sostieni-bottone-chiaro {
+  background: #ffffff;
+  color: var(--primary);
+}
+
+.sostieni-bottone-piccolo {
+  font-size: 1rem;
+  padding: 0.55rem 1.1rem;
+  margin: 0.2rem 0 1rem;
+}
+
+.sostieni-sotto {
+  font-size: 1.1rem;
+  color: #5b4f46;
+  max-width: 44rem;
+  margin-bottom: 1.4rem;
+}
+
+.sostieni-nota {
+  font-size: 1rem;
+  color: #6a5c50;
+  margin-top: 1rem;
+}
+
+/* --- i quattro gradini --------------------------------------------- */
+.gradini {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.gradino {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #f0e2d5;
+  border-radius: 14px;
+  padding: 1.5rem 1.3rem 1.4rem;
+  box-shadow: 0 3px 12px rgba(20, 10, 4, 0.07);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ⚠️ La barra in alto si scurisce di gradino in gradino: è il percorso
+   che si vede prima di leggerlo. L'ultimo è pieno d'accento perché è il
+   traguardo — dormire fuori casa. */
+.gradino::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: linear-gradient(90deg, #f6d3a8, #e8873b);
+  border-radius: 14px 14px 0 0;
+}
+
+.gradino-ultimo::before {
+  background: linear-gradient(90deg, #e8873b, var(--primary));
+}
+
+.gradino-cifra {
+  display: block;
+  font-size: 2.1rem;
+  font-weight: bold;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+  margin-bottom: 0.4rem;
+}
+
+.gradino h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.gradino p {
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #5b4f46;
+  margin: 0;
+}
+
+/* --- il bonifico e il 5x1000 ---------------------------------------- */
+.iban-grande {
+  font-size: 1.25rem;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+  word-break: break-all;
+  margin: 0.6rem 0 0.4rem;
+}
+
+.sostieni-riga {
+  font-size: 1rem;
+  margin: 0.35rem 0;
+}
+
+.sostieni-riga strong {
+  display: inline-block;
+  min-width: 7.5rem;
+  color: #6a5c50;
+}
+
+.sostieni-cinque {
+  background: #fff6ee;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+}
+
+.sostieni-fiducia {
+  background: #ffffff;
+  border: 1px solid #f0e2d5;
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+
+.sostieni-fiducia ul {
+  margin: 0 0 1.2rem;
+  padding-left: 1.2rem;
+}
+
+.sostieni-fiducia li {
+  font-size: 1.05rem;
+  margin-bottom: 0.6rem;
+}
+
+@media (max-width: 900px) {
+  .sostieni-apertura {
+    grid-template-columns: 1fr;
+  }
+  .sostieni-apertura-foto {
+    min-height: 14rem;
+    max-height: 18rem;
+  }
+  .gradini {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .gradini {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sostieni-bottone,
+  .sostieni-bottone:hover {
+    transition: none;
+    transform: none;
+  }
+}

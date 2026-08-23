@@ -32,39 +32,113 @@
   </nav>
 
   <main>
-    <section class="section">
-      <h1 class="section-title">Sostienici</h1>
-      <p style="color:#666;">Ogni forma di sostegno — un contributo, il 5x1000, il tempo di un volontario o di un educatore — ci aiuta a continuare il percorso verso l'autonomia dei ragazzi che seguiamo. Ecco come puoi darci una mano.</p>
-    </section>
-
-    <section class="section" id="cinque-per-mille">
-      <h2 class="section-title">Il 5x1000, a costo zero</h2>
-      <p>Non ti costa nulla: è una quota dell'IRPEF che lo Stato destina comunque al Terzo Settore, e con la tua firma decidi che vada a noi.</p>
-      <span class="cf-highlight">94293690486</span>
-      <div class="support-instructions">
-        <p>1. Nella tua dichiarazione dei redditi (Modello 730, Modello Redditi Persone Fisiche o CU), cerca il riquadro "Sostegno del volontariato, delle associazioni di promozione sociale e degli altri enti del Terzo Settore".</p>
-        <p>2. Firma nel riquadro e scrivi sopra la firma il nostro codice fiscale: <strong>94293690486</strong>.</p>
+    <!--
+      ⚠️ Questa e' la pagina che CHIEDE, ed e' l'unica del sito che si
+      giudica da quanto convince. L'ordine non e' casuale: prima si dice
+      che cosa diventa il denaro (i quattro gradini), poi si chiede, e il
+      5x1000 sta subito dopo il bonifico perche' e' l'unico modo di
+      sostenere che non costa niente — chi non puo' donare deve trovarlo
+      prima di andarsene.
+    -->
+    <section class="sostieni-apertura">
+      <img src="images/gallery/attivita-maggio-2025-13.jpg" alt="Il gruppo dei ragazzi durante un'uscita" class="sostieni-apertura-foto">
+      <div class="sostieni-apertura-testo">
+        <p class="sostieni-occhiello">Sostienici</p>
+        <h1>A settembre non voleva entrare. A maggio ha preso il treno <em>da solo</em>.</h1>
+        <p>
+          Non chiediamo un contributo generico: ogni cifra qui sotto e' una cosa precisa che
+          succede a un ragazzo. Nell'ultimo anno sono stati <strong>1.412</strong>, in
+          <strong>63 progetti</strong>, per <strong>1.163 ore</strong> insieme.
+        </p>
+        <div class="sostieni-apertura-azioni">
+          <a class="sostieni-bottone" href="#dona-ora">Dona ora</a>
+          <a class="sostieni-bottone sostieni-bottone-chiaro" href="#cinque-per-mille">Il 5x1000 non ti costa nulla</a>
+        </div>
       </div>
     </section>
 
+    <section class="section" id="gradini">
+      <h2 class="section-title">Che cosa diventa</h2>
+      <p class="sostieni-sotto">Quattro gradini, e nessuno li sale nello stesso tempo. Ma li sale.</p>
+      <div class="gradini">
+        <div class="gradino">
+          <span class="gradino-cifra">&euro; 25</span>
+          <h3>Un mese di laboratorio</h3>
+          <p>Musica, inglese, teatro: il gruppo piccolo in cui si entra la prima volta. E' il gradino piu' difficile di tutti.</p>
+        </div>
+        <div class="gradino">
+          <span class="gradino-cifra">&euro; 75</span>
+          <h3>Un trimestre del sabato</h3>
+          <p>Tre mesi con gli stessi compagni. Qui nascono le amicizie che reggono tutto il resto.</p>
+        </div>
+        <div class="gradino">
+          <span class="gradino-cifra">&euro; 45</span>
+          <h3>Un'uscita a Firenze</h3>
+          <p>Il treno, il biglietto fatto da soli, il museo. La citta' smette di essere un posto dove ti accompagnano.</p>
+        </div>
+        <div class="gradino gradino-ultimo">
+          <span class="gradino-cifra">&euro; 180</span>
+          <h3>Un fine settimana fuori casa</h3>
+          <p>La spesa, la cena, la lavatrice, la notte lontano dai genitori. Per molti e' la prima volta.</p>
+        </div>
+      </div>
+      <p class="sostieni-nota">
+        ⚠️ Le cifre sono quelle vere delle quote: quanto costa davvero, non quanto suona bene.
+      </p>
+    </section>
+
     <section class="section" id="dona-ora">
-      <h2 class="section-title">Dona ora</h2>
+      <h2 class="section-title">Come si dona</h2>
       <div class="support-grid">
-        <div class="support-card">
+        <div class="support-card carta-dona">
           <h3>🏦 Bonifico bancario</h3>
-          <p>Puoi sostenerci con un bonifico, libero o periodico, verso il conto dell'associazione.</p>
-          <p class="cf-highlight">IT93 U087 3637 7200 0000 0402 777</p>
-          <p><strong>Banca:</strong> BCC di Pontassieve, agenzia di Bagno a Ripoli</p>
-          <p><strong>Intestato a:</strong> La Rosa dei Venti APS</p>
-          <p><strong>Causale:</strong> Erogazione liberale a favore di La Rosa dei Venti APS</p>
+          <p>Libero o periodico, verso il conto dell'associazione.</p>
+          <p class="iban-grande" id="iban">IT93 U087 3637 7200 0000 0402 777</p>
+          <button type="button" class="sostieni-bottone sostieni-bottone-piccolo" id="copia-iban" data-copia="IT93U0873637720000000402777">Copia l'IBAN</button>
+          <p class="sostieni-riga"><strong>Banca</strong> BCC di Pontassieve, agenzia di Bagno a Ripoli</p>
+          <p class="sostieni-riga"><strong>Intestato a</strong> La Rosa dei Venti APS</p>
+          <p class="sostieni-riga"><strong>Causale</strong> Erogazione liberale a favore di La Rosa dei Venti APS</p>
+          <p class="sostieni-nota">Le erogazioni liberali alle APS sono detraibili: conserva la ricevuta del bonifico.</p>
         </div>
 
         <div class="support-card coming-soon-box">
-          <h3>💳 Carta di credito / pagamento online</h3>
+          <h3>💳 Carta di credito</h3>
           <span class="coming-soon-tag">🔒 Prossimamente</span>
-          <p>Stiamo attivando un servizio di pagamento online sicuro per donare in pochi clic. Nel frattempo puoi usare il bonifico o il 5x1000 qui sopra.</p>
+          <p>Stiamo attivando il pagamento online. Nel frattempo il bonifico qui accanto arriva allo stesso conto, e il 5x1000 non costa nulla.</p>
           <button class="btn-solid disabled" type="button" disabled aria-disabled="true">Dona con carta — presto disponibile</button>
         </div>
+      </div>
+    </section>
+
+    <section class="section sostieni-cinque" id="cinque-per-mille">
+      <h2 class="section-title">Il 5x1000: non ti costa nulla</h2>
+      <p class="sostieni-sotto">
+        E' una quota dell'IRPEF che lo Stato destina comunque al Terzo Settore. Non e' una donazione,
+        non si aggiunge alle tasse: con la tua firma decidi soltanto <em>a chi</em> vada.
+      </p>
+      <span class="cf-highlight">94293690486</span>
+      <button type="button" class="sostieni-bottone sostieni-bottone-piccolo" id="copia-cf" data-copia="94293690486">Copia il codice fiscale</button>
+      <div class="support-instructions">
+        <p><strong>1.</strong> Nella dichiarazione dei redditi (730, Redditi PF o CU) cerca il riquadro «Sostegno del volontariato, delle associazioni di promozione sociale e degli altri enti del Terzo Settore».</p>
+        <p><strong>2.</strong> Firma nel riquadro e scrivi sopra la firma il nostro codice fiscale.</p>
+        <p><strong>3.</strong> Fatto. Non devi fare altro, e non ti viene chiesto un euro.</p>
+      </div>
+    </section>
+
+    <section class="section" id="enti">
+      <h2 class="section-title">Per aziende, fondazioni ed enti</h2>
+      <p class="sostieni-sotto">
+        Un progetto ha un costo, una durata e un numero di ragazzi: potete adottarne uno intero.
+        A fine anno vi diciamo quanti l'hanno fatto e come e' andata — gli stessi numeri che
+        finiscono nel rendiconto, non un racconto scritto per l'occasione.
+      </p>
+      <div class="sostieni-fiducia">
+        <ul>
+          <li>Associazione di Promozione Sociale iscritta al <strong>RUNTS</strong>, codice fiscale <strong>94293690486</strong>.</li>
+          <li><strong>Bilanci e rendiconti pubblicati</strong> ogni anno: sono nella pagina <a href="documenti.html">Documenti</a>.</li>
+          <li>Con il <strong>patrocinio del Comune di Bagno a Ripoli</strong> e 32 realta' del territorio che lavorano con noi.</li>
+        </ul>
+        <a class="sostieni-bottone" href="mailto:info@larosadeiventiaps.org?subject=Adottare%20un%20progetto">Scriveteci: vi mandiamo le schede dei progetti</a>
       </div>
     </section>
 
@@ -209,5 +283,6 @@
 
   <script src="js/main.js"></script>
   <script src="js/candidature.js"></script>
+  <script src="js/copia.js"></script>
 </body>
 </html>
