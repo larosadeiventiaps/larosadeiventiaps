@@ -2088,3 +2088,121 @@ main {
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------
+   I tre canali nella pagina dei contatti (23/08/2026)
+   ------------------------------------------------------------
+   ⛔ I colori sono quelli veri dei tre servizi: #25D366 di WhatsApp,
+   #1877F2 di Facebook, la sfumatura di Instagram. Su un riquadro che
+   porta altrove il colore fa metà del riconoscimento — uno scelto a
+   occhio costringe a leggere per capire dove si va.
+
+   ⚠️ Sul verde di WhatsApp il testo è SCURO: bianco su #25D366 fa 1,8 di
+   contrasto, cioè si legge solo con lo schermo al massimo. Sugli altri
+   due, che sono scuri, il testo è bianco. Non è un'incoerenza: è la
+   stessa regola (contrasto sufficiente) applicata a tre fondi diversi.
+   ------------------------------------------------------------ */
+.canali {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+}
+
+.canale {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'simbolo testo'
+    'vai vai';
+  align-items: center;
+  gap: 0.35rem 1.1rem;
+  padding: 1.4rem 1.4rem 1.15rem;
+  border-radius: 18px;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(20, 10, 4, 0.13);
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+
+.canale:hover,
+.canale:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(20, 10, 4, 0.2);
+}
+
+.canale-whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #1ebe5a 100%);
+  color: #0b2016;
+}
+
+.canale-facebook {
+  background: linear-gradient(135deg, #1877f2 0%, #0b5fd0 100%);
+  color: #ffffff;
+}
+
+.canale-instagram {
+  background: linear-gradient(135deg, #f9ce34 0%, #ee2a7b 48%, #6228d7 100%);
+  color: #ffffff;
+}
+
+.canale-simbolo {
+  grid-area: simbolo;
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.canale-whatsapp .canale-simbolo { color: #128c7e; }
+.canale-facebook .canale-simbolo { color: #1877f2; }
+.canale-instagram .canale-simbolo { color: #d62976; }
+
+.canale-testo {
+  grid-area: testo;
+}
+
+.canale-testo strong {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.canale-testo small {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+  opacity: 0.9;
+}
+
+.canale-vai {
+  grid-area: vai;
+  justify-self: end;
+  margin-top: 0.7rem;
+  padding: 0.42rem 1.05rem;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.93);
+}
+
+.canale-whatsapp .canale-vai { color: #0b2016; }
+.canale-facebook .canale-vai { color: #1877f2; }
+.canale-instagram .canale-vai { color: #c1256b; }
+
+@media (max-width: 900px) {
+  .canali {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canale,
+  .canale:hover {
+    transition: none;
+    transform: none;
+  }
+}
