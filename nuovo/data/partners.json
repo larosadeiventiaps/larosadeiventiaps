@@ -11,13 +11,13 @@
     "type": "azienda",
     "description": "Azienda agricola dedicata all'apicoltura e alla produzione di miele artigianale nel territorio fiorentino.",
     "logo": "",
-    "url": ""
+    "url": "https://apicolturasanmartino.com"
   },
   {
     "name": "Auser",
     "type": "associazione",
     "description": "Associazione di volontariato e promozione sociale dedicata alla valorizzazione degli anziani e all'invecchiamento attivo.",
-    "logo": "",
+    "logo": "images/partners/auser.png",
     "url": "https://www.auser.it"
   },
   {
@@ -32,7 +32,7 @@
     "type": "istituzionale",
     "description": "Biblioteca comunale con servizi di prestito, consultazione e iniziative culturali per il territorio.",
     "logo": "",
-    "url": "https://www.comune.bagno-a-ripoli.fi.it"
+    "url": "https://www.comune.bagno-a-ripoli.fi.it/biblioteca/home"
   },
   {
     "name": "Borgogni",
@@ -44,7 +44,7 @@
   {
     "name": "Casa del Popolo Balatro",
     "type": "associazione",
-    "description": "Circolo ricreativo e culturale con attività sociali e aggregazione nel territorio ripolese.",
+    "description": "Circolo ricreativo e culturale affiliato ARCI, fondato nel 1892, con corsi (ginnastica, yoga, arti marziali), tornei di burraco e attività sociali a Balatro.",
     "logo": "",
     "url": ""
   },
@@ -80,7 +80,7 @@
     "name": "Contrada dell'Alfiere",
     "type": "associazione",
     "description": "Associazione culturale fondata nel 1993 per la rievocazione storica rinascimentale con sbandieratori, musici e danze.",
-    "logo": "",
+    "logo": "images/partners/contrada-alfiere.png",
     "url": "https://www.contradaalfiere.com"
   },
   {
@@ -122,7 +122,7 @@
     "name": "Fondazione CR Firenze",
     "type": "istituzionale",
     "description": "Fondazione bancaria che sostiene progetti culturali, sociali, scientifici e di sviluppo economico nel territorio fiorentino e toscano.",
-    "logo": "",
+    "logo": "images/partners/fondazione-cr-firenze.png",
     "url": "https://fondazionecrfirenze.it"
   },
   {
@@ -158,13 +158,13 @@
     "type": "associazione",
     "description": "Associazione onlus per il sostegno a persone con disabilità e famiglie, con laboratori esperienziali e gruppi di auto-aiuto.",
     "logo": "",
-    "url": "https://www.asslalanterna.it"
+    "url": ""
   },
   {
     "name": "Legambiente",
     "type": "associazione",
     "description": "Associazione ambientalista che promuove la tutela dell'ambiente, la sostenibilità e la lotta contro l'inquinamento.",
-    "logo": "",
+    "logo": "images/partners/legambiente.png",
     "url": "https://www.legambiente.it"
   },
   {
@@ -212,15 +212,15 @@
   {
     "name": "VAB",
     "type": "associazione",
-    "description": "Vigilanza Antincendi Boschivi — Associazione di volontariato per la prevenzione e lotta agli incendi boschivi e la protezione civile.",
-    "logo": "",
-    "url": "https://www.vab.it"
+    "description": "Vigilanza Antincendi Boschivi, sezione di Bagno a Ripoli: prevenzione e lotta agli incendi boschivi, protezione civile e gestione dei parchi Fontesanta e Mondeggi.",
+    "logo": "images/partners/vab.png",
+    "url": "https://www.vabbagnoaripoli.it"
   },
   {
     "name": "Volontmusic",
     "type": "associazione",
     "description": "Associazione che promuove il volontariato attraverso contest musicali tra band emergenti delle associazioni del territorio.",
-    "logo": "",
+    "logo": "images/partners/volontmusic.png",
     "url": ""
   }
 ]
