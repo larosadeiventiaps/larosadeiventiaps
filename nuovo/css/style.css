@@ -2947,3 +2947,33 @@ main {
     line-height: 1;
   }
 }
+
+/* Il logo di Teaming nella scheda delle donazioni. Altezza fissa e larghezza
+   automatica: il file è 244x68, servito a 34px di altezza perché resti nitido
+   anche sugli schermi fitti. */
+.teaming-logo {
+  height: 34px;
+  width: auto;
+  margin-bottom: 0.7rem;
+}
+
+/* ⚠️ Le schede del direttivo scrivevano ruolo e contatti a 0,9rem (14px): sotto
+   il minimo che regge chi legge questo sito. Portati tutti a 16px. */
+.team-card p,
+.team-card .team-role,
+.team-card .team-contact {
+  font-size: 1rem;
+}
+
+/* ⛔ Gli indirizzi di posta sono piu' lunghi della scheda
+   («francesca.f@larosadeiventiaps.org» sono 33 caratteri in una colonna da
+   200px): senza questo andavano a finire SOPRA la scheda accanto, e si
+   leggevano due indirizzi mescolati. Non e' un difetto nato oggi con il
+   corpo piu' grande, si vedeva anche prima — solo un po' meno. */
+.team-card .team-contact {
+  overflow-wrap: anywhere;
+}
+
+.team-card .team-contact a {
+  overflow-wrap: anywhere;
+}
