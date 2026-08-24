@@ -2900,3 +2900,50 @@ main {
 .carta-teaming .sostieni-bottone {
   margin-top: 0.4rem;
 }
+
+/* ------------------------------------------------------------
+   La barra in alto: le voci allineate fra loro
+   ------------------------------------------------------------
+   ⛔ «Utilità» usciva 8px più in basso delle altre voci, con la sua riga di
+   sottolineatura sfalsata. Non era un errore di padding: le altre voci sono
+   <a> INLINE, e il padding verticale di un box inline non allarga la riga —
+   deborda sopra e sotto senza spostare niente. Il bottone invece è un box
+   vero, quindi la riga si allargava e lui scendeva. Misurato: gli <a>
+   stavano a 3,5–42,5 px, il bottone a 11,5–52,5.
+
+   Si aggiusta togliendo di mezzo l'inline: ogni voce diventa un box con lo
+   stesso modello e la riga li centra. Dopo la correzione stanno tutti a
+   12,5–51,5 con la stessa altezza (39 px), «Dona ora» compreso.
+
+   ⚠️ Solo da 769px in su: sotto, il menu a scomparsa vuole le voci a tutta
+   larghezza (`display: block`, padding largo per il dito) e queste regole
+   glielo toglierebbero, essendo scritte dopo a parità di peso. */
+@media (min-width: 769px) {
+  .navbar-menu {
+    align-items: center;
+  }
+
+  .navbar-menu > li {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-menu > li > a,
+  .utilita-apri {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  /* «Dona ora» è una pillola: conserva il suo padding, non quello delle voci. */
+  .navbar-menu .voce-dona > a {
+    padding: 0.55rem 1.1rem;
+  }
+
+  /* La punta della tendina non deve alzare la riga del bottone: rimpicciolita
+     e con interlinea 1, se no rialza tutto di qualche pixel. */
+  .utilita-apri span[aria-hidden] {
+    font-size: 0.8em;
+    line-height: 1;
+  }
+}
