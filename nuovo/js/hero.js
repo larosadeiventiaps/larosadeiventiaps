@@ -62,7 +62,7 @@
       var img = document.createElement('img')
       // La versione nell'indirizzo serve se una fotografia viene sostituita
       // tenendo lo stesso nome: il server la terrebbe in cache 120 giorni.
-      // Vedi `VERSIONE_IMMAGINI` in main.js — se main.js non c'e', si usa
+      // Vedi `VERSIONE_IMMAGINI` in main.js — se main.js non c'è, si usa
       // l'indirizzo nudo invece di rompere la hero.
       img.src = typeof conVersione === 'function' ? conVersione(foto.file) : foto.file
       // ⚠️ Vuoto e non descrittivo: le fotografie della hero sono decorazione

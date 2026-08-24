@@ -1014,19 +1014,19 @@ function animaNumeri(contenitore) {
  * sono state archiviate. ⛔ Non è una supposizione sul contenuto: è un
  * nome che diamo noi, e quindi si può fare affidamento.
  */
-// ⛔ Il server di Ergonet serve le immagini da se', ignorando `.htaccess`:
-//    arrivano con `Cache-Control: max-age=10368000` (120 giorni) e non c'e'
+// ⛔ Il server di Ergonet serve le immagini da sé, ignorando `.htaccess`:
+//    arrivano con `Cache-Control: max-age=10368000` (120 giorni) e non c'è
 //    direttiva che possa cambiarlo da qui. Il 23/08/2026 sei loghi dei
 //    partner sono stati sostituiti tenendo lo stesso nome di file, e chi
 //    aveva aperto la pagina il giorno prima ha continuato a vedere quelli
 //    vecchi per mesi: il file nuovo era online, ma il browser non lo
-//    chiedeva piu'. L'unica leva che resta e' l'indirizzo: `?v=...` e' una
+//    chiedeva più. L'unica leva che resta è l'indirizzo: `?v=...` è una
 //    richiesta diversa, quindi una cache diversa.
 //    Lo stesso vale per i fogli di stile e per gli script: anche loro escono
-//    con 120 giorni. Per questo l'unico punto in cui la versione si scrive e'
+//    con 120 giorni. Per questo l'unico punto in cui la versione si scrive è
 //    l'indirizzo nelle pagine `.html` — quelle SI' rispettano il `no-store`
 //    di `.htaccess`, quindi arrivano sempre fresche e portano dentro la
-//    versione nuova. Questo file la rilegge dal proprio tag <script>, cosi'
+//    versione nuova. Questo file la rilegge dal proprio tag <script>, così
 //    non ci sono due valori da tenere allineati a mano.
 //    ⚠️ SI CAMBIA quando si sostituisce un file tenendo lo stesso nome
 //    (immagine, css o js). Un nome nuovo non ha il problema. Per cambiarla:
@@ -1039,7 +1039,7 @@ const VERSIONE_IMMAGINI = (function () {
 
 // Aggiunge la versione a un indirizzo di immagine che viene dai file di dati.
 // Lascia stare i segnaposto generati in pagina (`data:`) e gli indirizzi
-// assoluti verso altri siti, dove la cache non e' cosa nostra.
+// assoluti verso altri siti, dove la cache non è cosa nostra.
 function conVersione(percorso) {
   if (typeof percorso !== 'string' || !percorso) return percorso
   if (!VERSIONE_IMMAGINI) return percorso
