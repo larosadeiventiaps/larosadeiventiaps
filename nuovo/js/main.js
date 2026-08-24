@@ -724,7 +724,9 @@ function messaggioElencoVuoto(stato, conteggi, frasi, etichette) {
  *  - idGrid/idToggle/idTitolo/idVuoto: gli id degli elementi in pagina
  *    (search/data-da/data-a restano 'search-input'/'date-from'/'date-to',
  *    gli stessi ovunque nel sito)
- *  - statoIniziale: quale pulsante è premuto all'apertura
+ *  - statoIniziale: FORZA il pulsante premuto all'apertura. Se non lo si
+ *    indica — ed è il caso normale — la lista si apre da sola sul primo
+ *    stato che ha qualcosa dentro: in corso, poi futuri, poi passati.
  *  - frasi/etichette/titoli: testo dichiarato da chi chiama, già declinato
  *  - arricchisciGruppi(gruppi): opzionale, aggiunge ai gruppi i campi che
  *    progetti/eventi NON hanno in comune (numeri+sponsor per i progetti)
@@ -749,11 +751,30 @@ async function avviaListaAStati(config) {
     const vuoto = document.getElementById(config.idVuoto);
     const lightbox = setupCardLightbox();
 
-    // ⚠️ Si apre di default su "in corso": è la prima cosa che chi arriva
-    // sul sito vuole sapere. Se oggi è vuoto (come "in corso" sui progetti,
-    // 24/08/2026) è esattamente il caso per cui esiste il messaggio sotto,
-    // non un caso limite raro.
+    // ⚠️ Si apre su "in corso": è la prima cosa che chi arriva sul sito vuole
+    // sapere. Ma se non c'è niente in corso NON si mostra un elenco vuoto —
+    // si scende a "futuri", e se sono vuoti anche quelli a "passati"
+    // (chiesto dal titolare il 24/08/2026, quando "in corso" era zero su
+    // entrambe le pagine e la prima cosa che si vedeva era un buco).
+    //
+    // ⛔ La scelta si fa UNA VOLTA SOLA, alla prima apertura, e non a ogni
+    //    render: se no chi cerca "olio" e poi cancella la ricerca si
+    //    ritroverebbe su una linguetta diversa da quella che aveva scelto,
+    //    e chi clicca "In corso" apposta — per verificare che non ci sia
+    //    niente — verrebbe rispedito altrove senza capire perché.
     let statoAttivo = config.statoIniziale || 'in_corso';
+    let statoDaScegliere = !config.statoIniziale;
+
+    /**
+     * Il primo stato non vuoto, nell'ordine in cui interessa a chi guarda:
+     * quello che c'è adesso, poi quello che sta per arrivare, e solo alla
+     * fine quello che è già stato. Se sono vuoti tutti e tre resta "in
+     * corso", così il messaggio spiega la cosa giusta (il sito non ha
+     * ancora niente) invece di aprirsi su un archivio vuoto.
+     */
+    function primoStatoPieno(conteggi) {
+      return ['in_corso', 'futuro', 'passato'].find(s => conteggi[s] > 0) || 'in_corso';
+    }
 
     function render() {
       const query = searchInput.value.toLowerCase();
@@ -773,6 +794,13 @@ async function avviaListaAStati(config) {
       const conteggi = { in_corso: 0, futuro: 0, passato: 0 };
       const perStato = { in_corso: [], futuro: [], passato: [] };
       filtrati.forEach(g => { conteggi[g.stato]++; perStato[g.stato].push(g); });
+
+      // Solo alla prima apertura, e prima di disegnare qualunque cosa: i
+      // conteggi si sanno soltanto qui, dopo aver raggruppato e filtrato.
+      if (statoDaScegliere) {
+        statoAttivo = primoStatoPieno(conteggi);
+        statoDaScegliere = false;
+      }
 
       // I numeri sui pulsanti sono quelli DOPO ricerca e date correnti: un
       // pulsante che promette 12 e ne apre 3 è peggio che non dire niente.
@@ -843,7 +871,6 @@ function loadProjects() {
     idToggle: 'stato-toggle',
     idTitolo: 'progetti-elenco-titolo',
     idVuoto: 'progetti-vuoto',
-    statoIniziale: 'in_corso',
     frasi: {
       in_corso: 'Nessun progetto è in corso proprio in questo momento.',
       futuro: 'Non ci sono ancora nuovi progetti in programma.',
@@ -1189,7 +1216,6 @@ function loadEvents() {
     idToggle: 'eventi-stato-toggle',
     idTitolo: 'eventi-elenco-titolo',
     idVuoto: 'eventi-vuoto',
-    statoIniziale: 'in_corso',
     frasi: {
       in_corso: 'Nessun evento è in corso proprio in questo momento.',
       futuro: 'Non ci sono ancora nuovi eventi in programma.',
