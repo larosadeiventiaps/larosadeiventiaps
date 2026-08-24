@@ -2977,3 +2977,34 @@ main {
 .team-card .team-contact a {
   overflow-wrap: anywhere;
 }
+
+/* ------------------------------------------------------------
+   Pagina «App»: le cinque categorie
+   ------------------------------------------------------------
+   ⚠️ Cinque schede in una griglia da tre: le ultime due restano sulla riga
+   sotto, larghe come le altre. `support-grid-tre` (nata per «Come si dona»)
+   fa già il lavoro — non serve una griglia nuova. */
+.carta-app {
+  border-top: 3px solid var(--primary);
+}
+
+.carta-app h3 {
+  font-size: 1.15rem;
+}
+
+/* Il riquadro che dice a chi l'app NON serve. Grigio e non arancione: e' una
+   precisazione utile, non un avvertimento — chi e' socio e basta non sta
+   sbagliando niente. */
+.avviso-app {
+  background: #f4f4f4;
+  border-left: 4px solid var(--accent-gray);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  padding: 1rem 1.2rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.avviso-app p {
+  margin: 0;
+}
