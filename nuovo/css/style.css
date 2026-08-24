@@ -412,10 +412,10 @@ main {
 
 /* ⚠️ Quattro per riga (23/08/2026). Era un impaginato a COLONNE, come lo
    erano i progetti: le schede scorrevano per colonna, quindi il secondo
-   evento in ordine di data finiva a meta' pagina invece che accanto al
-   primo. Stessa griglia e stesse soglie di `.cards-grid`, cosi' le due
+   evento in ordine di data finiva a metà pagina invece che accanto al
+   primo. Stessa griglia e stesse soglie di `.cards-grid`, così le due
    pagine si comportano allo stesso modo — erano due regole diverse per
-   la stessa cosa, ed e' cosi' che una delle due resta indietro. */
+   la stessa cosa, ed è così che una delle due resta indietro. */
 .events-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -781,7 +781,7 @@ main {
 
 /* ⚠️ I numeri salgono da zero quando entrano nello schermo (`animaNumeri`
    in `js/main.js`): fermi sembravano una tabella, e una tabella non la
-   guarda nessuno. Il riquadro resta chiaro e il numero grande e' la cosa
+   guarda nessuno. Il riquadro resta chiaro e il numero grande è la cosa
    che si vede per prima da lontano. */
 .stat-card {
   position: relative;
@@ -1830,7 +1830,7 @@ main {
    ⛔ **Su uno schermo stretto la riga sola si rompe apposta.** Sei
    riquadri su un telefono sarebbero sei colonne da cinquanta pixel, con
    dentro un numero grande e un'etichetta di due parole: illeggibili. La
-   riga unica e' un fatto estetico, la leggibilita' no — e il committente
+   riga unica è un fatto estetico, la leggibilita' no — e il committente
    non vede bene.
    ------------------------------------------------------------ */
 .stats-grid.stats-una-riga {
@@ -2208,7 +2208,7 @@ main {
 }
 
 /* Il 5x1000: il codice fiscale a sinistra, la grafica dell'associazione a
-   destra. ⚠️ L'immagine non porta informazioni che non ci siano gia' nel
+   destra. ⚠️ L'immagine non porta informazioni che non ci siano già nel
    testo — il codice fiscale si legge e si copia dal riquadro accanto: chi
    non vede l'immagine non perde niente. */
 .cinque-riquadro {
@@ -2234,5 +2234,635 @@ main {
 @media (max-width: 760px) {
   .cinque-riquadro {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------
+   Menu «Utilità» (Calendario, App, Documenti)
+   ------------------------------------------------------------
+   ⚠️ Il bottone deve sembrare identico alle altre voci della barra: è un
+   <button> e non un <a> perché non porta da nessuna parte — apre. Un link
+   che non naviga toglie la freccia di ritorno del browser e confonde chi
+   usa la tastiera. Da qui il travaso di stile riga per riga. */
+.voce-utilita {
+  position: relative;
+}
+
+.utilita-apri {
+  font: inherit;
+  font-size: 1rem;
+  color: white;
+  background: none;
+  border: 0;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: border-color 0.3s;
+}
+
+.utilita-apri:hover,
+.utilita-apri.active,
+.voce-utilita.aperto .utilita-apri {
+  border-bottom-color: white;
+}
+
+.utilita-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  background: white;
+  border-radius: var(--radius-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  z-index: 1100;
+}
+
+.voce-utilita.aperto .utilita-menu {
+  display: block;
+}
+
+/* Col mouse si apre passandoci sopra, senza dover cliccare. Su un dispositivo
+   a tocco «hover» resta appiccicato dopo il tocco, per questo la regola sta
+   dentro `hover: hover`: lì comanda il clic, gestito in main.js. */
+@media (hover: hover) {
+  .voce-utilita:hover .utilita-menu,
+  .voce-utilita:focus-within .utilita-menu {
+    display: block;
+  }
+}
+
+.navbar-menu .utilita-menu a {
+  display: block;
+  padding: 0.7rem 1.2rem;
+  color: var(--dark);
+  border-bottom: 0;
+  white-space: nowrap;
+}
+
+.navbar-menu .utilita-menu a:hover,
+.navbar-menu .utilita-menu a:focus-visible,
+.navbar-menu .utilita-menu a.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  /* Nel menu a scomparsa non c'è spazio per una tendina che si apre sopra il
+     resto: le tre voci stanno sempre visibili, rientrate sotto l'etichetta. */
+  .voce-utilita,
+  .voce-utilita.aperto .utilita-menu,
+  .utilita-menu {
+    display: block;
+    position: static;
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .utilita-apri {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    justify-content: flex-start;
+    opacity: 0.85;
+    cursor: default;
+  }
+
+  .utilita-apri span[aria-hidden] {
+    display: none;
+  }
+
+  .navbar-menu .utilita-menu a {
+    color: white;
+    padding: 0.75rem 1rem 0.75rem 2rem;
+  }
+
+  .navbar-menu .utilita-menu a:hover,
+  .navbar-menu .utilita-menu a.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+  }
+}
+
+/* ------------------------------------------------------------
+   Calendario
+   ------------------------------------------------------------ */
+.cal-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cal-navigazione {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cal-periodo {
+  font-size: 1.4rem;
+  margin: 0 0 0 0.5rem;
+  min-width: 15ch;
+}
+
+.cal-freccia,
+.cal-oggi,
+.cal-vista,
+.cal-salta {
+  font: inherit;
+  font-size: 1rem;
+  background: white;
+  color: var(--dark);
+  border: 1px solid #ddd;
+  border-radius: var(--radius-input);
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.cal-freccia {
+  padding: 0.45rem 0.8rem;
+  font-size: 1.2rem;
+}
+
+.cal-freccia:hover,
+.cal-oggi:hover,
+.cal-vista:hover,
+.cal-salta:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.cal-viste {
+  display: flex;
+  gap: 0;
+  margin-left: auto;
+}
+
+.cal-viste .cal-vista:first-child {
+  border-radius: var(--radius-input) 0 0 var(--radius-input);
+}
+
+.cal-viste .cal-vista:last-child {
+  border-radius: 0 var(--radius-input) var(--radius-input) 0;
+  border-left: 0;
+}
+
+.cal-vista.attiva {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.cal-filtri {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.cal-filtri label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.cal-filtri input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+
+/* ⛔ Senza questa riga il pannello resterebbe visibile anche con l'attributo
+   `hidden`: `display: flex` qui sotto è più forte del display:none che il
+   browser da' agli elementi nascosti. */
+.cal-avviso[hidden] {
+  display: none;
+}
+
+.cal-avviso {
+  background: var(--primary-light);
+  border-left: 4px solid var(--primary);
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-input);
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* --- vista mese --- */
+.cal-mese {
+  border: 1px solid #e2e2e2;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: white;
+}
+
+.cal-testata {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #fafafa;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.cal-testata div {
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cal-riga {
+  position: relative;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.cal-riga:last-child {
+  border-bottom: 0;
+}
+
+.cal-giorni {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: absolute;
+  inset: 0;
+}
+
+.cal-giorno {
+  border-right: 1px solid #eee;
+  padding: 0.4rem 0.6rem;
+}
+
+.cal-giorno:last-child {
+  border-right: 0;
+}
+
+.cal-giorno.festivo {
+  background: #fcfcfc;
+}
+
+.cal-giorno.fuori-mese .cal-numero {
+  color: #bbb;
+}
+
+.cal-giorno.oggi {
+  background: var(--primary-light);
+}
+
+.cal-numero {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.cal-giorno.oggi .cal-numero {
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Le fasce stanno sopra la griglia dei giorni e la attraversano: un progetto
+   che dura tre giorni è UNA striscia, non tre etichette uguali ripetute. */
+.cal-fasce {
+  position: relative;
+  min-height: 96px;
+  pointer-events: none;
+}
+
+.cal-fascia,
+.cal-appuntamento {
+  pointer-events: auto;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font: inherit;
+  font-size: 1rem;
+  text-align: left;
+  border: 0;
+  border-radius: 4px;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.cal-fascia-testo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cal-fascia.tipo-progetto,
+.cal-appuntamento.tipo-progetto {
+  background: #E8630A;
+  color: white;
+}
+
+.cal-fascia.tipo-evento,
+.cal-appuntamento.tipo-evento {
+  background: #2f7d32;
+  color: white;
+}
+
+.cal-fascia:hover,
+.cal-appuntamento:hover {
+  filter: brightness(1.12);
+}
+
+.cal-continua {
+  opacity: 0.8;
+  font-weight: 700;
+}
+
+/* --- vista settimana --- */
+.cal-settimana {
+  border: 1px solid #e2e2e2;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: white;
+}
+
+.cal-testata-settimana {
+  display: grid;
+  grid-template-columns: 76px repeat(7, 1fr);
+  background: #fafafa;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.cal-giorno-testata {
+  padding: 0.5rem 0.75rem;
+  border-left: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.cal-giorno-nome {
+  font-size: 1rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cal-giorno-numero {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.cal-giorno-testata.oggi {
+  background: var(--primary-light);
+}
+
+.cal-giorno-testata.oggi .cal-giorno-numero {
+  color: var(--primary);
+}
+
+.cal-banda {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  border-bottom: 2px solid #e2e2e2;
+}
+
+.cal-banda-etichetta {
+  padding: 0.5rem 0.6rem;
+  font-size: 1rem;
+  color: #666;
+  border-right: 1px solid #eee;
+  line-height: 1.2;
+}
+
+.cal-banda-fasce {
+  position: relative;
+  padding: 0.4rem 0;
+}
+
+.cal-banda-vuota {
+  font-size: 1rem;
+  color: #888;
+  padding: 0.3rem 0.75rem;
+  margin: 0;
+}
+
+.cal-orario {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+}
+
+.cal-ore {
+  border-right: 1px solid #eee;
+}
+
+.cal-ora {
+  position: relative;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.cal-ora span {
+  position: absolute;
+  top: -0.7rem;
+  right: 0.6rem;
+  font-size: 1rem;
+  color: #888;
+  background: white;
+  padding: 0 0.2rem;
+}
+
+.cal-colonne {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.cal-colonna {
+  position: relative;
+  border-left: 1px solid #eee;
+}
+
+.cal-colonna.festivo {
+  background: #fcfcfc;
+}
+
+.cal-colonna.oggi {
+  background: var(--primary-light);
+}
+
+.cal-riga-ora {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.cal-appuntamento {
+  /* left e width li scrive calendario.js: quando due incontri si accavallano
+     si dividono la colonna del giorno. */
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  white-space: normal;
+  padding: 0.2rem 0.4rem;
+}
+
+.cal-appuntamento-ora {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.cal-appuntamento-titolo {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cal-nota-ore {
+  font-size: 1rem;
+  color: #666;
+  padding: 0.9rem 1rem;
+  margin: 0;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+/* --- legenda --- */
+.cal-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.cal-legenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cal-pallino {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.cal-pallino.tipo-progetto {
+  background: #E8630A;
+}
+
+.cal-pallino.tipo-evento {
+  background: #2f7d32;
+}
+
+/* --- la scheda che si apre cliccando una fascia --- */
+.cal-velo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 2000;
+}
+
+.cal-scheda {
+  position: relative;
+  background: white;
+  border-radius: var(--radius-card);
+  padding: 1.75rem;
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.cal-scheda h2 {
+  font-size: 1.6rem;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.cal-scheda p {
+  margin: 0 0 0.6rem;
+}
+
+.cal-scheda-tipo {
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  color: white;
+}
+
+.cal-scheda-tipo.tipo-progetto {
+  background: #E8630A;
+}
+
+.cal-scheda-tipo.tipo-evento {
+  background: #2f7d32;
+}
+
+.cal-scheda-quando {
+  font-weight: 600;
+}
+
+.cal-scheda-progetto {
+  color: #666;
+}
+
+.cal-scheda-chiudi {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-size: 2rem;
+  line-height: 1;
+  background: none;
+  border: 0;
+  color: #888;
+  cursor: pointer;
+}
+
+.cal-scheda-chiudi:hover {
+  color: var(--dark);
+}
+
+@media (max-width: 768px) {
+  /* Sette colonne su un telefono darebbero caselle da 45px: si scorre di
+     lato, che è come si guarda un calendario sul telefono. */
+  .cal-tabellone {
+    overflow-x: auto;
+  }
+
+  .cal-mese,
+  .cal-settimana {
+    min-width: 700px;
+  }
+
+  .cal-viste {
+    margin-left: 0;
+  }
+
+  .cal-periodo {
+    font-size: 1.2rem;
+    min-width: 0;
   }
 }

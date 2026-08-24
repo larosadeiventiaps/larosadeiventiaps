@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Il menu «Utilità» della barra
+  avviaMenuUtilita();
+
   // Load stats on home page
   loadStats();
   // Fasce di numeri in cima a progetti/eventi/partner (ognuna esce subito
@@ -34,6 +37,46 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load documenti on documenti page
   loadDocumenti();
 });
+
+/**
+ * Il menu «Utilità» della barra in alto.
+ *
+ * Col mouse basta il CSS (`:hover`), ma non basta mai da solo: su un telefono
+ * `:hover` resta acceso dopo il tocco e il menu non si chiude più, e con la
+ * tastiera ci si deve poter arrivare senza mouse. Qui si aggiunge il clic,
+ * l'Escape e la chiusura quando si tocca fuori.
+ *
+ * ⚠️ Sotto i 768px il CSS mostra le tre voci sempre aperte, rientrate dentro
+ * il menu a scomparsa: li' questo codice non serve, e la classe `aperto` che
+ * mette non cambia niente.
+ */
+function avviaMenuUtilita() {
+  const voce = document.querySelector('.voce-utilita');
+  if (!voce) return;
+  const bottone = voce.querySelector('.utilita-apri');
+  if (!bottone) return;
+
+  const apri = (aperto) => {
+    voce.classList.toggle('aperto', aperto);
+    bottone.setAttribute('aria-expanded', aperto ? 'true' : 'false');
+  };
+
+  bottone.addEventListener('click', (e) => {
+    e.stopPropagation();
+    apri(!voce.classList.contains('aperto'));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!voce.contains(e.target)) apri(false);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && voce.classList.contains('aperto')) {
+      apri(false);
+      bottone.focus();
+    }
+  });
+}
 
 function escapeHTML(str) {
   if (!str) return '';

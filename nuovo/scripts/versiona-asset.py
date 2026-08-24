@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """Cambia la versione degli asset (?v=...) in tutte le pagine del sito.
 
-⛔ PERCHE' ESISTE. Il server che sta davanti a Ergonet consegna da se' i file
+⛔ Perché ESISTE. Il server che sta davanti a Ergonet consegna da sé i file
 statici e ignora `.htaccess`: immagini, fogli di stile e script escono con
 `Cache-Control: max-age=10368000` (120 giorni), qualunque direttiva si
 scriva. Le pagine `.html` invece rispettano il `no-store`. Quindi:
-sostituire un file tenendo lo stesso nome non si vede — il file nuovo e'
-online, ma il browser di chi era passato prima non lo chiede piu'. E' il
+sostituire un file tenendo lo stesso nome non si vede — il file nuovo è
+online, ma il browser di chi era passato prima non lo chiede più. È il
 motivo per cui il 23/08/2026 sei loghi dei partner sono rimasti quelli
-vecchi. L'unica leva e' l'indirizzo: `?v=...` e' una richiesta diversa.
+vecchi. L'unica leva è l'indirizzo: `?v=...` è una richiesta diversa.
 
 QUANDO SI LANCIA: dopo aver sostituito un'immagine, un css o un js tenendo
-lo stesso nome di file. Se il nome e' nuovo non serve.
+lo stesso nome di file. Se il nome è nuovo non serve.
 
     python scripts/versiona-asset.py            # versione = la data di oggi
     python scripts/versiona-asset.py 20260901   # versione scelta a mano
 
-Va lanciato dalla cartella `nuovo/`. La versione delle immagini non e'
+Va lanciato dalla cartella `nuovo/`. La versione delle immagini non è
 scritta da nessuna parte: `js/main.js` la rilegge dal proprio tag <script>.
 """
 import glob

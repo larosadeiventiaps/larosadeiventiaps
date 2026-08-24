@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery — La Rosa dei Venti APS</title>
-  <meta name="description" content="La Rosa dei Venti APS — Gallery fotografica dei nostri eventi, attività e momenti speciali.">
-  <meta property="og:title" content="Gallery — La Rosa dei Venti APS">
-  <meta property="og:description" content="Guarda le foto dei nostri eventi, attività e momenti speciali condivisi insieme.">
+  <title>Calendario — La Rosa dei Venti APS</title>
+  <meta name="description" content="Il calendario dei progetti e degli eventi di La Rosa dei Venti APS: vista mese e vista settimana.">
+  <meta property="og:title" content="Calendario — La Rosa dei Venti APS">
+  <meta property="og:description" content="I progetti e gli eventi dell'associazione, mese per mese e settimana per settimana.">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/style.css?v=20260824c">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
@@ -21,7 +21,7 @@
       <li><a href="mission.html">Mission</a></li>
       <li><a href="progetti.html">Progetti</a></li>
       <li><a href="eventi.html">Eventi</a></li>
-      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
       <li><a href="partner.html">Partner</a></li>
       <!-- ⚠️ «Utilità» raccoglie le pagine di servizio (Calendario, App,
            Documenti). Sono voci che si cercano quando servono, non pagine
@@ -30,9 +30,9 @@
            «Documenti» accanto a «Partner» come se avessero lo stesso peso.
            Le tre pagine restano separate e i loro indirizzi non cambiano. -->
       <li class="voce-utilita">
-        <button type="button" class="utilita-apri" aria-expanded="false" aria-haspopup="true">Utilità <span aria-hidden="true">▾</span></button>
+        <button type="button" class="utilita-apri active" aria-expanded="false" aria-haspopup="true">Utilità <span aria-hidden="true">▾</span></button>
         <ul class="utilita-menu">
-          <li><a href="calendario.html">Calendario</a></li>
+          <li><a href="calendario.html" class="active">Calendario</a></li>
           <li><a href="app.html">App</a></li>
           <li><a href="documenti.html">Documenti</a></li>
         </ul>
@@ -44,22 +44,62 @@
   </nav>
 
   <main>
-    <div class="filter-bar">
-      <input type="text" id="search-input" placeholder="🔍 Cerca nella gallery...">
-      <input type="date" id="date-from" title="Da">
-      <input type="date" id="date-to" title="A">
-    </div>
+    <section class="section">
+      <h1 class="section-title">Calendario</h1>
+      <p style="margin-bottom:1.5rem;max-width:70ch;">
+        I progetti e gli eventi dell'associazione, mese per mese. Si passa alla settimana con il
+        pulsante in alto a destra, si cambia periodo con le frecce e si torna a oggi quando ci si
+        è persi. Ogni fascia si apre: dentro c'è il periodo, il luogo e che cosa è.
+      </p>
 
-    <div class="gallery-grid" id="gallery-grid"></div>
+      <!--
+        ⚠️ QUELLO CHE IL CALENDARIO SA, OGGI.
+        Le voci arrivano da `data/events.json` e `data/projects.json`: le
+        stesse delle pagine Eventi e Progetti, così non c'è un secondo
+        elenco da tenere allineato. Quei file però hanno solo la data di
+        inizio e quella di fine — nessun orario. Per questo un laboratorio da
+        settembre a giugno qui è una fascia lunga nove mesi e non trenta
+        incontri del martedì alle 17, e per questo la vista settimana ha la
+        griglia delle ore vuota: il calendario dice quello che i dati sanno.
+
+        Quando ogni progetto avrà le sue date con gli orari, basta
+        aggiungere alla voce un elenco `appuntamenti` (il formato è scritto
+        in cima a `js/calendario.js`): il calendario passa da solo a mostrare
+        gli incontri veri, con l'ora, e smette di disegnare la fascia lunga.
+      -->
+
+      <div class="cal-barra">
+        <div class="cal-navigazione">
+          <button type="button" class="cal-freccia" data-vai="prec" aria-label="Periodo precedente">‹</button>
+          <button type="button" class="cal-oggi">Oggi</button>
+          <button type="button" class="cal-freccia" data-vai="succ" aria-label="Periodo successivo">›</button>
+          <h2 class="cal-periodo" id="cal-periodo" aria-live="polite">&nbsp;</h2>
+        </div>
+
+        <div class="cal-filtri">
+          <label><input type="checkbox" data-filtro="progetto" checked> Progetti</label>
+          <label><input type="checkbox" data-filtro="evento" checked> Eventi</label>
+        </div>
+
+        <div class="cal-viste" role="group" aria-label="Vista del calendario">
+          <button type="button" class="cal-vista attiva" data-vista="mese" aria-pressed="true">Mese</button>
+          <button type="button" class="cal-vista" data-vista="settimana" aria-pressed="false">Settimana</button>
+        </div>
+      </div>
+
+      <p class="cal-avviso" id="cal-avviso" hidden></p>
+
+      <div class="cal-tabellone">
+        <div id="cal-contenitore"></div>
+      </div>
+
+      <div class="cal-legenda">
+        <span><i class="cal-pallino tipo-progetto"></i> Progetti</span>
+        <span><i class="cal-pallino tipo-evento"></i> Eventi</span>
+        <span>‹ › su una fascia vuol dire che il periodo continua prima o dopo questa settimana.</span>
+      </div>
+    </section>
   </main>
-
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Chiudi">✕</button>
-    <button class="lightbox-prev" id="lightbox-prev" aria-label="Precedente">❮</button>
-    <img id="lightbox-img" src="" alt="">
-    <button class="lightbox-next" id="lightbox-next" aria-label="Successivo">❯</button>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
 
   <footer class="footer">
     <p>La Rosa dei Venti APS</p>
@@ -87,5 +127,6 @@
   </footer>
 
   <script src="js/main.js?v=20260824c"></script>
+  <script src="js/calendario.js?v=20260824c"></script>
 </body>
 </html>
