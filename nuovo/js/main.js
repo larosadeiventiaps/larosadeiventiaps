@@ -373,9 +373,26 @@ async function loadStats() {
   const grid = document.getElementById('stats-grid');
   if (!grid) return;
   try {
-    const res = await fetch('data/projects.json');
+    // ⚠️ Anche i partner, dallo stesso elenco della pagina Partner. Prima si
+    //    contavano i nomi che comparivano nei campi `sponsor`/`collaboratori`
+    //    dei progetti: 31, mentre la pagina Partner ne mostrava 33 e
+    //    «Sostienici» diceva 33. Tre numeri per la stessa cosa, tutti veri
+    //    ciascuno a modo suo, e chi li leggeva di fila non poteva che
+    //    concludere che uno dei tre fosse sbagliato.
+    const [res, resPartner] = await Promise.all([
+      fetch('data/projects.json'),
+      fetch('data/partners.json')
+    ]);
     const projects = await res.json();
-    const totProjects = projects.length;
+    const partner = await resPartner.json();
+    // ⛔ **`projects.length` sono le EDIZIONI, non i progetti.** Le 57 righe
+    //    del file sono 28 progetti, ciascuno con le sue edizioni annuali:
+    //    fino al 24/08/2026 la home diceva «57 progetti realizzati», cioè
+    //    contava cinque volte «Giochiamo con l'inglese». Il numero era il
+    //    doppio del vero in prima pagina, e nessuno poteva accorgersene
+    //    guardandolo — sembrava semplicemente un bel numero.
+    const totProgetti = new Set(projects.map(p => p.title)).size;
+    const totEdizioni = projects.length;
     const totIncontri = projects.reduce((s, p) => s + (p.incontri || 0), 0);
     const totOre = projects.reduce((s, p) => s + (p.ore || 0), 0);
     const totPartecipanti = projects.reduce((s, p) => s + (p.partecipanti || 0), 0);
@@ -385,19 +402,18 @@ async function loadStats() {
     const totYears = years.size;
 
     const stats = [
-      { number: totProjects, label: 'Progetti realizzati', icona: '📋' },
+      { number: totProgetti, label: 'Progetti', icona: '📋' },
+      // Le edizioni sono la cosa che racconta la continuità — «lo facciamo da
+      // cinque anni» — e vanno dette, ma accanto ai progetti, non al posto
+      // loro: sono due numeri diversi e uno solo dei due è «quanti progetti».
+      { number: totEdizioni, label: 'Edizioni realizzate', icona: '🔁' },
       { number: totIncontri, label: 'Incontri organizzati', icona: '🗓️' },
       { number: Math.round(totOre), label: 'Ore di attività', icona: '⏱️' },
       { number: totPartecipanti, label: 'Partecipanti coinvolti', icona: '🧑‍🤝‍🧑' },
       { number: totVolontari, label: 'Volontari impiegati', icona: '🤝' },
       { number: totEducatori, label: 'Educatori coinvolti', icona: '🎓' },
       { number: totYears, label: 'Anni di attività', icona: '📅' },
-      // ⚠️ 24/08/2026 — `sponsor` è diventato un ARRAY di nomi (prima era
-      // una stringa sola). Con `[p.collaboratori, p.sponsor]` l'array
-      // finiva dentro il Set com'era, come UN elemento — non i nomi che
-      // contiene: il conteggio usciva silenziosamente sbagliato, senza
-      // nessun errore in console. Qui si spalmano i nomi dentro con `...`.
-      { number: new Set(projects.flatMap(p => [p.collaboratori, ...(p.sponsor || [])].filter(Boolean))).size, label: 'Partner e collaboratori', icona: '🏛️' }
+      { number: partner.length, label: 'Partner del territorio', icona: '🏛️' }
     ];
 
     renderStatCards(grid, stats);
