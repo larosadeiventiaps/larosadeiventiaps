@@ -41,11 +41,31 @@ ErrorDocument 404 /nuovo/404.html
 
 # ⚠️ Le pagine e i dati NON si tengono in cache. Questa e' una versione che
 # si guarda per correggerla: con la cache si rivedrebbe sempre la stessa
-# pagina vecchia senza capire perche'. Le immagini invece restano tenute,
-# come sopra: sono le stesse e pesano.
+# pagina vecchia senza capire perche'.
 <IfModule mod_headers.c>
 	<FilesMatch "\.(html|json)$">
 		Header set Cache-Control "no-store, must-revalidate"
+	</FilesMatch>
+</IfModule>
+
+# ⛔ Le immagini si tengono, ma si RICHIEDONO OGNI VOLTA. Il 23/08/2026 sei
+# loghi dei partner sono stati sostituiti mantenendo lo stesso nome di file
+# (comune-bagno-a-ripoli, croce-doro-ponte-ema, croce-rossa-italiana,
+# misericordia-badia, sds-firenze-sudest, trekking-bar): col «tieni per
+# quattro mesi» del blocco qui sopra, chi aveva aperto la pagina il giorno
+# prima ha continuato a vedere i loghi vecchi, senza nessun modo di
+# accorgersene ne' di rimediare dal server. «no-cache» non vuol dire «non
+# tenere»: il file resta nella cache del browser, ma prima di riusarlo il
+# browser chiede al server se e' cambiato — se non lo e' torna un 304 da
+# poche decine di byte, quindi il risparmio di banda che il blocco sopra
+# cercava resta. Quando il sito prendera' il posto di quello principale e i
+# contenuti non cambieranno piu' ogni giorno, questo blocco va tolto e
+# le immagini tornano a essere tenute a lungo — ma allora un logo sostituito
+# dovra' cambiare nome, o il problema torna identico.
+<IfModule mod_headers.c>
+	<FilesMatch "\.(png|jpe?g|webp|gif|svg|ico)$">
+		Header set Cache-Control "no-cache, must-revalidate"
+		Header unset Expires
 	</FilesMatch>
 </IfModule>
 
