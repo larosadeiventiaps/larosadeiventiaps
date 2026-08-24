@@ -54,6 +54,22 @@ MESI_IT = {
 }
 
 
+
+def risolvi_sponsor(grezzo):
+    """I nomi degli sponsor, risolti con la stessa tabella di sync-partners.py.
+
+    ⛔ La tabella NON si copia qui: se un giorno qualcuno correggesse un nome
+    in un solo file, la pagina Partner e la pagina Progetti chiamerebbero lo
+    stesso ente in due modi diversi, e nessuno saprebbe quale dei due è giusto.
+    """
+    import importlib.util
+    percorso = os.path.join(SCRIPT_DIR, "sync-partners.py")
+    spec = importlib.util.spec_from_file_location("sync_partners", percorso)
+    modulo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(modulo)
+    return modulo.resolve_partner_names(grezzo)
+
+
 def parse_date(val):
     """Converte un valore cella in una data ISO (YYYY-MM-DD)."""
     if val is None:
@@ -251,7 +267,14 @@ def sync(excel_path):
         if professionisti:
             project["professionisti"] = professionisti
         if sponsor:
-            project["sponsor"] = sponsor
+            # ⭐ `sponsor` è un ELENCO di nomi che combaciano con partners.json,
+            #    non la stringa grezza del foglio (24/08/2026). Il foglio scrive
+            #    «Comune BaR?», «Scuola Redi - IC Caponnetto», e celle con due
+            #    enti dentro: quei nomi finiscono su una pagina pubblica accanto
+            #    a «Con il sostegno di». La tabella che li risolve è una sola,
+            #    in `sync-partners.py`, e sta lì perché serve a entrambi:
+            #    duplicarla vorrebbe dire due elenchi liberi di divergere.
+            project["sponsor"] = risolvi_sponsor(sponsor)
         if collaboratori:
             project["collaboratori"] = collaboratori
 

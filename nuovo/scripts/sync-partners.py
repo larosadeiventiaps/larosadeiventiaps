@@ -56,6 +56,17 @@ ALIASES = {
     "croce d'oro ponte a ema": "Croce d'Oro Ponte a Ema",
     "l'apiario": "Apicoltura San Martino",
     "fontenuova": "Cooperativa Fontenuova",
+    # Aggiunti il 24/08/2026: sono le grafie che compaiono nella colonna
+    # «sponsor» del foglio progetti, diverse dalle sigle brevi qui sopra.
+    # Servono perché quei nomi finiscono su una pagina pubblica accanto a
+    # «Con il sostegno di»: sono enti che ci hanno dato dei soldi, e
+    # «Comune BaR?» col punto interrogativo è la cosa peggiore che possa
+    # capitare a quella riga.
+    "comune bar?": "Comune di Bagno a Ripoli",
+    "scuola redi - ic caponnetto": "Scuola Francesco Redi",
+    "contrada alfiere - bagno a ripoli": "Contrada dell'Alfiere",
+    "be care srl": "BE Care Srl",
+    "cri bagno a ripoli": "Croce Rossa Italiana",
 }
 
 # Stringhe composte nell'Excel che vanno espanse in più partner singoli

@@ -21,7 +21,7 @@
     "url": "https://www.auser.it"
   },
   {
-    "name": "BE Care S.r.l.",
+    "name": "BE Care Srl",
     "type": "azienda",
     "description": "Azienda di servizi ICT con ventennale esperienza nel settore informatico, partner tecnologico dell'associazione.",
     "logo": "images/partners/becare.png",
@@ -187,6 +187,13 @@
     "description": "Confraternita di Misericordia per servizi di soccorso, trasporto sanitario e attività sociali a Ponte a Ema.",
     "logo": "",
     "url": ""
+  },
+  {
+    "name": "Publiacqua",
+    "type": "azienda",
+    "description": "Gestore del servizio idrico integrato in Toscana centrale, sostenitore di progetti di educazione ambientale.",
+    "logo": "",
+    "url": "https://www.publiacqua.it"
   },
   {
     "name": "Scuola Francesco Redi",

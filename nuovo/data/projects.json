@@ -11,7 +11,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Biblioteca di Bagno a Ripoli",
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -37,7 +39,9 @@
     "partecipanti": 20,
     "educatori": 6,
     "volontari": 2,
-    "sponsor": "Fondazione CR Firenze",
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema",
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
   },
@@ -49,7 +53,9 @@
     "status": "in_corso",
     "incontri": 7,
     "ore": 14.0,
-    "sponsor": "Intesa Sanpaolo",
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio di Musica ed espressione Corporea"
   },
   {
@@ -106,7 +112,9 @@
     "educatori": 2,
     "volontari": 25,
     "professionisti": 1,
-    "sponsor": "Comune BaR?",
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli",
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
   },
@@ -150,7 +158,9 @@
     "educatori": 2,
     "volontari": 2,
     "professionisti": 4,
-    "sponsor": "Publiacqua",
+    "sponsor": [
+      "Publiacqua"
+    ],
     "collaboratori": "Associazione Nomya",
     "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme"
   },
@@ -167,17 +177,6 @@
     "professionisti": 4,
     "collaboratori": "Comune di Bagno a Ripoli",
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette."
-  },
-  {
-    "title": "Prim'olio",
-    "image": "images/logo.jpg",
-    "startDate": "2025-11-12",
-    "endDate": "2025-11-15",
-    "status": "passato",
-    "incontri": 2,
-    "ore": 16.0,
-    "volontari": 6,
-    "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio."
   },
   {
     "title": "Autonomia",
@@ -203,7 +202,9 @@
     "educatori": 2,
     "volontari": 25,
     "professionisti": 1,
-    "sponsor": "Comune BaR?",
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli",
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
   },
@@ -229,7 +230,9 @@
     "status": "passato",
     "incontri": 7,
     "ore": 14.0,
-    "sponsor": "Intesa Sanpaolo",
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio di Musica ed espressione Corporea"
   },
   {
@@ -256,7 +259,9 @@
     "ore": 21.0,
     "partecipanti": 7,
     "educatori": 2,
-    "sponsor": "Intesa Sanpaolo",
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "collaboratori": "Cooperativa Fontenuova",
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
   },
@@ -329,29 +334,6 @@
     "description": "In collaborazione con Trekking di Bagno a Ripoli. 1 incontri per un totale di 3.0 ore. 10 partecipanti."
   },
   {
-    "title": "Volontmusic",
-    "image": "images/logo.jpg",
-    "startDate": "2025-04-12",
-    "endDate": "2025-04-12",
-    "status": "passato",
-    "incontri": 1,
-    "sponsor": "Volontmusic",
-    "description": "Contest musicale tra band emergenti delle associazioni di volontariato per promuovere la solidarietà attraverso la musica."
-  },
-  {
-    "title": "Riforma sulla disabilità",
-    "image": "images/logo.jpg",
-    "startDate": "2025-03-21",
-    "endDate": "2025-03-21",
-    "status": "passato",
-    "incontri": 1,
-    "ore": 2.0,
-    "partecipanti": 30,
-    "professionisti": 2,
-    "collaboratori": "SdS Firenze sud-est e Comune di Bagno a Ripoli",
-    "description": "In collaborazione con SdS Firenze sud-est e Comune di Bagno a Ripoli. 1 incontri per un totale di 2.0 ore. 30 partecipanti."
-  },
-  {
     "title": "Colori in libertà",
     "image": "images/progetti-nuove/loc-colori-in-liberta.jpg",
     "startDate": "2025-01-01",
@@ -363,7 +345,9 @@
     "educatori": 3,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Intesa Sanpaolo",
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "collaboratori": "Consorzio blu Ancora",
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
   },
@@ -379,7 +363,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Intesa Sanpaolo",
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "collaboratori": "Cooperativa Fontenuova",
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
   },
@@ -394,7 +380,9 @@
     "partecipanti": 20,
     "educatori": 6,
     "volontari": 2,
-    "sponsor": "Fondazione CR Firenze",
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema",
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
   },
@@ -411,17 +399,6 @@
     "professionisti": 4,
     "collaboratori": "Comune di Bagno a Ripoli",
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette."
-  },
-  {
-    "title": "Prim'olio",
-    "image": "images/projects/la-tommasina.jpg",
-    "startDate": "2024-11-12",
-    "endDate": "2024-11-15",
-    "status": "passato",
-    "incontri": 2,
-    "ore": 16.0,
-    "volontari": 6,
-    "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio."
   },
   {
     "title": "Genitori a confronto",
@@ -447,7 +424,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Biblioteca di Bagno a Ripoli",
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -505,7 +484,9 @@
     "educatori": 2,
     "volontari": 5,
     "professionisti": 2,
-    "sponsor": "Comune di Bagno a Ripoli",
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "collaboratori": "Comune di Bagno a Ripoli, Il Teatro dell'Inutile, Apicoltura San Martino",
     "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni."
   },
@@ -592,7 +573,9 @@
     "partecipanti": 15,
     "educatori": 4,
     "volontari": 2,
-    "sponsor": "Intesa Sanpaolo",
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema",
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
   },
@@ -607,20 +590,11 @@
     "partecipanti": 100,
     "volontari": 1,
     "professionisti": 5,
-    "sponsor": "Scuola Redi - IC Caponnetto",
+    "sponsor": [
+      "Scuola Francesco Redi"
+    ],
     "collaboratori": "Comune di Bagno a Ripoli",
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette."
-  },
-  {
-    "title": "Prim'olio",
-    "image": "images/projects/la-tommasina.jpg",
-    "startDate": "2023-11-12",
-    "endDate": "2023-11-15",
-    "status": "passato",
-    "incontri": 1,
-    "ore": 8.0,
-    "volontari": 6,
-    "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio."
   },
   {
     "title": "Genitori a confronto",
@@ -645,7 +619,10 @@
     "partecipanti": 120,
     "educatori": 2,
     "volontari": 25,
-    "sponsor": "Scuola Redi - IC Caponnetto, Fondazione Claudio Ciai",
+    "sponsor": [
+      "Scuola Francesco Redi",
+      "Fondazione Claudio Ciai"
+    ],
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli",
     "description": "Progetto di educazione stradale per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
   },
@@ -661,7 +638,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Biblioteca di Bagno a Ripoli",
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -697,7 +676,9 @@
     "startDate": "2023-04-01",
     "endDate": "2023-04-30",
     "status": "passato",
-    "sponsor": "Comune di Bagno a Ripoli",
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "collaboratori": "Auser, Legambiente",
     "description": "Progetto di orti sociali nel verde del bosco, per coltivare insieme ortaggi e piante promuovendo la socializzazione all'aria aperta."
   },
@@ -710,7 +691,9 @@
     "incontri": 15,
     "ore": 90.0,
     "partecipanti": 9,
-    "sponsor": "Contrada Alfiere - Bagno a Ripoli",
+    "sponsor": [
+      "Contrada dell'Alfiere"
+    ],
     "collaboratori": "Contrada Alfiere - Bagno a Ripoli",
     "description": "Laboratorio di cucina e convivialità legato alle tradizioni locali, con preparazione di frittelle e momenti di festa insieme."
   },
@@ -741,7 +724,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Biblioteca di Bagno a Ripoli",
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -755,7 +740,9 @@
     "partecipanti": 140,
     "educatori": 2,
     "volontari": 28,
-    "sponsor": "Scuola Redi - IC Caponnetto",
+    "sponsor": [
+      "Scuola Francesco Redi"
+    ],
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli",
     "description": "Progetto di educazione stradale per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
   },
@@ -771,7 +758,10 @@
     "educatori": 1,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": "Be Care Srl, CRI Bagno a Ripoli",
+    "sponsor": [
+      "BE Care Srl",
+      "Croce Rossa Italiana"
+    ],
     "collaboratori": "La Lanterna",
     "description": "Corso di alfabetizzazione informatica per imparare ad usare il computer, navigare in internet e utilizzare i principali strumenti digitali."
   },
@@ -786,7 +776,9 @@
     "partecipanti": 5,
     "educatori": 1,
     "volontari": 2,
-    "sponsor": "Scuola Redi - IC Caponnetto",
+    "sponsor": [
+      "Scuola Francesco Redi"
+    ],
     "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto",
     "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra."
   },
@@ -818,20 +810,6 @@
     "description": "Escursioni guidate alla scoperta del territorio di Bagno a Ripoli, tra sentieri, borghi e paesaggi collinari."
   },
   {
-    "title": "Diritto parità di genere",
-    "image": "images/logo.jpg",
-    "startDate": "2021-06-01",
-    "endDate": "2021-06-01",
-    "status": "passato",
-    "incontri": 1,
-    "ore": 1.5,
-    "partecipanti": 10,
-    "educatori": 1,
-    "sponsor": "Comune di Bagno a Ripoli",
-    "collaboratori": "Comune di Bagno a Ripoli",
-    "description": "Incontro di sensibilizzazione sulla parità di genere e i diritti delle persone con disabilità, in collaborazione con il Comune di Bagno a Ripoli."
-  },
-  {
     "title": "Dall'orto con amore",
     "image": "images/projects/corso-riciclo.jpg",
     "startDate": "2021-01-03",
@@ -842,7 +820,9 @@
     "partecipanti": 3,
     "educatori": 1,
     "volontari": 2,
-    "sponsor": "Scuola Redi - IC Caponnetto",
+    "sponsor": [
+      "Scuola Francesco Redi"
+    ],
     "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto",
     "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra."
   },
@@ -853,7 +833,9 @@
     "endDate": "2020-11-26",
     "status": "passato",
     "incontri": 1,
-    "sponsor": "Fondazione CR Firenze",
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "collaboratori": "Borgogni",
     "description": "Iniziativa di volontariato per portare comfort e vicinanza ai pazienti ricoverati attraverso piccoli gesti di cura e attenzione."
   },
@@ -864,7 +846,9 @@
     "endDate": "2021-01-21",
     "status": "passato",
     "incontri": 1,
-    "sponsor": "Fondazione CR Firenze",
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "collaboratori": "Borgogni",
     "description": "Progetto di socializzazione attraverso il gioco per bambini e ragazzi con disabilità, favorendo l'inclusione e il divertimento condiviso."
   }
