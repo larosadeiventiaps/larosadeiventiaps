@@ -3472,3 +3472,42 @@ main {
 @media (max-width: 560px) {
   .modi-griglia { grid-template-columns: 1fr; }
 }
+
+/* ------------------------------------------------------------
+   Home: i nove numeri su DUE righe
+   ------------------------------------------------------------
+   ⛔ Con `repeat(4, 1fr)` i nove riquadri facevano 4 + 4 + 1: l'ultimo
+   restava solo in fondo a sinistra e sembrava un errore di impaginazione,
+   non una scelta. Chiesto dal titolare il 24/08/2026: due righe.
+
+   ⚠️ Nove non si divide in due, quindi sono 5 + 4. Si usa flex e non grid
+   apposta: con `repeat(5, 1fr)` la seconda riga lascerebbe una casella vuota
+   a destra — un buco visibile. Qui i quattro della seconda riga sono
+   CENTRATI e larghi quanto i cinque sopra (`flex-grow: 0`), così la riga
+   corta si legge come una scelta.
+
+   Vale solo per la home (`#stats-grid`): le altre pagine hanno un numero
+   diverso di riquadri e la loro griglia funziona già. */
+#stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+#stats-grid .stat-card {
+  flex: 0 0 calc((100% - 6rem) / 5);
+  min-width: 150px;
+}
+
+@media (max-width: 1100px) {
+  #stats-grid .stat-card {
+    flex: 0 0 calc((100% - 3rem) / 3);
+  }
+}
+
+@media (max-width: 700px) {
+  #stats-grid .stat-card {
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+  }
+}
