@@ -14,7 +14,7 @@
     "startDate": "2025-04-12",
     "endDate": "2025-04-12",
     "location": "CRC Antella",
-    "description": "VolontMusic",
+    "description": "Contest musicale fra le band emergenti delle associazioni di volontariato del territorio, per far conoscere il volontariato attraverso la musica.",
     "image": "images/events/Volontmusic.png",
     "status": "passato",
     "link": "https://www.youtube.com/channel/UCFGszTo63mRTSlNrtNXDiHA/featured"
@@ -24,7 +24,7 @@
     "startDate": "2025-03-21",
     "endDate": "2025-03-21",
     "location": "Ospedale Santa Maria Annunziata",
-    "description": "Contest musicale tra band emergenti delle associazioni di volontariato per promuovere la solidarietà attraverso la musica.",
+    "description": "Incontro pubblico sulla nuova riforma della disabilità e sul Progetto Vita, con la Società della Salute Firenze Sud-Est e il Comune di Bagno a Ripoli.",
     "image": "images/events/Disabilita.jpg",
     "status": "passato"
   },
@@ -54,7 +54,7 @@
     "endDate": "2023-03-31",
     "location": "Pieve di Bagno a Ripoli",
     "description": "Laboratorio di cucina e convivialità legato alle tradizioni locali, con preparazione di frittelle e momenti di festa insieme.",
-    "image": "images/logo.jpg",
+    "image": "images/events/loc-frittelle-pieve.jpg",
     "status": "passato",
     "link": "https://www.quiantella.it/a-bagno-a-ripoli-torna-la-sagra-delle-frittelle/"
   },
@@ -64,7 +64,7 @@
     "endDate": "2021-06-01",
     "location": "Comune di Bagno a Ripoli",
     "description": "Incontro di sensibilizzazione sulla parità di genere e i diritti delle persone con disabilità, in collaborazione con il Comune di Bagno a Ripoli.",
-    "image": "images/logo.jpg",
+    "image": "images/events/parita-di-genere.jpg",
     "status": "passato"
   }
 ]

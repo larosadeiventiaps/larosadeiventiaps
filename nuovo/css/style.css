@@ -456,6 +456,164 @@ main {
 }
 
 /* ------------------------------------------------------------
+   Pulsanti di stato (progetti.html, 24/08/2026)
+   ------------------------------------------------------------
+   ⚠️ Sostituiscono le tre sezioni impilate (in corso/futuro/passato viste
+   tutte insieme): se ne vede una alla volta, scelta col clic. Il numero
+   dentro ogni pulsante lo scrive renderProjects() in js/main.js — è
+   sempre il conteggio DOPO ricerca e filtro data correnti.
+   ------------------------------------------------------------ */
+.stato-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.stato-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
+  border: 2px solid var(--primary);
+  background: white;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.stato-btn:hover {
+  transform: translateY(-2px);
+}
+
+.stato-btn.attivo {
+  background: var(--primary);
+  color: white;
+}
+
+.stato-btn .stato-conteggio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stato-btn.attivo .stato-conteggio {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stato-btn {
+    transition: none;
+  }
+  .stato-btn:hover {
+    transform: none;
+  }
+}
+
+/* ⛔ Un elenco vuoto non resta bianco: qui la frase spiega perché — mai
+   solo "0 risultati" — e i pulsanti dentro il testo (data-vai-stato)
+   mandano a uno stato che ha davvero delle schede. */
+.progetti-vuoto {
+  background: var(--primary-light);
+  border: 2px dashed var(--primary);
+  border-radius: 14px;
+  padding: 1.5rem 1.75rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+}
+
+.progetti-vuoto .link-vuoto {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------
+   Scheda raggruppata per titolo (progetti.html ED eventi.html, 24-25/08/2026)
+   ------------------------------------------------------------
+   ⚠️ Una scheda per PROGETTO/EVENTO, non per edizione: qui sotto il
+   titolo c'è la fascia di anni coperta e — solo se è tornato più di una
+   volta — il numero di edizioni. "1 edizione" non si scrive mai: sembra
+   un dato scritto per errore, non un'informazione.
+   ⛔ Condivisa dalle due pagine (vedi raggruppaPerTitolo/renderBadgeEdizioni
+   in js/main.js): un solo stile per la stessa idea, non una copia ciascuna.
+   ------------------------------------------------------------ */
+.progetto-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.edizioni-badge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.1rem 0.65rem;
+  border-radius: 999px;
+}
+
+/* I numeri sommati sulle edizioni: solo quelli che il progetto ha
+   davvero (vedi renderNumeriProgetto in js/main.js) — un campo che
+   nessuna edizione conta non compare come "0", sparisce del tutto. */
+.progetto-numeri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-size: 1rem;
+  color: var(--dark);
+  margin: 0.7rem 0 0;
+}
+
+.progetto-numeri span {
+  white-space: nowrap;
+}
+
+.progetto-sponsor {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid #eee;
+}
+
+/* Riga "📍 luogo" sulla scheda evento raggruppata: gli eventi non hanno
+   incontri/ore/partecipanti come i progetti, quindi qui non c'è
+   `.progetto-numeri` — solo il luogo, se l'evento ce l'ha. */
+.evento-luogo {
+  font-size: 1rem;
+  color: var(--dark);
+  margin-top: 0.6rem;
+}
+
+/* ------------------------------------------------------------
    Gallery
    ------------------------------------------------------------ */
 /* ⚠️ Miniature piccole (22/08/2026): prima erano a piena colonna (masonry
@@ -772,13 +930,6 @@ main {
   gap: 1.5rem;
 }
 
-/* ⚠️ La fascia di eventi.html ha solo tre numeri sinceri (vedi il commento
-   su `loadEventStats()` in js/main.js) — a quattro colonne di default ne
-   sarebbe rimasta una vuota. */
-#eventi-stats-grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
 /* ⚠️ I numeri salgono da zero quando entrano nello schermo (`animaNumeri`
    in `js/main.js`): fermi sembravano una tabella, e una tabella non la
    guarda nessuno. Il riquadro resta chiaro e il numero grande è la cosa
@@ -965,6 +1116,81 @@ main {
   border-radius: var(--radius-input);
   font-size: 0.9rem;
   background: white;
+}
+
+/* ------------------------------------------------------------
+   Tabella sponsor — «Con il sostegno di» (partner.html, 24/08/2026)
+   ------------------------------------------------------------
+   ⚠️ Serve per chiedere un contributo nuovo: "l'anno scorso col vostro
+   sostegno abbiamo fatto questo". Righe e nota sono calcolate da
+   loadPartnerSponsorship() in js/main.js da data/projects.json — mai
+   scritte a mano, altrimenti si disallineano al primo progetto aggiunto.
+   ------------------------------------------------------------ */
+.sostegno-sponsor {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid #eee;
+}
+
+.sostegno-sponsor-nota {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+  max-width: 68ch;
+  margin-bottom: 1.5rem;
+}
+
+.sostegno-sponsor-vuoto {
+  font-size: 1rem;
+  color: #999;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* ⛔ Lo scorrimento resta DENTRO la tabella, non nella pagina: su un
+   telefono cinque colonne non ci stanno tutte, ma la pagina non deve
+   scorrere di lato per questo. */
+.tabella-scroll {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.tabella-sponsor {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.tabella-sponsor th,
+.tabella-sponsor td {
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0e2d5;
+}
+
+.tabella-sponsor thead th {
+  background: var(--primary-light);
+  color: var(--dark);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tabella-sponsor tbody th[scope="row"] {
+  font-weight: 600;
+  color: var(--dark);
+  background: white;
+}
+
+.tabella-sponsor tbody tr:nth-child(even) td,
+.tabella-sponsor tbody tr:nth-child(even) th {
+  background: #fdfaf7;
+}
+
+.tabella-sponsor td {
+  color: #444;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ------------------------------------------------------------
@@ -1342,8 +1568,7 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .stats-grid,
-  #eventi-stats-grid {
+  .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1357,6 +1582,11 @@ main {
 
   .document-item {
     flex-wrap: wrap;
+  }
+
+  .tabella-sponsor th,
+  .tabella-sponsor td {
+    padding: 0.6rem 0.8rem;
   }
 
   .document-download {
@@ -1431,8 +1661,7 @@ main {
     grid-template-columns: 1fr;
   }
 
-  .stats-grid,
-  #eventi-stats-grid {
+  .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }

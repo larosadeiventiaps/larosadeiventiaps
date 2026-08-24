@@ -8,7 +8,7 @@
   <meta property="og:title" content="Partner — La Rosa dei Venti APS">
   <meta property="og:description" content="Scopri le organizzazioni e le realtà che collaborano con noi per realizzare i nostri progetti.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824q">
+  <link rel="stylesheet" href="css/style.css?v=20260824s">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -104,6 +104,30 @@
       </section>
 
       <div class="partners-grid" id="partners-grid"></div>
+
+      <!-- ⚠️ Tabella pensata per chi chiede un contributo nuovo: "l'anno
+           scorso col vostro sostegno abbiamo fatto questo". Solo gli
+           sponsor che compaiono davvero in data/projects.json, mai un
+           elenco scritto a mano — vedi loadPartnerSponsorship() in
+           js/main.js, che calcola anche la nota qui sotto. -->
+      <section class="sostegno-sponsor" id="sostegno-sponsor" aria-labelledby="sostegno-sponsor-titolo">
+        <h2 class="section-title" id="sostegno-sponsor-titolo">Con il sostegno di</h2>
+        <p class="sostegno-sponsor-nota" id="sostegno-sponsor-nota"></p>
+        <div class="tabella-scroll">
+          <table class="tabella-sponsor" id="tabella-sponsor">
+            <thead>
+              <tr>
+                <th scope="col">Sponsor</th>
+                <th scope="col">Progetti sostenuti</th>
+                <th scope="col">Incontri</th>
+                <th scope="col">Ore</th>
+                <th scope="col">Partecipanti</th>
+              </tr>
+            </thead>
+            <tbody id="tabella-sponsor-corpo"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 
@@ -132,6 +156,6 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824q"></script>
+  <script src="js/main.js?v=20260824s"></script>
 </body>
 </html>

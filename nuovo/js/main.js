@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
   // Load partners on partner page
   loadPartners();
+  // Tabella "Con il sostegno di" in fondo a partner.html
+  loadPartnerSponsorship();
   // Load events on events page and homepage
   loadEvents();
   loadUpcomingEvents();
@@ -312,7 +314,12 @@ async function loadStats() {
       { number: totVolontari, label: 'Volontari impiegati', icona: '🤝' },
       { number: totEducatori, label: 'Educatori coinvolti', icona: '🎓' },
       { number: totYears, label: 'Anni di attività', icona: '📅' },
-      { number: new Set(projects.flatMap(p => [p.collaboratori, p.sponsor].filter(Boolean))).size, label: 'Partner e collaboratori', icona: '🏛️' }
+      // ⚠️ 24/08/2026 — `sponsor` è diventato un ARRAY di nomi (prima era
+      // una stringa sola). Con `[p.collaboratori, p.sponsor]` l'array
+      // finiva dentro il Set com'era, come UN elemento — non i nomi che
+      // contiene: il conteggio usciva silenziosamente sbagliato, senza
+      // nessun errore in console. Qui si spalmano i nomi dentro con `...`.
+      { number: new Set(projects.flatMap(p => [p.collaboratori, ...(p.sponsor || [])].filter(Boolean))).size, label: 'Partner e collaboratori', icona: '🏛️' }
     ];
 
     renderStatCards(grid, stats);
@@ -324,26 +331,32 @@ async function loadStats() {
 }
 
 /**
- * Fascia numeri in cima a progetti.html. Stessi campi che il committente
- * ha indicato esserci nei dati (incontri, ore, partecipanti, educatori,
- * volontari) più il totale progetti: sei numeri, tutti calcolati da
- * `data/projects.json`, mai scritti a mano.
+ * Fascia numeri in cima a progetti.html.
+ *
+ * ⚠️ `data/projects.json` è per EDIZIONE (57 righe = 28 progetti in 57
+ * anni scolastici diversi): "progetti" ed "edizioni" sono due conteggi
+ * diversi, e il committente ha chiesto di vederli come due voci separate,
+ * non confuse in una sola. Il resto (incontri/ore/partecipanti/…) sono
+ * somme sulle edizioni, che restano un solo numero perché non hanno questa
+ * ambiguità.
  */
 async function loadProjectStats() {
   const grid = document.getElementById('progetti-stats-grid');
   if (!grid) return;
   try {
     const res = await fetch('data/projects.json');
-    const projects = await res.json();
-    const totProjects = projects.length;
-    const totIncontri = projects.reduce((s, p) => s + (p.incontri || 0), 0);
-    const totOre = projects.reduce((s, p) => s + (p.ore || 0), 0);
-    const totPartecipanti = projects.reduce((s, p) => s + (p.partecipanti || 0), 0);
-    const totEducatori = projects.reduce((s, p) => s + (p.educatori || 0), 0);
-    const totVolontari = projects.reduce((s, p) => s + (p.volontari || 0), 0);
+    const edizioni = await res.json();
+    const totProgetti = new Set(edizioni.map(e => e.title)).size;
+    const totEdizioni = edizioni.length;
+    const totIncontri = edizioni.reduce((s, p) => s + (p.incontri || 0), 0);
+    const totOre = edizioni.reduce((s, p) => s + (p.ore || 0), 0);
+    const totPartecipanti = edizioni.reduce((s, p) => s + (p.partecipanti || 0), 0);
+    const totEducatori = edizioni.reduce((s, p) => s + (p.educatori || 0), 0);
+    const totVolontari = edizioni.reduce((s, p) => s + (p.volontari || 0), 0);
 
     const stats = [
-      { number: totProjects, label: 'Progetti realizzati', icona: '📋' },
+      { number: totProgetti, label: 'Progetti', icona: '📋' },
+      { number: totEdizioni, label: 'Edizioni realizzate', icona: '🔁' },
       { number: totIncontri, label: 'Incontri organizzati', icona: '🗓️' },
       { number: Math.round(totOre), label: 'Ore di attività', icona: '⏱️' },
       { number: totPartecipanti, label: 'Partecipanti coinvolti', icona: '🧑‍🤝‍🧑' },
@@ -360,23 +373,31 @@ async function loadProjectStats() {
 /**
  * Fascia numeri in cima a eventi.html.
  *
+ * ⚠️ 25/08/2026 — `data/events.json` è per EDIZIONE come `projects.json`:
+ * 7 righe sono 5 eventi ("Prim'Olio" compare tre volte). Stessa medicina
+ * della fascia progetti: "Eventi" ed "Edizioni realizzate" sono due
+ * conteggi diversi. Tenerne uno solo ("Eventi realizzati: 7") avrebbe
+ * detto un numero diverso da quante schede si vedono sotto una volta
+ * raggruppate — lo stesso guasto che i pulsanti di stato non devono fare.
+ *
  * ⛔ Niente "eventi di quest'anno": nei dati reali sono tutti passati e
  * nessuno cade nell'anno corrente, quindi sarebbe uno zero vero ma
  * fuorviante in cima a una fascia che vuole raccontare il percorso.
- * Meglio tre numeri sinceri e tutti positivi (quello che i dati permettono
- * davvero di dire) che un quarto che scoraggia chi guarda.
  */
 async function loadEventStats() {
   const grid = document.getElementById('eventi-stats-grid');
   if (!grid) return;
   try {
     const res = await fetch('data/events.json');
-    const events = await res.json();
-    const anni = new Set(events.map(e => new Date(e.startDate).getFullYear()));
-    const luoghi = new Set(events.map(e => e.location).filter(Boolean));
+    const edizioni = await res.json();
+    const totEventi = new Set(edizioni.map(e => e.title)).size;
+    const totEdizioni = edizioni.length;
+    const anni = new Set(edizioni.map(e => new Date(e.startDate).getFullYear()));
+    const luoghi = new Set(edizioni.map(e => e.location).filter(Boolean));
 
     const stats = [
-      { number: events.length, label: 'Eventi realizzati', icona: '🎉' },
+      { number: totEventi, label: 'Eventi', icona: '🎉' },
+      { number: totEdizioni, label: 'Edizioni realizzate', icona: '🔁' },
       { number: anni.size, label: 'Anni di eventi', icona: '📅' },
       { number: luoghi.size, label: 'Luoghi coinvolti', icona: '📍' }
     ];
@@ -443,78 +464,344 @@ async function loadLatestProjects() {
   }
 }
 
-async function loadProjects() {
-  const gridInCorso = document.getElementById('grid-in-corso');
-  if (!gridInCorso) return;
+/**
+ * Raggruppa EDIZIONI (di `data/projects.json` O di `data/events.json` — è
+ * la stessa idea: righe ripetute per anno sotto lo stesso `title`) per
+ * titolo: 57 righe di progetti diventano 28 progetti, 7 righe di eventi
+ * diventano 5 eventi (decisione del committente, 24-25/08/2026 — «una
+ * scheda per progetto/evento, non una per edizione»).
+ *
+ * ⛔ Condivisa da progetti.html ed eventi.html (vedi `avviaListaAStati` più
+ * sotto): raggruppare-per-titolo è UNA regola sola, non due copie che
+ * possono divergere alla prima modifica.
+ *
+ * Ogni gruppo porta solo quello che progetti ED eventi hanno in comune —
+ * l'elenco delle edizioni, quante sono, la fascia di anni, l'edizione più
+ * recente e lo stato calcolato dalle date. I campi che non condividono
+ * (numeri sommati e sponsor per i progetti; luogo e link per gli eventi)
+ * li aggiunge chi chiama, dopo.
+ */
+function raggruppaPerTitolo(edizioni) {
+  const perTitolo = new Map();
+  edizioni.forEach(e => {
+    if (!perTitolo.has(e.title)) perTitolo.set(e.title, []);
+    perTitolo.get(e.title).push(e);
+  });
+
+  return Array.from(perTitolo.values()).map(eds => {
+    // L'edizione più recente rappresenta il gruppo in copertina e nel testo
+    // (immagine + descrizione, e per gli eventi anche luogo/link): è la
+    // versione più aggiornata di come lo raccontiamo, non necessariamente
+    // la prima mai fatta.
+    const piuRecente = eds.slice().sort((a, b) => new Date(b.startDate) - new Date(a.startDate))[0];
+
+    return {
+      title: piuRecente.title,
+      edizioni: eds,
+      numEdizioni: eds.length,
+      fasciaAnni: fasciaAnniGruppo(eds),
+      piuRecente,
+      stato: statoGruppo(eds)
+    };
+  });
+}
+
+function sommaCampoEdizioni(edizioni, campo) {
+  return edizioni.reduce((s, e) => s + (e[campo] || 0), 0);
+}
+
+// "2019" se il gruppo è nato e finito nello stesso anno solare,
+// "2019–2023" se ha attraversato più anni — su tutte le sue edizioni, non
+// solo sulla prima o sull'ultima.
+function fasciaAnniGruppo(edizioni) {
+  const anni = edizioni.flatMap(e => [new Date(e.startDate).getFullYear(), new Date(e.endDate || e.startDate).getFullYear()]);
+  const min = Math.min(...anni);
+  const max = Math.max(...anni);
+  return min === max ? String(min) : `${min}–${max}`;
+}
+
+/**
+ * Stato di UNA edizione, calcolato dalle date — ⛔ MAI dal campo `status`
+ * del file: è scritto a mano e resta fermo (dice "in corso" per edizioni
+ * finite a giugno; oggi, 24/08/2026, calcolando dalle date gli "in corso"
+ * veri sono zero).
+ *
+ * ⚠️ Il confronto con `fine` usa la fine della giornata (23:59:59), non la
+ * mezzanotte: un'edizione che finisce "oggi" deve restare "in corso" nelle
+ * ore in cui accade davvero, non risultare già passata dallo scoccare della
+ * mezzanotte UTC del suo `endDate`.
+ */
+function statoEdizione(e, oggi) {
+  const inizio = new Date(e.startDate);
+  const fine = new Date(e.endDate || e.startDate);
+  fine.setHours(23, 59, 59, 999);
+  if (oggi < inizio) return 'futuro';
+  if (oggi > fine) return 'passato';
+  return 'in_corso';
+}
+
+/**
+ * Stato del GRUPPO (progetto o evento raggruppato), dalle sue edizioni.
+ *
+ * ⚠️ L'ordine dei tre controlli è quello dell'urgenza dell'informazione, non
+ * un ordine qualsiasi: se anche una sola edizione è in corso ORA, è la cosa
+ * più importante da dire e vince su tutto il resto — si controlla per
+ * prima. Se nessuna è in corso ma almeno una deve ancora cominciare, il
+ * gruppo è "futuro": c'è ancora qualcosa da aspettare, e questa
+ * informazione conta più del fatto che altre edizioni siano già finite.
+ * Solo se non resta nessuna delle due condizioni il gruppo è "passato" —
+ * la più debole delle tre, quindi l'unica messa per ultima.
+ */
+function statoGruppo(edizioni) {
+  const oggi = new Date();
+  const stati = edizioni.map(e => statoEdizione(e, oggi));
+  if (stati.includes('in_corso')) return 'in_corso';
+  if (stati.includes('futuro')) return 'futuro';
+  return 'passato';
+}
+
+/**
+ * «Il filtro per data mostra i progetti che hanno UNA EDIZIONE in quel
+ * periodo» — parole del committente, valide allo stesso modo per gli
+ * eventi. Si guarda edizione per edizione: il gruppo passa se ALMENO UNA
+ * delle sue edizioni tocca l'intervallo scelto, anche se le altre sono
+ * fuori (es. "dal 2025-01-01" tiene un laboratorio che va da settembre a
+ * giugno, perché l'edizione lo tocca).
+ *
+ * ⚠️ Una volta che il gruppo passa il filtro, la scheda mostra comunque
+ * TUTTE le sue edizioni — numeri sommati compresi: il filtro decide CHI
+ * entra in elenco, non quali edizioni contare nella scheda.
+ */
+function gruppoNelPeriodo(gruppo, from, to) {
+  if (!from && !to) return true;
+  return gruppo.edizioni.some(e => {
+    const inizio = new Date(e.startDate);
+    const fine = new Date(e.endDate || e.startDate);
+    if (from && fine < from) return false;
+    if (to && inizio > to) return false;
+    return true;
+  });
+}
+
+// "45" se è un numero intero di ore, "45,5" con la virgola italiana se no.
+function formattaOre(ore) {
+  return Number.isInteger(ore) ? String(ore) : ore.toFixed(1).replace('.', ',');
+}
+
+/**
+ * Badge "N edizioni" sulla scheda raggruppata — progetti ED eventi.
+ *
+ * ⚠️ "1 edizione" scritta sulla scheda sembrerebbe un errore (un dato che
+ * non dice niente): si mostra SOLO quando il gruppo è tornato più volte,
+ * che è l'informazione vera da dare.
+ */
+function renderBadgeEdizioni(numEdizioni) {
+  return numEdizioni > 1 ? `<span class="edizioni-badge">${numEdizioni} edizioni</span>` : '';
+}
+
+/**
+ * Riga di numeri sulla scheda progetto (incontri/ore/partecipanti/
+ * educatori/volontari). ⚠️ Gli eventi NON hanno questi campi — niente
+ * gettone vuoto: questa funzione la chiama solo renderProjectCard.
+ *
+ * ⚠️ Non tutti i progetti hanno tutti questi campi: un totale a zero non
+ * vuol dire "zero volontari", vuol dire "questo progetto i volontari non
+ * li conta" — si scrive solo quello che il progetto ha DAVVERO, altrimenti
+ * ogni scheda si riempie di righe che dicono "0" senza dire niente.
+ */
+function renderNumeriProgetto(numeri) {
+  // ⚠️ Il singolare non è un vezzo: sulle schede vere capita spesso
+  //    («1 volontario», «1 incontro»), e «1 volontari» è il genere di
+  //    sciatteria che chi legge nota subito e attribuisce a tutto il sito.
+  //    ⛔ Le ore fanno eccezione e restano fuori da questa regola: possono
+  //    valere 1,5 — «1,5 ora» sarebbe sbagliato quanto «1 ore».
+  const conta = (n, uno, molti) => `${n} ${n === 1 ? uno : molti}`;
+  const voci = [
+    numeri.incontri > 0 ? `🗓️ ${conta(numeri.incontri, 'incontro', 'incontri')}` : '',
+    numeri.ore > 0 ? `⏱️ ${formattaOre(numeri.ore)} ore` : '',
+    numeri.partecipanti > 0 ? `🧑‍🤝‍🧑 ${conta(numeri.partecipanti, 'partecipante', 'partecipanti')}` : '',
+    numeri.educatori > 0 ? `🎓 ${conta(numeri.educatori, 'educatore', 'educatori')}` : '',
+    numeri.volontari > 0 ? `🤝 ${conta(numeri.volontari, 'volontario', 'volontari')}` : ''
+  ].filter(Boolean);
+  if (!voci.length) return '';
+  return `<div class="progetto-numeri">${voci.map(v => `<span>${escapeHTML(v)}</span>`).join('')}</div>`;
+}
+
+function renderProjectCard(progetto, index) {
+  const sponsorHtml = progetto.sponsor.length
+    ? `<p class="progetto-sponsor">🤝 Sostenuto da ${escapeHTML(progetto.sponsor.join(', '))}</p>`
+    : '';
+
+  return `
+    <article class="card" data-lb-index="${index}">
+      <div class="card-image" style="cursor:pointer"><img src="${conVersione(progetto.immagine)}" alt="${escapeHTML(progetto.title)}" loading="lazy" class="${classeImmagine(progetto.immagine)}"></div>
+      <div class="card-body">
+        <h3>${escapeHTML(progetto.title)}</h3>
+        <div class="progetto-card-meta">
+          <span>${escapeHTML(progetto.fasciaAnni)}</span>
+          ${renderBadgeEdizioni(progetto.numEdizioni)}
+        </div>
+        <p>${escapeHTML(progetto.descrizione)}</p>
+        ${renderNumeriProgetto(progetto.numeri)}
+        ${sponsorHtml}
+      </div>
+    </article>
+  `;
+}
+
+/**
+ * Scheda di un EVENTO raggruppato (eventi.html) — gemella di
+ * `renderProjectCard`, ma con i campi che gli eventi hanno davvero: luogo
+ * e collegamento, non incontri/ore/partecipanti (gli eventi non li hanno,
+ * niente gettone vuoto al loro posto). Diversa da `renderEventCard()` più
+ * sotto, che resta quella per UNA singola edizione (usata dalla home per
+ * "Prossimi eventi").
+ */
+function renderEventGroupCard(evento, index) {
+  const rappresentativa = evento.piuRecente;
+  const locationHtml = rappresentativa.location
+    ? `<p class="evento-luogo">📍 ${escapeHTML(rappresentativa.location)}</p>`
+    : '';
+  const linkHtml = rappresentativa.link
+    ? `<a href="${rappresentativa.link}" class="partner-link" target="_blank" rel="noopener noreferrer">Maggiori info ↗</a>`
+    : '';
+
+  return `
+    <article class="card" data-lb-index="${index}">
+      <div class="card-image" style="cursor:pointer"><img src="${conVersione(rappresentativa.image)}" alt="${escapeHTML(evento.title)}" loading="lazy" class="${classeImmagine(rappresentativa.image)}"></div>
+      <div class="card-body">
+        <h3>${escapeHTML(evento.title)}</h3>
+        <div class="progetto-card-meta">
+          <span>${escapeHTML(evento.fasciaAnni)}</span>
+          ${renderBadgeEdizioni(evento.numEdizioni)}
+        </div>
+        <p>${escapeHTML(rappresentativa.description)}</p>
+        ${locationHtml}
+        ${linkHtml}
+      </div>
+    </article>
+  `;
+}
+
+const CLASSE_STATO = { in_corso: 'in-corso', futuro: 'futuro', passato: 'passato' };
+
+/**
+ * Frase per l'elenco vuoto (progetti O eventi) — mai "0 risultati" e basta:
+ * spiega perché, e se esistono altri stati con qualcosa dentro offre un
+ * modo per arrivarci con un clic. Altrimenti chi legge può pensare che
+ * l'associazione sia ferma o che il sito sia rotto.
+ *
+ * `frasi` ed `etichette` sono {in_corso, futuro, passato} già declinati da
+ * chi chiama ("progetto"/"progetti" oppure "evento"/"eventi").
+ */
+function messaggioElencoVuoto(stato, conteggi, frasi, etichette) {
+  const altri = ['passato', 'futuro', 'in_corso'].filter(s => s !== stato && conteggi[s] > 0);
+  let msg = frasi[stato] || 'Nessun risultato.';
+  if (altri.length) {
+    const link = altri
+      .map(s => `<button type="button" class="link-vuoto" data-vai-stato="${s}">${etichette[s]} (${conteggi[s]})</button>`)
+      .join(' o ');
+    msg += ` Intanto guarda i ${link}.`;
+  }
+  return msg;
+}
+
+/**
+ * Motore comune ai tre pulsanti di stato (in corso/futuri/passati) di
+ * progetti.html ed eventi.html: raggruppa le edizioni per titolo, filtra
+ * per ricerca testuale e per data, smista nei tre stati, aggiorna i
+ * conteggi sui pulsanti e disegna la scheda giusta per ogni gruppo
+ * visibile.
+ *
+ * ⛔ Le REGOLE (raggruppamento, stato dalle date, filtro per data, frase
+ * per l'elenco vuoto) sono UNA sola implementazione qui dentro, non due
+ * copie — una per pagina — che divergerebbero alla prima modifica. È
+ * esattamente il guasto che questo file ha già pagato una volta: vedi il
+ * commento sugli id duplicati fra progetti.html ed eventi.html più sotto.
+ *
+ * `config`:
+ *  - datiUrl: 'data/projects.json' | 'data/events.json'
+ *  - idGrid/idToggle/idTitolo/idVuoto: gli id degli elementi in pagina
+ *    (search/data-da/data-a restano 'search-input'/'date-from'/'date-to',
+ *    gli stessi ovunque nel sito)
+ *  - statoIniziale: quale pulsante è premuto all'apertura
+ *  - frasi/etichette/titoli: testo dichiarato da chi chiama, già declinato
+ *  - arricchisciGruppi(gruppi): opzionale, aggiunge ai gruppi i campi che
+ *    progetti/eventi NON hanno in comune (numeri+sponsor per i progetti)
+ *  - renderScheda(gruppo, indice): l'HTML della scheda
+ *  - vociLightbox(gruppo): { image, alt, title, meta, description }
+ */
+async function avviaListaAStati(config) {
+  const grid = document.getElementById(config.idGrid);
+  if (!grid) return;
 
   try {
-    const res = await fetch('data/projects.json');
-    const allProjects = await res.json();
+    const res = await fetch(config.datiUrl);
+    const edizioni = await res.json();
+    const arricchisci = config.arricchisciGruppi || (g => g);
+    const gruppi = arricchisci(raggruppaPerTitolo(edizioni));
 
     const searchInput = document.getElementById('search-input');
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
+    const toggle = document.getElementById(config.idToggle);
+    const titolo = document.getElementById(config.idTitolo);
+    const vuoto = document.getElementById(config.idVuoto);
     const lightbox = setupCardLightbox();
 
-    function renderProjects() {
+    // ⚠️ Si apre di default su "in corso": è la prima cosa che chi arriva
+    // sul sito vuole sapere. Se oggi è vuoto (come "in corso" sui progetti,
+    // 24/08/2026) è esattamente il caso per cui esiste il messaggio sotto,
+    // non un caso limite raro.
+    let statoAttivo = config.statoIniziale || 'in_corso';
+
+    function render() {
       const query = searchInput.value.toLowerCase();
       const from = dateFrom.value ? new Date(dateFrom.value) : null;
       const to = dateTo.value ? new Date(dateTo.value) : null;
 
-      const filtered = allProjects.filter(p => {
-        if (query && !p.title.toLowerCase().includes(query) && !p.description.toLowerCase().includes(query)) return false;
-        if (from || to) {
-          const pStart = new Date(p.startDate);
-          const pEnd = new Date(p.endDate);
-          if (from && pEnd < from) return false;
-          if (to && pStart > to) return false;
+      const filtrati = gruppi.filter(g => {
+        if (query) {
+          const inTitolo = g.title.toLowerCase().includes(query);
+          const inEdizioni = g.edizioni.some(e => (e.description || '').toLowerCase().includes(query));
+          if (!inTitolo && !inEdizioni) return false;
         }
+        if ((from || to) && !gruppoNelPeriodo(g, from, to)) return false;
         return true;
       });
 
-      const allVisible = [];
-      ['in_corso', 'futuro', 'passato'].forEach(status => {
-        const items = filtered.filter(p => p.status === status);
-        const gridId = 'grid-' + status.replace('_', '-');
-        const sectionId = 'section-' + status.replace('_', '-');
-        const grid = document.getElementById(gridId);
-        const section = document.getElementById(sectionId);
+      const conteggi = { in_corso: 0, futuro: 0, passato: 0 };
+      const perStato = { in_corso: [], futuro: [], passato: [] };
+      filtrati.forEach(g => { conteggi[g.stato]++; perStato[g.stato].push(g); });
 
-        if (items.length === 0) {
-          section.style.display = 'none';
-          // Niente scheda resta cliccabile qui, ma senza svuotarla restano
-          // schede vecchie con un data-lb-index ormai sbagliato: al filtro
-          // successivo si sarebbero riattaccati ascoltatori di clic su
-          // elementi nascosti, uno in più a ogni ricerca.
-          grid.innerHTML = '';
-        } else {
-          section.style.display = 'block';
-          const startIdx = allVisible.length;
-          items.forEach(p => allVisible.push(p));
-          grid.innerHTML = items.map((p, i) => `
-            <article class="card" data-lb-index="${startIdx + i}">
-              <div class="card-image" style="cursor:pointer"><img src="${conVersione(p.image)}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}"></div>
-              <div class="card-body">
-                <h3>${escapeHTML(p.title)}</h3>
-                <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
-                <p>${escapeHTML(p.description)}</p>
-              </div>
-            </article>
-          `).join('');
-        }
+      // I numeri sui pulsanti sono quelli DOPO ricerca e date correnti: un
+      // pulsante che promette 12 e ne apre 3 è peggio che non dire niente.
+      toggle.querySelectorAll('.stato-btn').forEach(btn => {
+        const s = btn.dataset.stato;
+        const attivo = s === statoAttivo;
+        btn.querySelector('.stato-conteggio').textContent = conteggi[s];
+        btn.classList.toggle('attivo', attivo);
+        btn.setAttribute('aria-pressed', attivo ? 'true' : 'false');
       });
 
+      const visibili = perStato[statoAttivo];
+      titolo.textContent = config.titoli[statoAttivo];
+      titolo.className = 'project-section-title ' + CLASSE_STATO[statoAttivo];
+
+      if (visibili.length === 0) {
+        vuoto.innerHTML = messaggioElencoVuoto(statoAttivo, conteggi, config.frasi, config.etichette);
+        vuoto.hidden = false;
+        grid.innerHTML = '';
+      } else {
+        vuoto.hidden = true;
+        grid.innerHTML = visibili.map((g, i) => config.renderScheda(g, i)).join('');
+      }
+
       // Lo scorrimento nell'ingranditore resta dentro le sole schede
-      // mostrate qui — cioè quelle già passate dal filtro sopra.
+      // mostrate qui — cioè lo stato attualmente selezionato, già filtrato.
       if (lightbox) {
-        lightbox.setItems(allVisible.map(p => ({
-          image: p.image,
-          alt: p.title,
-          title: p.title,
-          meta: `${formatDate(p.startDate)} — ${formatDate(p.endDate)}`,
-          description: p.description
-        })));
-        document.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
+        lightbox.setItems(visibili.map(config.vociLightbox));
+        grid.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
           const idx = parseInt(el.closest('[data-lb-index]').dataset.lbIndex, 10);
           const img = el.querySelector('img');
           makeLightboxTrigger(el, 'Ingrandisci: ' + (img ? img.alt : ''), () => lightbox.open(idx, el));
@@ -522,13 +809,75 @@ async function loadProjects() {
       }
     }
 
-    searchInput.addEventListener('input', renderProjects);
-    dateFrom.addEventListener('change', renderProjects);
-    dateTo.addEventListener('change', renderProjects);
-    renderProjects();
+    toggle.addEventListener('click', (e) => {
+      const btn = e.target.closest('.stato-btn');
+      if (!btn) return;
+      statoAttivo = btn.dataset.stato;
+      render();
+    });
+
+    // I link dentro il messaggio "elenco vuoto" nascono e muoiono col
+    // messaggio stesso (`innerHTML` li ricrea ogni volta): si ascolta sul
+    // contenitore fisso, non su di loro — altrimenti ogni render ne
+    // impilerebbe uno nuovo.
+    vuoto.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-vai-stato]');
+      if (!btn) return;
+      statoAttivo = btn.dataset.vaiStato;
+      render();
+    });
+
+    searchInput.addEventListener('input', render);
+    dateFrom.addEventListener('change', render);
+    dateTo.addEventListener('change', render);
+    render();
   } catch (e) {
-    console.warn('Could not load projects:', e);
+    console.warn('Could not load ' + config.datiUrl + ':', e);
   }
+}
+
+function loadProjects() {
+  return avviaListaAStati({
+    datiUrl: 'data/projects.json',
+    idGrid: 'progetti-grid',
+    idToggle: 'stato-toggle',
+    idTitolo: 'progetti-elenco-titolo',
+    idVuoto: 'progetti-vuoto',
+    statoIniziale: 'in_corso',
+    frasi: {
+      in_corso: 'Nessun progetto è in corso proprio in questo momento.',
+      futuro: 'Non ci sono ancora nuovi progetti in programma.',
+      passato: 'Nessun progetto passato corrisponde alla ricerca.'
+    },
+    etichette: { in_corso: 'in corso', futuro: 'futuri', passato: 'passati' },
+    titoli: { in_corso: 'Progetti in corso', futuro: 'Progetti futuri', passato: 'Progetti passati' },
+    // I progetti portano numeri sommati e sponsor, che i gruppi generici
+    // di raggruppaPerTitolo non hanno: si aggiungono qui, non dentro la
+    // funzione condivisa con gli eventi.
+    arricchisciGruppi: (gruppi) => gruppi.map(g => ({
+      ...g,
+      immagine: g.piuRecente.image,
+      descrizione: g.piuRecente.description,
+      // Uno sponsor che ha sostenuto più edizioni dello stesso progetto va
+      // scritto una volta sola sulla scheda, non ripetuto.
+      sponsor: Array.from(new Set(g.edizioni.flatMap(e => e.sponsor || []))),
+      numeri: {
+        incontri: sommaCampoEdizioni(g.edizioni, 'incontri'),
+        ore: sommaCampoEdizioni(g.edizioni, 'ore'),
+        partecipanti: sommaCampoEdizioni(g.edizioni, 'partecipanti'),
+        educatori: sommaCampoEdizioni(g.edizioni, 'educatori'),
+        volontari: sommaCampoEdizioni(g.edizioni, 'volontari')
+      }
+    })),
+    renderScheda: renderProjectCard,
+    vociLightbox: (p) => ({
+      image: p.immagine,
+      alt: p.title,
+      title: p.title,
+      meta: p.fasciaAnni + (p.numEdizioni > 1 ? ` — ${p.numEdizioni} edizioni` : ''),
+      description: p.descrizione
+    })
+  });
 }
 
 /**
@@ -703,6 +1052,88 @@ async function loadPartners() {
   }
 }
 
+/**
+ * Tabella «Con il sostegno di», in fondo a partner.html: per chi deve
+ * chiedere un contributo nuovo, poter dire "l'anno scorso col vostro
+ * sostegno abbiamo fatto questo".
+ *
+ * ⚠️ Lo sponsor sta nell'EDIZIONE, non nel progetto: un progetto con più
+ * edizioni può aver avuto sponsor diversi anno per anno. Qui si sommano
+ * SOLO i numeri delle edizioni che quello sponsor ha davvero sostenuto —
+ * non quelli dell'intero progetto raggruppato — altrimenti gli si
+ * attribuirebbero incontri e ore che non ha finanziato.
+ *
+ * ⚠️ Solo una parte dei progetti ha uno sponsor dichiarato nei dati: la
+ * nota sopra la tabella lo dice con un numero calcolato qui, non scritto a
+ * mano, così resta vero anche quando i dati cambiano.
+ */
+async function loadPartnerSponsorship() {
+  const corpo = document.getElementById('tabella-sponsor-corpo');
+  if (!corpo) return;
+
+  try {
+    const [resProgetti, resPartner] = await Promise.all([
+      fetch('data/projects.json'),
+      fetch('data/partners.json')
+    ]);
+    const edizioni = await resProgetti.json();
+    const partnersData = await resPartner.json();
+    const nomiPartner = new Set(partnersData.map(p => p.name));
+
+    const perSponsor = new Map();
+    edizioni.forEach(e => {
+      (e.sponsor || []).forEach(nome => {
+        if (!perSponsor.has(nome)) perSponsor.set(nome, []);
+        perSponsor.get(nome).push(e);
+      });
+    });
+
+    const totProgetti = new Set(edizioni.map(e => e.title)).size;
+    const progettiConSponsor = new Set(edizioni.filter(e => e.sponsor && e.sponsor.length).map(e => e.title));
+
+    const nota = document.getElementById('sostegno-sponsor-nota');
+    if (nota) {
+      nota.textContent = `${progettiConSponsor.size} progetti su ${totProgetti} hanno uno sponsor dichiarato nei dati: i numeri qui sotto raccontano solo quelli, non l'intera attività dell'associazione.`;
+    }
+
+    if (perSponsor.size === 0) {
+      const scroll = corpo.closest('.tabella-scroll');
+      if (scroll) scroll.outerHTML = '<p class="sostegno-sponsor-vuoto">Nessuno sponsor è ancora collegato a un progetto nei dati.</p>';
+      return;
+    }
+
+    const righe = Array.from(perSponsor.entries()).map(([nome, eds]) => ({
+      nome,
+      trovato: nomiPartner.has(nome),
+      numProgetti: new Set(eds.map(e => e.title)).size,
+      incontri: sommaCampoEdizioni(eds, 'incontri'),
+      ore: sommaCampoEdizioni(eds, 'ore'),
+      partecipanti: sommaCampoEdizioni(eds, 'partecipanti')
+    })).sort((a, b) => b.numProgetti - a.numProgetti || a.nome.localeCompare(b.nome, 'it'));
+
+    corpo.innerHTML = righe.map(r => `
+      <tr>
+        <th scope="row">${escapeHTML(r.nome)}</th>
+        <td>${r.numProgetti}</td>
+        <td>${r.incontri || '—'}</td>
+        <td>${r.ore ? formattaOre(r.ore) : '—'}</td>
+        <td>${r.partecipanti || '—'}</td>
+      </tr>
+    `).join('');
+
+    // ⚠️ Un nome in "sponsor" che non combacia con nessun "name" in
+    // partners.json non darebbe nessun errore visibile: la riga uscirebbe
+    // comunque in tabella, ma senza logo/scheda associata altrove sul
+    // sito. Si segnala qui, così il guasto non resta silenzioso.
+    const orfani = righe.filter(r => !r.trovato).map(r => r.nome);
+    if (orfani.length) {
+      console.warn('Sponsor senza corrispondenza in data/partners.json:', orfani);
+    }
+  } catch (e) {
+    console.warn('Could not load partner sponsorship table:', e);
+  }
+}
+
 function eventDateDisplay(e) {
   const startStr = formatDate(e.startDate);
   const endStr = formatDate(e.endDate);
@@ -741,93 +1172,46 @@ function renderEventCard(e) {
  * progetti.html anche `loadEvents()` trovava questi id e in certi ordini
  * di caricamento sovrascriveva "Progetti Futuri/Passati" con le schede
  * degli eventi — una corsa fra due `fetch`, silenziosa, mai segnalata da
- * un errore. Qui gli id degli eventi sono stati resi unici
- * (`grid-eventi-…`, `section-eventi-…`) per togliere la collisione alla
- * radice: senza, non potevo garantire che lo scorrimento nell'ingranditore
- * restasse dentro le schede giuste.
+ * un errore. Gli id degli eventi sono stati resi unici (`grid-eventi-…`)
+ * per togliere la collisione alla radice.
+ *
+ * ⚠️ 25/08/2026 — eventi.html è passata alla stessa griglia raggruppata di
+ * progetti.html (`avviaListaAStati`, vedi sopra): 7 edizioni in
+ * `data/events.json` diventano 5 eventi ("Prim'Olio" compare tre volte).
+ * Con id per-pagina distinti (`eventi-grid` qui, `progetti-grid` là) la
+ * collisione del 22/08 non può ripresentarsi: il motore condiviso non ha
+ * niente da confondere.
  */
-async function loadEvents() {
-  const gridFuturo = document.getElementById('grid-eventi-futuro');
-  if (!gridFuturo) return;
-
-  try {
-    const res = await fetch('data/events.json');
-    const allEvents = await res.json();
-
-    if (allEvents.length === 0) {
-      document.querySelector('.project-section#section-eventi-futuro').innerHTML =
-        '<div class="section"><p style="color:#999;text-align:center;">Nessun evento in programma. Torna a trovarci!</p></div>';
-      const passatoSection = document.getElementById('section-eventi-passato');
-      if (passatoSection) passatoSection.style.display = 'none';
-      return;
-    }
-
-    const searchInput = document.getElementById('search-input');
-    const dateFrom = document.getElementById('date-from');
-    const dateTo = document.getElementById('date-to');
-    const lightbox = setupCardLightbox();
-
-    function renderEvents() {
-      const query = searchInput.value.toLowerCase();
-      const from = dateFrom.value ? new Date(dateFrom.value) : null;
-      const to = dateTo.value ? new Date(dateTo.value) : null;
-
-      const filtered = allEvents.filter(e => {
-        if (query && !e.title.toLowerCase().includes(query) && !(e.description || '').toLowerCase().includes(query)) return false;
-        if (from || to) {
-          const eStart = new Date(e.startDate);
-          const eEnd = new Date(e.endDate || e.startDate);
-          if (from && eEnd < from) return false;
-          if (to && eStart > to) return false;
-        }
-        return true;
-      });
-
-      const allVisible = [];
-      ['futuro', 'passato'].forEach(status => {
-        const items = filtered.filter(e => e.status === status);
-        const grid = document.getElementById('grid-eventi-' + status);
-        const section = document.getElementById('section-eventi-' + status);
-
-        if (items.length === 0) {
-          section.style.display = 'none';
-          grid.innerHTML = '';
-        } else {
-          section.style.display = 'block';
-          const startIdx = allVisible.length;
-          items.forEach(e => allVisible.push(e));
-          grid.innerHTML = items.map((e, i) => {
-            const card = renderEventCard(e);
-            return card.replace('<article class="card">', `<article class="card" data-lb-index="${startIdx + i}">`);
-          }).join('');
-        }
-      });
-
-      // Lo scorrimento nell'ingranditore resta dentro le sole schede
-      // mostrate qui — cioè quelle già passate dal filtro sopra.
-      if (lightbox) {
-        lightbox.setItems(allVisible.map(e => ({
-          image: e.image,
-          alt: e.title,
-          title: e.title,
-          meta: [eventDateDisplay(e), e.location ? '📍 ' + e.location : ''].filter(Boolean).join(' — '),
-          description: e.description
-        })));
-        document.querySelectorAll('[data-lb-index] .card-image').forEach(el => {
-          const idx = parseInt(el.closest('[data-lb-index]').dataset.lbIndex, 10);
-          const img = el.querySelector('img');
-          makeLightboxTrigger(el, 'Ingrandisci: ' + (img ? img.alt : ''), () => lightbox.open(idx, el));
-        });
-      }
-    }
-
-    searchInput.addEventListener('input', renderEvents);
-    dateFrom.addEventListener('change', renderEvents);
-    dateTo.addEventListener('change', renderEvents);
-    renderEvents();
-  } catch (e) {
-    console.warn('Could not load events:', e);
-  }
+function loadEvents() {
+  return avviaListaAStati({
+    datiUrl: 'data/events.json',
+    idGrid: 'eventi-grid',
+    idToggle: 'eventi-stato-toggle',
+    idTitolo: 'eventi-elenco-titolo',
+    idVuoto: 'eventi-vuoto',
+    statoIniziale: 'in_corso',
+    frasi: {
+      in_corso: 'Nessun evento è in corso proprio in questo momento.',
+      futuro: 'Non ci sono ancora nuovi eventi in programma.',
+      passato: 'Nessun evento passato corrisponde alla ricerca.'
+    },
+    etichette: { in_corso: 'in corso', futuro: 'futuri', passato: 'passati' },
+    titoli: { in_corso: 'Eventi in corso', futuro: 'Prossimi eventi', passato: 'Eventi passati' },
+    renderScheda: renderEventGroupCard,
+    // ⚠️ Gli eventi non hanno incontri/ore/partecipanti: la meta
+    // dell'ingranditore porta fascia anni + edizioni (come i progetti) e,
+    // se c'è, il luogo dell'edizione più recente — non un numero inventato.
+    vociLightbox: (ev) => ({
+      image: ev.piuRecente.image,
+      alt: ev.title,
+      title: ev.title,
+      meta: [
+        ev.fasciaAnni + (ev.numEdizioni > 1 ? ` — ${ev.numEdizioni} edizioni` : ''),
+        ev.piuRecente.location ? '📍 ' + ev.piuRecente.location : ''
+      ].filter(Boolean).join(' — '),
+      description: ev.piuRecente.description
+    })
+  });
 }
 
 async function loadUpcomingEvents() {

@@ -70,7 +70,7 @@
     "educatori": 1,
     "professionisti": 1,
     "collaboratori": "CRC Antella. Il teatro dell'Inutile",
-    "description": "Laboratorio di teatro"
+    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
   },
   {
     "title": "Autonomia Abitativa",
@@ -102,7 +102,7 @@
   },
   {
     "title": "Marciapiede Didattico",
-    "image": "images/logo.jpg",
+    "image": "images/progetti-nuove/marciapiede-didattico.jpg",
     "startDate": "2026-10-10",
     "endDate": "2026-11-10",
     "status": "futuro",
@@ -166,7 +166,7 @@
   },
   {
     "title": "Settimana dei Diritti",
-    "image": "images/logo.jpg",
+    "image": "images/projects/bagno-a-ripoli-rontini.jpg",
     "startDate": "2025-12-09",
     "endDate": "2025-12-11",
     "status": "passato",
@@ -192,7 +192,7 @@
   },
   {
     "title": "Marciapiede Didattico",
-    "image": "images/logo.jpg",
+    "image": "images/progetti-nuove/marciapiede-didattico.jpg",
     "startDate": "2025-10-10",
     "endDate": "2025-11-10",
     "status": "passato",
@@ -220,7 +220,7 @@
     "educatori": 3,
     "volontari": 6,
     "collaboratori": "Trekking di Bagno a Ripoli",
-    "description": "In collaborazione con Trekking di Bagno a Ripoli. 1 incontri per un totale di 3.0 ore. 15 partecipanti."
+    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti."
   },
   {
     "title": "Musica ed Espressione corporea",
@@ -247,7 +247,7 @@
     "educatori": 1,
     "professionisti": 1,
     "collaboratori": "CRC Antella",
-    "description": "In collaborazione con CRC Antella. 6 incontri per un totale di 12.0 ore. 6 partecipanti."
+    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
   },
   {
     "title": "Colori in libertà",
@@ -267,7 +267,7 @@
   },
   {
     "title": "Musica alla lavanda",
-    "image": "images/logo.jpg",
+    "image": "images/progetti-nuove/musica-alla-lavanda.jpg",
     "startDate": "2025-09-21",
     "endDate": "2025-09-21",
     "status": "passato",
@@ -331,7 +331,7 @@
     "volontari": 1,
     "professionisti": 5,
     "collaboratori": "Trekking di Bagno a Ripoli",
-    "description": "In collaborazione con Trekking di Bagno a Ripoli. 1 incontri per un totale di 3.0 ore. 10 partecipanti."
+    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti."
   },
   {
     "title": "Colori in libertà",
@@ -530,7 +530,7 @@
     "volontari": 1,
     "professionisti": 5,
     "collaboratori": "Trekking di Bagno a Ripoli",
-    "description": "In collaborazione con Trekking di Bagno a Ripoli. 1 incontri per un totale di 3.0 ore. 10 partecipanti."
+    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti."
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -610,7 +610,7 @@
   },
   {
     "title": "Marciapiede Didattico",
-    "image": "images/logo.jpg",
+    "image": "images/progetti-nuove/marciapiede-didattico.jpg",
     "startDate": "2023-10-01",
     "endDate": "2023-11-01",
     "status": "passato",
@@ -731,7 +731,7 @@
   },
   {
     "title": "Marciapiede Didattico",
-    "image": "images/logo.jpg",
+    "image": "images/progetti-nuove/marciapiede-didattico.jpg",
     "startDate": "2022-06-01",
     "endDate": "2022-10-01",
     "status": "passato",

@@ -8,7 +8,7 @@
   <meta property="og:title" content="Eventi — La Rosa dei Venti APS">
   <meta property="og:description" content="Scopri i prossimi eventi e le iniziative passate dell'associazione.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824q">
+  <link rel="stylesheet" href="css/style.css?v=20260824s">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -51,18 +51,33 @@
     </div>
 
     <div class="project-section" id="eventi-stats-section">
-      <div class="stats-grid" id="eventi-stats-grid"></div>
+      <div class="stats-grid stats-una-riga" id="eventi-stats-grid"></div>
     </div>
 
-    <section class="project-section" id="section-eventi-futuro">
-      <h2 class="project-section-title futuro">Prossimi Eventi</h2>
-      <div class="events-grid" id="grid-eventi-futuro"></div>
-    </section>
+    <!-- ⛔ Stessa medicina di progetti.html (24-25/08/2026): i tre
+         pulsanti sostituiscono le sezioni impilate, una si vede alla
+         volta, e "data/events.json" è raggruppato per titolo — 7 edizioni
+         diventano 5 eventi ("Prim'Olio" compare tre volte). Motore comune
+         `avviaListaAStati()` in js/main.js: id qui sotto tutti distinti da
+         quelli di progetti.html (eventi-grid, non progetti-grid) apposta,
+         per non riaprire la collisione già presa una volta (vedi il
+         commento su `loadEvents()`). -->
+    <div class="project-section" id="eventi-elenco-section">
+      <div class="stato-toggle" id="eventi-stato-toggle" role="group" aria-label="Filtra gli eventi per stato">
+        <button type="button" class="stato-btn" data-stato="in_corso" aria-pressed="false">In corso <span class="stato-conteggio" data-stato-conteggio="in_corso">0</span></button>
+        <button type="button" class="stato-btn" data-stato="futuro" aria-pressed="false">Futuri <span class="stato-conteggio" data-stato-conteggio="futuro">0</span></button>
+        <button type="button" class="stato-btn" data-stato="passato" aria-pressed="false">Passati <span class="stato-conteggio" data-stato-conteggio="passato">0</span></button>
+      </div>
 
-    <section class="project-section" id="section-eventi-passato">
-      <h2 class="project-section-title passato">Eventi Passati</h2>
-      <div class="events-grid" id="grid-eventi-passato"></div>
-    </section>
+      <h2 class="project-section-title" id="eventi-elenco-titolo"></h2>
+
+      <!-- ⛔ Un elenco vuoto non resta bianco: la frase (calcolata da
+           avviaListaAStati(), mai statica) spiega perché e manda a uno
+           stato che ha davvero delle schede. -->
+      <p class="progetti-vuoto" id="eventi-vuoto" hidden></p>
+
+      <div class="cards-grid" id="eventi-grid"></div>
+    </div>
   </main>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
@@ -98,6 +113,6 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824q"></script>
+  <script src="js/main.js?v=20260824s"></script>
 </body>
 </html>
