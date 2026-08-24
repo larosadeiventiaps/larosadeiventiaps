@@ -3375,3 +3375,100 @@ main {
 .gallery-vuoto[hidden] {
   display: none;
 }
+
+/* ------------------------------------------------------------
+   «Sostienici»: i sei modi, in cima
+   ------------------------------------------------------------
+   ⚠️ Sei riquadri, non sei pastiglie: ognuno deve dire in una riga che cosa
+   comporta, e una pastiglia col nome dentro non lo dice. Sono il primo bivio
+   della pagina, non una barra di filtri. */
+.modi-griglia {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+}
+
+.modo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  /* ⭐ La riga di colore in cima è ciò che li rende riconoscibili a colpo
+     d'occhio: sei riquadri bianchi identici si leggono uno per uno. */
+  border-top: 4px solid var(--modo-colore, var(--primary));
+  border-radius: var(--radius-card);
+  padding: 1.1rem 1.15rem 1rem;
+  text-decoration: none;
+  color: var(--dark);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.modo:hover,
+.modo:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.13);
+}
+
+.modo-segno {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.modo strong {
+  font-size: 1.2rem;
+  color: var(--modo-colore, var(--primary));
+}
+
+.modo small {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.modo em {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--modo-colore, var(--primary));
+  margin-top: 0.5rem;
+}
+
+/* «non ti costa nulla» e «serve tempo, non soldi»: è la risposta alla prima
+   domanda che uno si fa, e va vista prima del testo, non dentro. */
+.modo-gratis {
+  align-self: flex-start;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--modo-velo, var(--primary-light));
+  color: var(--modo-colore, var(--primary));
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  margin-bottom: 0.15rem;
+}
+
+/* Un colore per ciascuno. ⚠️ Scelti scuri abbastanza da leggersi su bianco:
+   il colore qui è anche quello del titolo, non solo del filetto. */
+.modo-socio      { --modo-colore: #b8541f; --modo-velo: #fbecdf; }
+.modo-dona       { --modo-colore: #c0392b; --modo-velo: #fbe6e3; }
+.modo-cinque     { --modo-colore: #217a45; --modo-velo: #e2f1e8; }
+.modo-sponsor    { --modo-colore: #1f5f9e; --modo-velo: #e3eef9; }
+.modo-volontario { --modo-colore: #8a5a06; --modo-velo: #fbeeda; }
+.modo-educatore  { --modo-colore: #6b3fa0; --modo-velo: #efe8f7; }
+
+.carta-socio {
+  border-top: 4px solid #b8541f;
+}
+
+@media (max-width: 900px) {
+  .modi-griglia { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .modi-griglia { grid-template-columns: 1fr; }
+}
