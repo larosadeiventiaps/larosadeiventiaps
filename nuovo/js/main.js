@@ -1022,17 +1022,27 @@ function animaNumeri(contenitore) {
 //    vecchi per mesi: il file nuovo era online, ma il browser non lo
 //    chiedeva piu'. L'unica leva che resta e' l'indirizzo: `?v=...` e' una
 //    richiesta diversa, quindi una cache diversa.
-//    ⚠️ SI CAMBIA A MANO quando si sostituisce un'immagine mantenendo il
-//    suo nome di file. Se invece l'immagine e' nuova (nome mai usato), non
-//    serve toccare niente. Non e' una data automatica: dev'essere lo stesso
-//    valore per tutti i visitatori, altrimenti ognuno riscarica tutto.
-const VERSIONE_IMMAGINI = '20260824'
+//    Lo stesso vale per i fogli di stile e per gli script: anche loro escono
+//    con 120 giorni. Per questo l'unico punto in cui la versione si scrive e'
+//    l'indirizzo nelle pagine `.html` — quelle SI' rispettano il `no-store`
+//    di `.htaccess`, quindi arrivano sempre fresche e portano dentro la
+//    versione nuova. Questo file la rilegge dal proprio tag <script>, cosi'
+//    non ci sono due valori da tenere allineati a mano.
+//    ⚠️ SI CAMBIA quando si sostituisce un file tenendo lo stesso nome
+//    (immagine, css o js). Un nome nuovo non ha il problema. Per cambiarla:
+//    `python scripts/versiona-asset.py`
+const VERSIONE_IMMAGINI = (function () {
+  var tag = document.currentScript || document.querySelector('script[src*="js/main.js"]')
+  var trovata = tag && /[?&]v=([^&]+)/.exec(tag.getAttribute('src') || '')
+  return trovata ? trovata[1] : ''
+})()
 
 // Aggiunge la versione a un indirizzo di immagine che viene dai file di dati.
 // Lascia stare i segnaposto generati in pagina (`data:`) e gli indirizzi
 // assoluti verso altri siti, dove la cache non e' cosa nostra.
 function conVersione(percorso) {
   if (typeof percorso !== 'string' || !percorso) return percorso
+  if (!VERSIONE_IMMAGINI) return percorso
   if (percorso.startsWith('data:') || /^https?:/i.test(percorso)) return percorso
   return percorso + (percorso.includes('?') ? '&' : '?') + 'v=' + VERSIONE_IMMAGINI
 }
