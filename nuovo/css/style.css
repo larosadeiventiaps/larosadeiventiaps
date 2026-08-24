@@ -3237,3 +3237,141 @@ main {
 .avviso-app p {
   margin: 0;
 }
+
+/* ------------------------------------------------------------
+   «Seguici»: i marchi veri al posto delle emoji
+   ------------------------------------------------------------
+   ⚠️ Il colore sta sul quadratino, non sul segno: il segno è bianco e il
+   fondo porta il colore del servizio. È così che li si riconosce — un
+   glifo verde su bianco non è WhatsApp, WhatsApp è il bianco sul verde. */
+.marchio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+  flex: 0 0 auto;
+}
+
+.marchio-whatsapp  { background: #25D366; }
+.marchio-facebook  { background: #1877F2; }
+/* La sfumatura vera di Instagram, dal giallo in basso a sinistra al viola in
+   alto a destra: il marchio è quella, non il solo contorno. */
+.marchio-instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.social-riga a {
+  display: inline-flex;
+  align-items: center;
+  /* Su schermo stretto l'indirizzo va a capo: il marchio resta in alto
+     accanto alla prima riga invece di centrarsi su due righe di testo. */
+  align-items: center;
+  line-height: 1.4;
+}
+
+.nota-pec {
+  display: block;
+  font-size: 1rem;
+  color: #777;
+  margin-left: 1.9rem;
+}
+
+/* ------------------------------------------------------------
+   Gallery: i filtri per progetto
+   ------------------------------------------------------------
+   La miniatura davanti al nome è la ragione per cui questi pulsanti
+   funzionano: una fila di pastiglie tutte uguali si legge una per una,
+   con l'immagine si riconosce quella che si cerca senza leggere. */
+.gallery-filtri {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 0 auto 1.75rem;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.gallery-filtro {
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.9rem 0.35rem 0.35rem;
+  border: 2px solid var(--line, #ddd);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--dark);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+/* Senza miniatura (il pulsante «Tutte») il rientro a sinistra sarebbe un
+   buco: si pareggia. */
+.gallery-filtro:not(:has(.gallery-filtro-foto)) {
+  padding-left: 0.9rem;
+}
+
+.gallery-filtro-foto {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  flex: 0 0 auto;
+}
+
+.gallery-filtro-nome {
+  /* ⚠️ I titoli dei progetti sono lunghi («Follow me...Ad uno s-passo dalla
+     cultura»): senza tetto un pulsante solo occuperebbe tutta la riga. Si
+     taglia con i puntini, il nome intero resta nel `title` del pulsante. */
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gallery-filtro-quante {
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.05rem 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.gallery-filtro:hover {
+  border-color: var(--primary);
+}
+
+.gallery-filtro.attivo {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+
+.gallery-filtro.attivo .gallery-filtro-quante {
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+.gallery-vuoto {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.2rem;
+  background: var(--primary-light);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.gallery-vuoto[hidden] {
+  display: none;
+}

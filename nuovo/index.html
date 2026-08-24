@@ -8,7 +8,7 @@
   <meta property="og:title" content="La Rosa dei Venti APS">
   <meta property="og:description" content="Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824t">
+  <link rel="stylesheet" href="css/style.css?v=20260824w">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -125,8 +125,16 @@
       <a href="progetti.html" class="scheda-grande">
         <img src="images/gallery/attivita-maggio-2025-11.jpg" alt="Ragazzi ed educatori durante un laboratorio">
         <span class="scheda-grande-testo">
-          <strong>63 progetti</strong>
-          <small>Teatro, musica, inglese, uscite culturali, autonomia abitativa: 1.412 partecipanti e 1.163 ore insieme.</small>
+          <!-- ⛔ I numeri NON si scrivono a mano qui: li mette `numeriDaiDati()`
+               leggendo data/projects.json. Fino al 24/08/2026 c'era scritto «63
+               progetti, 1.412 partecipanti, 1.163 ore»: erano i totali del
+               foglio Excel di mesi prima, e nel frattempo sei righe erano
+               state spostate fra gli eventi e le edizioni raggruppate in 28
+               progetti. Tre numeri sbagliati in prima pagina, senza che niente
+               lo segnalasse — è il modo in cui questi testi mentono sempre. -->
+          <strong data-numero="progetti">Progetti</strong>
+          <small>Teatro, musica, inglese, uscite culturali, autonomia abitativa:
+            <span data-numero="partecipanti">…</span> e <span data-numero="ore">…</span> insieme.</small>
           <em>Guarda tutti i progetti &rarr;</em>
         </span>
       </a>
@@ -182,7 +190,7 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824t"></script>
-  <script src="js/hero.js?v=20260824t"></script>
+  <script src="js/main.js?v=20260824w"></script>
+  <script src="js/hero.js?v=20260824w"></script>
 </body>
 </html>

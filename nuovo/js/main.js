@@ -38,7 +38,85 @@ document.addEventListener('DOMContentLoaded', () => {
   loadDirettivo();
   // Load documenti on documenti page
   loadDocumenti();
+  // I numeri dentro le frasi (home, sostienici): scritti dal codice, mai a mano.
+  numeriDaiDati();
 });
+
+/**
+ * Il punto ogni tre cifre: 1372 → «1.372».
+ *
+ * ⛔ **Non si usa `toLocaleString('it-IT')`, e non è una questione di gusto.**
+ * Misurato il 24/08/2026 su un Chrome vero: `(1372).toLocaleString('it-IT')`
+ * restituisce **«1372»**, senza separatore — quella build ha i dati di
+ * localizzazione ridotti, e `Intl` non ha di che raggruppare. Non solleva
+ * niente, non avvisa: restituisce semplicemente un numero scritto male, e la
+ * fascia delle statistiche lo mostrava così da sempre a chiunque avesse un
+ * browser fatto in quel modo.
+ *
+ * Quattro righe di codice non dipendono da nessuna libreria di sistema e danno
+ * la stessa risposta ovunque. Per un separatore delle migliaia, `Intl` è una
+ * dipendenza che può mancare in silenzio.
+ */
+function formattaNumero(n) {
+  const intero = Math.round(Number(n) || 0);
+  const segno = intero < 0 ? '-' : '';
+  return segno + String(Math.abs(intero)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+/**
+ * I numeri scritti dentro le frasi delle pagine — non le fasce di statistiche,
+ * ma il testo corrente: «63 progetti, 1.412 partecipanti, 1.163 ore».
+ *
+ * ⛔ **Erano scritti a mano nell'HTML, ed erano diventati falsi.** Venivano dai
+ * totali di un foglio Excel di mesi prima; nel frattempo sei righe erano state
+ * spostate fra gli eventi e le edizioni raggruppate per progetto. Il 24/08/2026
+ * l'home diceva «63 progetti» quando erano 28, e «1.412 partecipanti» quando
+ * erano 1.372. Nessun errore, nessun segno: solo tre numeri sbagliati nella
+ * prima frase che legge chi arriva — e la prima frase è quella su cui si decide
+ * se un'associazione è seria.
+ *
+ * La difesa non è ricordarsi di aggiornarli: è non scriverli. Qui si marca il
+ * punto con `data-numero` e il valore lo mette il codice, dagli stessi file da
+ * cui vengono le fasce di statistiche.
+ *
+ * ⚠️ Se i dati non si caricano, il segnaposto «…» resta com'è: una frase con i
+ * puntini si vede ed è vera («non lo so»), un `0` sarebbe una bugia scritta
+ * bene.
+ */
+async function numeriDaiDati() {
+  const punti = document.querySelectorAll('[data-numero]');
+  if (!punti.length) return;
+
+  try {
+    const [progetti, partner] = await Promise.all([
+      fetch('data/projects.json').then(r => r.json()),
+      fetch('data/partners.json').then(r => r.json())
+    ]);
+
+    const somma = (campo) => progetti.reduce((s, p) => s + (p[campo] || 0), 0);
+    const quanti = new Set(progetti.map(p => p.title)).size;
+    const conta = (n, uno, molti) => formattaNumero(n) + ' ' + (n === 1 ? uno : molti);
+
+    const valori = {
+      progetti: conta(quanti, 'progetto', 'progetti'),
+      edizioni: conta(progetti.length, 'edizione', 'edizioni'),
+      partecipanti: conta(somma('partecipanti'), 'partecipante', 'partecipanti'),
+      // La stessa cifra senza la parola: serve dove la frase la porta già
+      // («sono stati 1.372, in 28 progetti»).
+      'partecipanti-solo': formattaNumero(somma('partecipanti')),
+      ore: conta(Math.round(somma('ore')), 'ora', 'ore'),
+      incontri: conta(somma('incontri'), 'incontro', 'incontri'),
+      partner: conta(partner.length, 'realtà', 'realtà')
+    };
+
+    punti.forEach(el => {
+      const chiave = el.dataset.numero;
+      if (valori[chiave] !== undefined) el.textContent = valori[chiave];
+    });
+  } catch (e) {
+    console.warn('Numeri nei testi non caricati:', e);
+  }
+}
 
 /**
  * Il menu «Utilità» della barra in alto.
@@ -942,7 +1020,72 @@ async function loadGallery() {
     const searchInput = document.getElementById('search-input');
     const dateFrom = document.getElementById('date-from');
     const dateTo = document.getElementById('date-to');
+    const contenitoreFiltri = document.getElementById('gallery-filtri');
+    const vuoto = document.getElementById('gallery-vuoto');
     const lightbox = setupCardLightbox();
+
+    // `null` = «tutte»: è lo stato di partenza e resta distinto da
+    // `progetto === null`, che invece vuol dire «le foto senza progetto».
+    let progettoScelto = null;
+
+    /**
+     * I pulsanti nascono dai dati, non da un elenco scritto a mano.
+     *
+     * Ogni pulsante porta la MINIATURA della prima foto di quel progetto: è
+     * la parte «identificativa» chiesta dal committente. Una fila di
+     * pastiglie tutte uguali col nome dentro si legge una per una; con
+     * l'immagine davanti si riconosce quella che si cerca senza leggere —
+     * ed è così che funziona il ricordo di una fotografia.
+     *
+     * ⚠️ L'ordine è per numero di foto, non alfabetico: chi arriva vuole
+     * prima quello di cui c'è di più da vedere. «Altre attività» resta in
+     * fondo comunque, perché non è un progetto.
+     */
+    function disegnaFiltri() {
+      const perProgetto = new Map();
+      allPhotos.forEach(f => {
+        const chiave = f.progetto || null;
+        if (!perProgetto.has(chiave)) perProgetto.set(chiave, []);
+        perProgetto.get(chiave).push(f);
+      });
+
+      const conProgetto = [...perProgetto.entries()]
+        .filter(([chiave]) => chiave !== null)
+        .sort((a, b) => b[1].length - a[1].length);
+      const senzaProgetto = perProgetto.get(null) || [];
+
+      const voci = [
+        { chiave: null, nome: 'Tutte', foto: allPhotos },
+        ...conProgetto.map(([nome, foto]) => ({ chiave: nome, nome, foto })),
+      ];
+      if (senzaProgetto.length) {
+        voci.push({ chiave: '__altre__', nome: 'Altre attività', foto: senzaProgetto });
+      }
+
+      contenitoreFiltri.innerHTML = voci.map(v => {
+        const attivo = v.chiave === progettoScelto;
+        // La miniatura è la prima foto del gruppo. Per «Tutte» non ce n'è
+        // una che rappresenti l'insieme: meglio nessuna immagine che una
+        // scelta a caso che sembrerebbe voler dire qualcosa.
+        const miniatura = v.chiave === null
+          ? ''
+          : `<img class="gallery-filtro-foto" src="${conVersione(v.foto[0].image)}" alt="" loading="lazy">`;
+        return `
+          <button type="button" class="gallery-filtro${attivo ? ' attivo' : ''}"
+                  data-progetto="${escapeHTML(v.chiave === null ? '' : v.chiave)}" title="${escapeHTML(v.nome)}"
+                  aria-pressed="${attivo ? 'true' : 'false'}">
+            ${miniatura}
+            <span class="gallery-filtro-nome">${escapeHTML(v.nome)}</span>
+            <span class="gallery-filtro-quante">${v.foto.length}</span>
+          </button>`;
+      }).join('');
+    }
+
+    function passaIlProgetto(f) {
+      if (progettoScelto === null) return true;
+      if (progettoScelto === '__altre__') return !f.progetto;
+      return f.progetto === progettoScelto;
+    }
 
     function renderGallery() {
       const query = searchInput.value.toLowerCase();
@@ -950,6 +1093,7 @@ async function loadGallery() {
       const to = dateTo.value ? new Date(dateTo.value) : null;
 
       const visiblePhotos = allPhotos.filter(p => {
+        if (!passaIlProgetto(p)) return false;
         if (query && !p.title.toLowerCase().includes(query) && !(p.description || '').toLowerCase().includes(query)) return false;
         // Il filtro per data si applica SOLO alle foto che una data ce
         // l'hanno. Scelta esplicita (non un effetto collaterale): una foto
@@ -967,6 +1111,22 @@ async function loadGallery() {
       // L'ordine è quello di data/gallery.json, invariato: non c'è nessun
       // ordinamento per data qui, quindi una foto senza data non "salta"
       // da nessuna parte — resta dov'è stata messa da chi cura l'elenco.
+      contenitoreFiltri.querySelectorAll('.gallery-filtro').forEach(b => {
+        const chiave = b.dataset.progetto === '' ? null : b.dataset.progetto;
+        const attivo = chiave === progettoScelto;
+        b.classList.toggle('attivo', attivo);
+        b.setAttribute('aria-pressed', attivo ? 'true' : 'false');
+      });
+
+      // ⛔ Un elenco vuoto non si lascia bianco: con un filtro per progetto
+      //    E una ricerca insieme è facile arrivarci, e chi ci arriva deve
+      //    capire che è stato lui a restringere troppo, non che il sito è
+      //    rotto.
+      vuoto.hidden = visiblePhotos.length > 0;
+      if (!visiblePhotos.length) {
+        vuoto.textContent = 'Nessuna fotografia con questi filtri. Prova a togliere la ricerca o le date, oppure scegli «Tutte».';
+      }
+
       grid.innerHTML = visiblePhotos.map((p, i) => {
         const meta = formatGalleryMeta(p);
         return `
@@ -998,9 +1158,19 @@ async function loadGallery() {
       }
     }
 
+    // I pulsanti si ridisegnano una volta sola: le miniature non cambiano
+    // col filtro, e ricrearli a ogni render farebbe ricaricare le immagini.
+    contenitoreFiltri.addEventListener('click', (e) => {
+      const b = e.target.closest('.gallery-filtro');
+      if (!b) return;
+      progettoScelto = b.dataset.progetto === '' ? null : b.dataset.progetto;
+      renderGallery();
+    });
+
     searchInput.addEventListener('input', renderGallery);
     dateFrom.addEventListener('change', renderGallery);
     dateTo.addEventListener('change', renderGallery);
+    disegnaFiltri();
     renderGallery();
   } catch (e) {
     console.warn('Could not load gallery:', e);
@@ -1432,7 +1602,7 @@ function animaNumeri(contenitore) {
   const fermo = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (fermo || typeof IntersectionObserver === 'undefined') {
-    numeri.forEach(n => { n.textContent = Number(n.dataset.valore).toLocaleString('it-IT'); });
+    numeri.forEach(n => { n.textContent = formattaNumero(n.dataset.valore); });
     return;
   }
 
@@ -1448,7 +1618,7 @@ function animaNumeri(contenitore) {
         // Frenata dolce: veloce all'inizio, lenta alla fine. Un conteggio
         // lineare sembra un contatore rotto.
         const morbido = 1 - Math.pow(1 - avanzamento, 3);
-        voce.target.textContent = Math.round(arrivo * morbido).toLocaleString('it-IT');
+        voce.target.textContent = formattaNumero(arrivo * morbido);
         if (avanzamento < 1) requestAnimationFrame(passo);
       };
       requestAnimationFrame(passo);
