@@ -2024,7 +2024,11 @@ main {
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
   color: var(--primary);
-  word-break: break-all;
+  /* ⛔ Non `break-all`: spezzava i gruppi di quattro a metà («0000 04 / 02 777»)
+     appena la colonna si stringeva, e un IBAN letto a pezzi sbagliati è un
+     bonifico sbagliato. L'IBAN ha già gli spazi: si va a capo li'. */
+  word-break: normal;
+  overflow-wrap: anywhere;
   margin: 0.6rem 0 0.4rem;
 }
 
@@ -2865,4 +2869,34 @@ main {
     font-size: 1.2rem;
     min-width: 0;
   }
+}
+
+/* ------------------------------------------------------------
+   «Come si dona»: tre schede invece di due
+   ------------------------------------------------------------
+   ⚠️ `.support-grid` sta anche in app.html e nei moduli volontario/educatore,
+   dove le schede sono due: la colonna in più si chiede con una classe in più
+   invece di cambiare la griglia per tutti. */
+.support-grid-tre {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ⛔ Si scende a una colonna a 900px e non a 768 come le griglie da due: tre
+   schede fitte di testo, in mezzo un IBAN che non si può spezzare, sotto i
+   900px diventano tre colonnine illeggibili. La regola sta DOPO quella del
+   media query di serie, se no a parità di peso vincerebbe quella. */
+@media (max-width: 900px) {
+  .support-grid-tre {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* La scheda di Teaming è un modo di donare che funziona adesso: accanto alla
+   carta spenta e grigia deve vedersi che è viva. */
+.carta-teaming {
+  border: 2px solid var(--primary);
+}
+
+.carta-teaming .sostieni-bottone {
+  margin-top: 0.4rem;
 }

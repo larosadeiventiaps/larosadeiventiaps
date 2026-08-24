@@ -8,7 +8,7 @@
   <meta property="og:title" content="Sostienici — La Rosa dei Venti APS">
   <meta property="og:description" content="Sostienici con il 5x1000, una donazione o diventando volontario o educatore.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824c">
+  <link rel="stylesheet" href="css/style.css?v=20260824d">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -101,7 +101,10 @@
 
     <section class="section" id="dona-ora">
       <h2 class="section-title">Come si dona</h2>
-      <div class="support-grid">
+      <!-- ⚠️ Tre schede e non due: la griglia di serie ne mette due per riga, e la
+           terza resterebbe da sola a metà larghezza. `support-grid-tre` le mette
+           tutte e tre in fila sul computer e in colonna sul telefono. -->
+      <div class="support-grid support-grid-tre">
         <div class="support-card carta-dona">
           <h3>🏦 Bonifico bancario</h3>
           <p>Libero o periodico, verso il conto dell'associazione.</p>
@@ -111,6 +114,24 @@
           <p class="sostieni-riga"><strong>Intestato a</strong> La Rosa dei Venti APS</p>
           <p class="sostieni-riga"><strong>Causale</strong> Erogazione liberale a favore di La Rosa dei Venti APS</p>
           <p class="sostieni-nota">Le erogazioni liberali alle APS sono detraibili: conserva la ricevuta del bonifico.</p>
+        </div>
+
+        <!-- ⚠️ Teaming sta in mezzo, fra il bonifico e la carta spenta: è l'unico
+             modo di dare che funziona OGGI oltre al bonifico, e chi non se la sente
+             di fare un versamento grosso trova qui la porta piccola. Il gruppo
+             dell'associazione è già aperto, il collegamento porta lì dentro. -->
+        <div class="support-card carta-teaming">
+          <h3>🌱 Teaming — un euro al mese</h3>
+          <p>
+            Teaming è una donazione da <strong>un euro al mese</strong>, trattenuta con la carta
+            senza doverci pensare ogni volta: da soli è poco, ma siamo in tanti e insieme diventa
+            un laboratorio, un'uscita, un fine settimana.
+          </p>
+          <p>
+            Ci si iscrive in un minuto sulla pagina del nostro gruppo, l'euro arriva intero
+            all'associazione e si smette quando si vuole, senza dover spiegare niente a nessuno.
+          </p>
+          <a class="sostieni-bottone sostieni-bottone-piccolo" href="https://www.teaming.net/larosadeiventi" target="_blank" rel="noopener noreferrer">Unisciti al gruppo su Teaming ↗</a>
         </div>
 
         <div class="support-card coming-soon-box">
@@ -303,8 +324,8 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824c"></script>
-  <script src="js/candidature.js?v=20260824c"></script>
-  <script src="js/copia.js?v=20260824c"></script>
+  <script src="js/main.js?v=20260824d"></script>
+  <script src="js/candidature.js?v=20260824d"></script>
+  <script src="js/copia.js?v=20260824d"></script>
 </body>
 </html>
