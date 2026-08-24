@@ -48,7 +48,17 @@ ErrorDocument 404 /nuovo/404.html
 	</FilesMatch>
 </IfModule>
 
-# ⛔ Le immagini si tengono, ma si RICHIEDONO OGNI VOLTA. Il 23/08/2026 sei
+# ⛔ QUESTO BLOCCO SULLE IMMAGINI NON HA EFFETTO, ed e' tenuto solo perche' lo
+# avrebbe se un giorno Apache tornasse a servirle. Provato il 24/08/2026: le
+# immagini escono comunque con `Cache-Control: max-age=10368000` (120 giorni)
+# e senza `Expires`, cioe' non le sta servendo Apache — davanti c'e' un
+# server che consegna i file statici da se' e non legge questo file. Le
+# pagine `.html` invece rispettano il blocco qui sopra: si vede dalla
+# risposta, che porta `no-store`.
+# La cache delle immagini quindi NON si governa da qui: si governa
+# dall'indirizzo, con `?v=...` — vedi `VERSIONE_IMMAGINI` in `js/main.js`.
+#
+# Il 23/08/2026 sei
 # loghi dei partner sono stati sostituiti mantenendo lo stesso nome di file
 # (comune-bagno-a-ripoli, croce-doro-ponte-ema, croce-rossa-italiana,
 # misericordia-badia, sds-firenze-sudest, trekking-bar): col «tieni per

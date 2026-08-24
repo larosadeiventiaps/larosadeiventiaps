@@ -129,7 +129,7 @@ function setupCardLightbox() {
   function update() {
     if (!items.length) return;
     const item = items[currentIndex];
-    lbImg.src = item.image;
+    lbImg.src = conVersione(item.image);
     lbImg.alt = item.alt || item.title || '';
     const metaHtml = item.meta ? '<p class="lightbox-meta">' + escapeHTML(item.meta) + '</p>' : '';
     const descHtml = item.description ? '<p>' + escapeHTML(item.description) + '</p>' : '';
@@ -386,7 +386,7 @@ async function loadLatestProjects() {
     }
     grid.innerHTML = inCorso.map(p => `
       <article class="card">
-        <div class="card-image"><img src="${p.image}" alt="${escapeHTML(p.title)}" class="${classeImmagine(p.image)}"></div>
+        <div class="card-image"><img src="${conVersione(p.image)}" alt="${escapeHTML(p.title)}" class="${classeImmagine(p.image)}"></div>
         <div class="card-body">
           <h3>${escapeHTML(p.title)}</h3>
           <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
@@ -450,7 +450,7 @@ async function loadProjects() {
           items.forEach(p => allVisible.push(p));
           grid.innerHTML = items.map((p, i) => `
             <article class="card" data-lb-index="${startIdx + i}">
-              <div class="card-image" style="cursor:pointer"><img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}"></div>
+              <div class="card-image" style="cursor:pointer"><img src="${conVersione(p.image)}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}"></div>
               <div class="card-body">
                 <h3>${escapeHTML(p.title)}</h3>
                 <p class="date">${formatDate(p.startDate)} — ${formatDate(p.endDate)}</p>
@@ -552,7 +552,7 @@ async function loadGallery() {
         const meta = formatGalleryMeta(p);
         return `
         <div class="gallery-item" data-index="${i}">
-          <img src="${p.image}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}">
+          <img src="${conVersione(p.image)}" alt="${escapeHTML(p.title)}" loading="lazy" class="${classeImmagine(p.image)}">
           <div class="gallery-item-info">
             <h3>${escapeHTML(p.title)}</h3>
             ${meta ? `<p class="date">${escapeHTML(meta)}</p>` : ''}
@@ -627,7 +627,7 @@ async function loadPartners() {
       grid.innerHTML = filtered.map(p => {
         const initials = p.name.split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
         const logoHtml = p.logo
-          ? `<img src="${p.logo}" alt="${escapeHTML(p.name)}">`
+          ? `<img src="${conVersione(p.logo)}" alt="${escapeHTML(p.name)}">`
           : `<div class="partner-placeholder">${escapeHTML(initials)}</div>`;
         const linkHtml = p.url
           ? `<a href="${p.url}" class="partner-link" target="_blank" rel="noopener noreferrer">Visita il sito ↗</a>`
@@ -675,7 +675,7 @@ function renderEventCard(e) {
 
   return `
     <article class="card">
-      <div class="card-image" style="cursor:pointer"><img src="${e.image}" alt="${escapeHTML(e.title)}" loading="lazy"></div>
+      <div class="card-image" style="cursor:pointer"><img src="${conVersione(e.image)}" alt="${escapeHTML(e.title)}" loading="lazy"></div>
       <div class="card-body">
         <h3>${escapeHTML(e.title)}</h3>
         <div class="event-meta">
@@ -1014,6 +1014,29 @@ function animaNumeri(contenitore) {
  * sono state archiviate. ⛔ Non è una supposizione sul contenuto: è un
  * nome che diamo noi, e quindi si può fare affidamento.
  */
+// ⛔ Il server di Ergonet serve le immagini da se', ignorando `.htaccess`:
+//    arrivano con `Cache-Control: max-age=10368000` (120 giorni) e non c'e'
+//    direttiva che possa cambiarlo da qui. Il 23/08/2026 sei loghi dei
+//    partner sono stati sostituiti tenendo lo stesso nome di file, e chi
+//    aveva aperto la pagina il giorno prima ha continuato a vedere quelli
+//    vecchi per mesi: il file nuovo era online, ma il browser non lo
+//    chiedeva piu'. L'unica leva che resta e' l'indirizzo: `?v=...` e' una
+//    richiesta diversa, quindi una cache diversa.
+//    ⚠️ SI CAMBIA A MANO quando si sostituisce un'immagine mantenendo il
+//    suo nome di file. Se invece l'immagine e' nuova (nome mai usato), non
+//    serve toccare niente. Non e' una data automatica: dev'essere lo stesso
+//    valore per tutti i visitatori, altrimenti ognuno riscarica tutto.
+const VERSIONE_IMMAGINI = '20260824'
+
+// Aggiunge la versione a un indirizzo di immagine che viene dai file di dati.
+// Lascia stare i segnaposto generati in pagina (`data:`) e gli indirizzi
+// assoluti verso altri siti, dove la cache non e' cosa nostra.
+function conVersione(percorso) {
+  if (typeof percorso !== 'string' || !percorso) return percorso
+  if (percorso.startsWith('data:') || /^https?:/i.test(percorso)) return percorso
+  return percorso + (percorso.includes('?') ? '&' : '?') + 'v=' + VERSIONE_IMMAGINI
+}
+
 function classeImmagine(percorso) {
   return typeof percorso === 'string' && percorso.includes('/loc-') ? 'locandina' : ''
 }

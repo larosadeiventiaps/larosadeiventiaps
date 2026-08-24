@@ -60,7 +60,11 @@
     sfondo.innerHTML = ''
     scelte.forEach(function (foto) {
       var img = document.createElement('img')
-      img.src = foto.file
+      // La versione nell'indirizzo serve se una fotografia viene sostituita
+      // tenendo lo stesso nome: il server la terrebbe in cache 120 giorni.
+      // Vedi `VERSIONE_IMMAGINI` in main.js — se main.js non c'e', si usa
+      // l'indirizzo nudo invece di rompere la hero.
+      img.src = typeof conVersione === 'function' ? conVersione(foto.file) : foto.file
       // ⚠️ Vuoto e non descrittivo: le fotografie della hero sono decorazione
       //    dietro al titolo, e chi usa un lettore di schermo si sentirebbe
       //    leggere sette descrizioni prima di arrivare al nome
