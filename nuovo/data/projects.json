@@ -119,7 +119,7 @@
     "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
   },
   {
-    "title": "Musica ed Espressione corporea",
+    "title": "Musica e Movimento",
     "image": "images/progetti-nuove/loc-musica-e-movimento-2026.jpg",
     "startDate": "2026-09-19",
     "endDate": "2026-12-05",
@@ -127,7 +127,7 @@
     "location": "DO.ME.A. — Grassina",
     "incontri": 7,
     "ore": 14.0,
-    "description": "Laboratorio di Musica ed espressione Corporea, il sabato pomeriggio, con la merenda insieme.",
+    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina.",
     "appuntamenti": [
       {
         "data": "2026-09-19",
@@ -169,7 +169,7 @@
   {
     "title": "Giochiamo con l'inglese",
     "image": "images/progetti-nuove/loc-giochiamo-inglese-2026.jpg",
-    "startDate": "2026-10-01",
+    "startDate": "2026-09-22",
     "endDate": "2027-06-30",
     "status": "futuro",
     "location": "Biblioteca di Bagno a Ripoli",
