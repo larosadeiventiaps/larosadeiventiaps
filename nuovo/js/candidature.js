@@ -178,7 +178,11 @@
    */
   function corpoPerIlServer(dati, tipo, file) {
     var corpo = new FormData();
-    corpo.append('ruolo', tipo === 'educatore' ? 'educatore' : 'volontario');
+    // ⚠️ MAIUSCOLO: l'api ammette solo 'VOLONTARIO' e 'EDUCATORE'
+    // (`RUOLI_CANDIDATURA`). In minuscolo risponde 400 «ruolo: valore non
+    // valido» — sbagliato la prima volta, e visto solo perché la prova è
+    // stata fatta contro il server vero invece che a mente.
+    corpo.append('ruolo', tipo === 'educatore' ? 'EDUCATORE' : 'VOLONTARIO');
     corpo.append('nome', dati.nome || '');
     corpo.append('cognome', dati.cognome || '');
     corpo.append('email', dati.email || '');
