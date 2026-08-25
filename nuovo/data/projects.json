@@ -101,6 +101,24 @@
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
   },
   {
+    "title": "Colori in libertà",
+    "image": "images/progetti-nuove/loc-colori-in-liberta-2026.jpg",
+    "startDate": "2026-09-01",
+    "endDate": "2027-06-30",
+    "status": "futuro",
+    "collaboratori": "Cooperativa Sociale Fontenuova",
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+  },
+  {
+    "title": "Teatro",
+    "image": "images/progetti-nuove/loc-teatro-2026.jpg",
+    "startDate": "2026-09-01",
+    "endDate": "2026-12-31",
+    "status": "futuro",
+    "collaboratori": "CRC Antella, Il Teatro dell'Inutile",
+    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
+  },
+  {
     "title": "Musica ed Espressione corporea",
     "image": "images/progetti-nuove/loc-musica-e-movimento-2026.jpg",
     "startDate": "2026-09-19",
@@ -147,6 +165,15 @@
         "fine": "17:30"
       }
     ]
+  },
+  {
+    "title": "Giochiamo con l'inglese",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026.jpg",
+    "startDate": "2026-10-01",
+    "endDate": "2027-06-30",
+    "status": "futuro",
+    "location": "Biblioteca di Bagno a Ripoli",
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
     "title": "Marciapiede Didattico",
@@ -207,6 +234,16 @@
         "fine": "19:00"
       }
     ]
+  },
+  {
+    "title": "Follow me...Ad uno s-passo dalla cultura",
+    "image": "images/progetti-nuove/loc-follow-me-2026.jpg",
+    "startDate": "2027-01-01",
+    "endDate": "2027-05-31",
+    "status": "futuro",
+    "incontri": 3,
+    "collaboratori": "Istituto Morante-Ginori Conti",
+    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
   },
   {
     "title": "Aiutiamo l'ambiente",
