@@ -107,31 +107,48 @@
     "endDate": "2027-01-16",
     "status": "futuro",
     "incontri": 8,
+    "ore": 12.0,
     "description": "Laboratorio di Musica ed espressione Corporea",
     "appuntamenti": [
       {
-        "data": "2026-09-19"
+        "data": "2026-09-19",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2026-10-03"
+        "data": "2026-10-03",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2026-10-24"
+        "data": "2026-10-24",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2026-11-07"
+        "data": "2026-11-07",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2026-11-21"
+        "data": "2026-11-21",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2026-11-28"
+        "data": "2026-11-28",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2026-12-05"
+        "data": "2026-12-05",
+        "ora": "15:30",
+        "fine": "17:00"
       },
       {
-        "data": "2027-01-16"
+        "data": "2027-01-16",
+        "ora": "15:30",
+        "fine": "17:00"
       }
     ]
   },
@@ -160,28 +177,43 @@
     "endDate": "2027-01-06",
     "status": "futuro",
     "incontri": 7,
+    "ore": 21.0,
     "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
     "appuntamenti": [
       {
-        "data": "2026-10-17"
+        "data": "2026-10-17",
+        "ora": "15:30",
+        "fine": "18:30"
       },
       {
-        "data": "2026-10-31"
+        "data": "2026-10-31",
+        "ora": "15:30",
+        "fine": "18:30"
       },
       {
-        "data": "2026-11-14"
+        "data": "2026-11-14",
+        "ora": "15:30",
+        "fine": "18:30"
       },
       {
-        "data": "2026-11-28"
+        "data": "2026-11-28",
+        "ora": "15:30",
+        "fine": "18:30"
       },
       {
-        "data": "2026-12-12"
+        "data": "2026-12-12",
+        "ora": "15:30",
+        "fine": "18:30"
       },
       {
-        "data": "2026-12-26"
+        "data": "2026-12-26",
+        "ora": "15:30",
+        "fine": "18:30"
       },
       {
-        "data": "2027-01-06"
+        "data": "2027-01-06",
+        "ora": "15:30",
+        "fine": "18:30"
       }
     ]
   },
