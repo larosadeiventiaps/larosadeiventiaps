@@ -205,6 +205,19 @@
   function inviaCandidatura(dati, tipo, file) {
     var mailtoUrl = costruisciMailto(dati, tipo);
 
+    // ⛔ **Il volontario passa ancora dall'email, e non e' una svista.**
+    // `POST /pubblico/candidature` pretende il CV **per qualunque ruolo**
+    // (`richieste.service.ts`, e c'e' un test che lo fissa). Al volontario
+    // questo sito il curriculum non lo chiede — «raccontaci due cose di te»
+    // — quindi la richiesta tornerebbe 400 e chi ha compilato leggerebbe in
+    // faccia «cv: nessun file allegato». Misurato sul sito vero il
+    // 25/08/2026. Quando l'api rendera' il CV obbligatorio solo per
+    // l'educatore, si toglie questa riga e basta.
+    if (!file) {
+      window.location.href = mailtoUrl;
+      return Promise.resolve({ viaEmail: true });
+    }
+
     if (!API_CANDIDATURE) {
       window.location.href = mailtoUrl;
       return Promise.resolve({ viaEmail: true });
