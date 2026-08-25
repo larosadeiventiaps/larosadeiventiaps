@@ -8,7 +8,7 @@
   <meta property="og:title" content="L'app dell'associazione — La Rosa dei Venti APS">
   <meta property="og:description" content="Come installare sul telefono l'app dell'associazione, e a che cosa serve a genitori, partecipanti, educatori, volontari e direttivo.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824zc">
+  <link rel="stylesheet" href="css/style.css?v=20260825a">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -39,6 +39,14 @@
       </li>
       <li><a href="sostienici.html">Sostienici</a></li>
       <li><a href="contatti.html">Contatti</a></li>
+      <!-- ⭐ 25/08/2026: il gestionale dell'associazione è online, e questa è
+           la porta. Sta accanto a «Dona ora» e non dentro «Utilità» perché
+           non è una pagina di servizio: è il posto dove un genitore trova le
+           iscrizioni dei figli e il direttivo lavora tutti i giorni.
+           ⚠️ Porta a /accesso, non alla radice: la radice è la domanda di
+           tesseramento, e chi cerca la propria area riservata ci si
+           troverebbe davanti un modulo da compilare. -->
+      <li class="voce-accedi"><a href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Accedi</a></li>
       <li class="voce-dona"><a href="sostienici.html#dona-ora">❤️ Dona ora</a></li>
     </ul>
   </nav>
@@ -54,9 +62,18 @@
         Serve a <strong>chi vive l'associazione tutti i giorni</strong>: le famiglie, i ragazzi e chi
         li accompagna. Ognuno ci trova cose diverse — qui sotto c'è a che cosa serve a te.
       </p>
-      <p style="margin-bottom:0;max-width:70ch;">
-        Non si scarica da uno store e non occupa spazio: si aggiunge alla schermata del telefono
-        direttamente da qui, in due passaggi. <a href="#come-si-installa">Come si fa ↓</a>
+      <p style="margin-bottom:1.5rem;max-width:70ch;">
+        Non si scarica da uno store e non occupa spazio: si apre nel browser e si aggiunge alla
+        schermata del telefono in due passaggi. <a href="#come-si-installa">Come si fa ↓</a>
+      </p>
+      <!-- ⭐ Dal 25/08/2026 l'app è online e questo pulsante ci porta davvero.
+           Fino a ieri la pagina spiegava come installare una cosa che non
+           esisteva, e in fondo c'era un riquadro che lo ammetteva. -->
+      <p style="margin-bottom:0.5rem;">
+        <a class="sostieni-bottone" href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Apri l'app →</a>
+      </p>
+      <p style="margin:0;max-width:70ch;font-size:1rem;color:#555;">
+        L'indirizzo è <strong>rdv.nextum.it</strong>: è quello da aprire sul telefono per installarla.
       </p>
     </section>
 
@@ -135,6 +152,10 @@
 
     <section class="section" id="come-si-installa">
       <h2 class="section-title">Come si installa</h2>
+      <p style="margin-bottom:1.5rem;max-width:70ch;">
+        Si parte sempre aprendo <strong>rdv.nextum.it</strong> sul telefono, e da lì si aggiunge
+        alla schermata. Non c'è niente da scaricare da uno store.
+      </p>
       <div class="support-grid">
         <div class="support-card">
           <h3>📱 iPhone e iPad</h3>
@@ -170,15 +191,38 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="placeholder-box">
-        <span class="placeholder-tag">⚠️ Non è ancora attiva</span>
-        <p style="margin:0;">
-          L'app è pronta ma non è ancora pubblicata online: appena lo sarà, qui comparirà
-          il pulsante per aprirla e queste istruzioni funzioneranno. Nel frattempo, per qualunque cosa,
-          scrivi a <a href="mailto:info@larosadeiventiaps.org">info@larosadeiventiaps.org</a>.
-        </p>
+    <!-- ⚠️ Le due strade di accesso non sono un dettaglio da nascondere: chi
+         è nel direttivo entra con l'account Microsoft dell'associazione, chi è
+         socio o genitore riceve un collegamento via email e NON ha nessuna
+         password. Senza dirlo, un genitore cerca una password che non gli è
+         mai stata data, e conclude che l'app non sia per lui. -->
+    <section class="section" id="come-si-entra">
+      <h2 class="section-title">Come si entra</h2>
+      <div class="support-grid">
+        <div class="support-card">
+          <h3>👨‍👩‍👧 Sei socio, genitore o partecipante</h3>
+          <p>
+            Scrivi il tuo indirizzo email nella schermata di accesso: ti arriva un collegamento
+            che ti fa entrare. <strong>Non serve nessuna password</strong>, e non c'è niente da
+            ricordare.
+          </p>
+          <p style="font-size:1rem;color:#555;">
+            ⚠️ Dev'essere l'indirizzo che l'associazione ha in anagrafica. Se non ricevi
+            niente, scrivi a <a href="mailto:info@larosadeiventiaps.org">info@larosadeiventiaps.org</a>
+            e lo sistemiamo.
+          </p>
+        </div>
+        <div class="support-card">
+          <h3>🏛️ Sei nel direttivo</h3>
+          <p>
+            Entri con l'<strong>account Microsoft dell'associazione</strong>, lo stesso della
+            posta. Un clic, senza scrivere niente.
+          </p>
+        </div>
       </div>
+      <p style="margin-top:1.5rem;">
+        <a class="sostieni-bottone" href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Vai all'accesso →</a>
+      </p>
     </section>
   </main>
 
@@ -204,9 +248,10 @@
         </svg>
       </a>
     </div>
+    <p><a href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Accedi all'area riservata</a> — soci, famiglie, educatori e direttivo</p>
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824zc"></script>
+  <script src="js/main.js?v=20260825a"></script>
 </body>
 </html>

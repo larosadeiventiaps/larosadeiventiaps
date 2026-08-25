@@ -8,7 +8,7 @@
   <meta property="og:title" content="Contatti — La Rosa dei Venti APS">
   <meta property="og:description" content="Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824zc">
+  <link rel="stylesheet" href="css/style.css?v=20260825a">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -39,6 +39,14 @@
       </li>
       <li><a href="sostienici.html">Sostienici</a></li>
       <li><a href="contatti.html" class="active">Contatti</a></li>
+      <!-- ⭐ 25/08/2026: il gestionale dell'associazione è online, e questa è
+           la porta. Sta accanto a «Dona ora» e non dentro «Utilità» perché
+           non è una pagina di servizio: è il posto dove un genitore trova le
+           iscrizioni dei figli e il direttivo lavora tutti i giorni.
+           ⚠️ Porta a /accesso, non alla radice: la radice è la domanda di
+           tesseramento, e chi cerca la propria area riservata ci si
+           troverebbe davanti un modulo da compilare. -->
+      <li class="voce-accedi"><a href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Accedi</a></li>
       <li class="voce-dona"><a href="sostienici.html#dona-ora">❤️ Dona ora</a></li>
     </ul>
   </nav>
@@ -155,12 +163,49 @@
             </span>instagram.com/larosadeiventiaps</a>
         </p>
       </div>
+      <!-- ⛔ Qui c'era un modulo che puntava a «formspree.io/f/YOUR_FORM_ID»:
+           un segnaposto del modello di partenza, mai sostituito. Chi lo
+           compilava finiva su una pagina d'errore di un servizio terzo e il
+           messaggio non arrivava a nessuno — e da questa parte non c'era
+           nessun errore, nessun conteggio, nessuna traccia.
+           Dal 25/08/2026 il messaggio va al gestionale
+           (POST /pubblico/informazioni) e compare nell'elenco del direttivo;
+           se il gestionale non risponde si apre il programma di posta col
+           messaggio già scritto. Vedi js/informazioni.js. -->
       <div class="contact-form">
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <input type="text" name="name" placeholder="Il tuo nome" required>
-          <input type="email" name="email" placeholder="La tua email" required>
-          <textarea name="message" placeholder="Il tuo messaggio..." required></textarea>
+        <h3 style="margin-top:0;">Scrivici</h3>
+        <form id="modulo-informazioni" novalidate>
+          <div class="campo-modulo">
+            <label for="informazioni-nome">Nome</label>
+            <input type="text" id="informazioni-nome" name="nome" autocomplete="name" data-obbligatorio aria-describedby="informazioni-nome-errore">
+            <p class="campo-errore" id="informazioni-nome-errore"></p>
+          </div>
+          <div class="campo-modulo">
+            <label for="informazioni-email">Email</label>
+            <input type="email" id="informazioni-email" name="email" autocomplete="email" data-obbligatorio aria-describedby="informazioni-email-errore">
+            <p class="campo-errore" id="informazioni-email-errore"></p>
+          </div>
+          <!-- Il telefono non è obbligatorio, e lo dice l'etichetta: un campo
+               segnato con l'asterisco che poi si può saltare insegna a non
+               fidarsi degli asterischi. -->
+          <div class="campo-modulo">
+            <label for="informazioni-telefono">Telefono (se preferisci che ti chiamiamo)</label>
+            <input type="tel" id="informazioni-telefono" name="telefono" autocomplete="tel" aria-describedby="informazioni-telefono-errore">
+            <p class="campo-errore" id="informazioni-telefono-errore"></p>
+          </div>
+          <div class="campo-modulo">
+            <label for="informazioni-messaggio">Il tuo messaggio</label>
+            <textarea id="informazioni-messaggio" name="messaggio" rows="5" data-obbligatorio aria-describedby="informazioni-messaggio-errore"></textarea>
+            <p class="campo-errore" id="informazioni-messaggio-errore"></p>
+          </div>
+          <div class="campo-modulo campo-consenso">
+            <input type="checkbox" id="informazioni-consenso" name="consenso" data-obbligatorio aria-describedby="informazioni-consenso-errore">
+            <label for="informazioni-consenso">Ho letto e accetto l'<a href="documenti/informativa-privacy.pdf" target="_blank" rel="noopener noreferrer">informativa sulla privacy</a> per il trattamento dei miei dati.</label>
+          </div>
+          <p class="campo-errore" id="informazioni-consenso-errore"></p>
+
           <button type="submit">Invia messaggio</button>
+          <p class="modulo-esito" id="informazioni-esito" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -191,9 +236,13 @@
         </svg>
       </a>
     </div>
+    <p><a href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Accedi all'area riservata</a> — soci, famiglie, educatori e direttivo</p>
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824zc"></script>
+  <script src="js/main.js?v=20260825a"></script>
+  <!-- gestionale.js PRIMA di informazioni.js: porta l'indirizzo dell'api. -->
+  <script src="js/gestionale.js?v=20260825a"></script>
+  <script src="js/informazioni.js?v=20260825a"></script>
 </body>
 </html>

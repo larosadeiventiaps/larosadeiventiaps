@@ -21,6 +21,30 @@ Options -Indexes
 </IfModule>
 
 # ------------------------------------------------------------------
+# HTTPS obbligatorio dentro questa cartella - 25/08/2026
+# ------------------------------------------------------------------
+# Da oggi due moduli di questo sito (candidature e richieste di
+# informazioni) parlano con il gestionale su rdv.nextum.it, che e' un altro
+# dominio: il browser li lascia passare solo se l'api dichiara l'origine di
+# chi chiama fra quelle ammesse. Le origini ammesse sono le DUE in https
+# (con e senza www): da una pagina aperta in http:// l'origine non combacia,
+# la richiesta viene scartata dal browser e il modulo ripiega in silenzio
+# sull'email. Nessun errore, nessuna traccia, e la sensazione che il
+# collegamento col gestionale non serva a niente.
+# ⚠️ Il sito rispondeva in chiaro senza rimandare da nessuna parte
+# (verificato: http://larosadeiventiaps.org/nuovo/ dava 200, non un 301).
+# Serve comunque, moduli a parte: qui si scrivono nome, email e telefono.
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	# HTTPS=on non basta dietro un proxy che termina TLS: si guarda anche
+	# l'intestazione che quel proxy lascia. Senza la seconda condizione si
+	# rischia un ciclo di rimandi infinito su un sito che era gia' sicuro.
+	RewriteCond %{HTTPS} !=on
+	RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# ------------------------------------------------------------------
 # Indirizzo provvisorio — 22/08/2026
 # ------------------------------------------------------------------
 # Il sito nuovo vive in questa sottocartella SENZA sostituire quello

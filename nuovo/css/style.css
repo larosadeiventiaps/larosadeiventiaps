@@ -1769,6 +1769,45 @@ main {
   color: var(--primary-dark, var(--primary));
 }
 
+/* ------------------------------------------------------------
+   «Accedi»: la porta del gestionale (25/08/2026)
+   ------------------------------------------------------------
+   ⚠️ **Un contorno, non un pieno.** Accanto c'è già «Dona ora», che è
+   pieno: due pulsanti pieni uno di fianco all'altro si contendono lo
+   sguardo e nessuno dei due vince. Il contorno dice «sono un pulsante»
+   senza gridarlo, e lascia alla donazione il primo posto — che è la
+   gerarchia voluta, non un ripiego grafico.
+   ⚠️ `white-space: nowrap` perché una voce di menu che va a capo
+   allarga la barra di una riga intera su un portatile.
+   ------------------------------------------------------------ */
+.navbar-menu .voce-accedi a {
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  padding: 0.35rem 0.95rem;
+  white-space: nowrap;
+}
+
+.navbar-menu .voce-accedi a:hover,
+.navbar-menu .voce-accedi a:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: #ffffff;
+}
+
+/* Sul telefono il menu sta su fondo chiaro: un contorno bianco sparirebbe. */
+@media (max-width: 768px) {
+  .navbar-menu .voce-accedi a {
+    border-color: var(--primary);
+    color: var(--primary);
+    display: inline-block;
+    margin: 0.4rem 0;
+  }
+
+  .navbar-menu .voce-accedi a:hover,
+  .navbar-menu .voce-accedi a:focus-visible {
+    background: #fff3e8;
+  }
+}
+
 /* ⚠️ Nel menu a tendina del telefono le voci stanno su fondo chiaro, e un
    pulsante bianco su bianco sparirebbe: lì si gira, fondo pieno d'accento
    e scritta bianca. */

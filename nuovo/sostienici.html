@@ -8,7 +8,7 @@
   <meta property="og:title" content="Sostienici — La Rosa dei Venti APS">
   <meta property="og:description" content="Sostienici con il 5x1000, una donazione o diventando volontario o educatore.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260824zc">
+  <link rel="stylesheet" href="css/style.css?v=20260825a">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -39,6 +39,14 @@
       </li>
       <li><a href="sostienici.html" class="active">Sostienici</a></li>
       <li><a href="contatti.html">Contatti</a></li>
+      <!-- ⭐ 25/08/2026: il gestionale dell'associazione è online, e questa è
+           la porta. Sta accanto a «Dona ora» e non dentro «Utilità» perché
+           non è una pagina di servizio: è il posto dove un genitore trova le
+           iscrizioni dei figli e il direttivo lavora tutti i giorni.
+           ⚠️ Porta a /accesso, non alla radice: la radice è la domanda di
+           tesseramento, e chi cerca la propria area riservata ci si
+           troverebbe davanti un modulo da compilare. -->
+      <li class="voce-accedi"><a href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Accedi</a></li>
       <li class="voce-dona"><a href="sostienici.html#dona-ora">❤️ Dona ora</a></li>
     </ul>
   </nav>
@@ -196,18 +204,25 @@
         <div class="support-card carta-socio">
           <h3>Come si fa</h3>
           <p>
-            Due cose: si <strong>compila il modulo</strong> di domanda e si <strong>paga la
-            tessera annuale</strong>. Scrivici o chiama: ti mandiamo il modulo e ti diciamo
-            quanto costa la tessera dell'anno in corso.
+            Due cose: si <strong>compila la domanda</strong> e si <strong>paga la tessera
+            annuale</strong>. La domanda si compila <strong>online</strong>, in quattro
+            passaggi: i dati di chi si iscrive, i contatti, il riepilogo e i consensi.
+            Alla fine ti scriviamo un'email con le istruzioni per pagare la quota — il
+            tesseramento si attiva quando il pagamento risulta ricevuto.
           </p>
-          <!-- ⚠️ Il modulo NON è ancora fra i documenti scaricabili
-               (data/documenti.json ne ha nove: statuto, atto costitutivo,
-               bilanci, privacy — nessun modulo di ammissione). Finché non c'è,
-               si chiede: dire «scarica il modulo» e non trovarlo è peggio che
-               non dirlo. -->
+          <!-- ⭐ Dal 25/08/2026 la domanda si compila sul gestionale
+               (https://rdv.nextum.it/), che è il modulo pubblico di
+               tesseramento. Prima non esisteva nessuna strada: la pagina
+               diceva «scrivici e ti mandiamo il modulo» perché un modulo
+               scaricabile non c'era, e non c'è nemmeno adesso — ma non serve
+               più. ⚠️ Email e telefono restano, e restano PRIMA in ordine di
+               lettura per chi non se la sente di compilare da solo. -->
+          <a class="sostieni-bottone" href="https://rdv.nextum.it/" target="_blank" rel="noopener">Compila la domanda online →</a>
+          <p class="sostieni-nota" style="margin-top:0.75rem;">
+            Preferisci parlarne con una persona? Va benissimo:
+          </p>
           <p class="sostieni-riga"><strong>Email</strong> <a href="mailto:info@larosadeiventiaps.org?subject=Vorrei%20diventare%20socio">info@larosadeiventiaps.org</a></p>
           <p class="sostieni-riga"><strong>Telefono</strong> <a href="tel:3288424884">328 8424884</a> (Valentina)</p>
-          <a class="sostieni-bottone sostieni-bottone-piccolo" href="mailto:info@larosadeiventiaps.org?subject=Vorrei%20diventare%20socio">Scrivici per tesserarti</a>
           <p class="sostieni-nota">
             ⚠️ Essere socio e fare una donazione sono due cose diverse: si può fare l'una, l'altra,
             o tutt'e due.
@@ -315,7 +330,7 @@
           <p>Se vuoi dare una mano nelle attività, nelle uscite e nei laboratori con i ragazzi, ci fa piacere conoscerti. Raccontaci due cose di te qui sotto.</p>
 
           <div class="modulo-nota">
-            ✉️ Il modulo online non è ancora collegato al nostro gestionale: quando premi «Invia candidatura» si apre il tuo programma di posta con un'email già scritta verso <strong>info@larosadeiventiaps.org</strong>. Controlla che si apra e invia da lì — è quello il passaggio che ci fa davvero arrivare la tua candidatura.
+            ✅ Quando premi «Invia candidatura» la richiesta arriva direttamente a noi e la leggiamo dal nostro gestionale. Se in quel momento non fosse raggiungibile, si apre il tuo programma di posta con l'email già scritta verso <strong>info@larosadeiventiaps.org</strong>: in quel caso invia da lì, e il messaggio te lo dice.
           </div>
 
           <form class="modulo-candidatura" id="modulo-volontario" data-tipo="volontario" novalidate>
@@ -362,7 +377,7 @@
           <p>Se sei un educatore professionale o hai un titolo affine e vuoi mettere le tue competenze al servizio dei nostri progetti, raccontaci di te e mandaci il tuo curriculum.</p>
 
           <div class="modulo-nota">
-            ✉️ Anche qui il modulo online non è ancora collegato: quando premi «Invia candidatura» si apre il tuo programma di posta con un'email già scritta verso <strong>info@larosadeiventiaps.org</strong> — <strong>allega il curriculum lì</strong>, prima di inviare, perché il modulo non può farlo al posto tuo.
+            ✅ Il curriculum che scegli qui sotto <strong>parte insieme alla candidatura</strong>: non devi allegarlo da nessun'altra parte. Se il gestionale non fosse raggiungibile, si apre il tuo programma di posta con l'email già scritta verso <strong>info@larosadeiventiaps.org</strong> — solo in quel caso il curriculum va allegato a mano, e il messaggio te lo ricorda.
           </div>
 
           <form class="modulo-candidatura" id="modulo-educatore" data-tipo="educatore" novalidate>
@@ -395,7 +410,7 @@
               <label for="educatore-curriculum">Curriculum (PDF o Word)</label>
               <input type="file" id="educatore-curriculum" name="curriculum" accept=".pdf,.doc,.docx" data-obbligatorio aria-describedby="educatore-curriculum-errore educatore-curriculum-nota">
               <p class="campo-errore" id="educatore-curriculum-errore"></p>
-              <p id="educatore-curriculum-nota" style="font-size:1rem;color:#555;">Il file scelto qui NON parte da solo: lo dovrai allegare tu nell'email che si apre.</p>
+              <p id="educatore-curriculum-nota" style="font-size:1rem;color:#555;">PDF o Word, fino a 5 MB. Parte insieme alla candidatura.</p>
             </div>
             <div class="campo-modulo campo-consenso">
               <input type="checkbox" id="educatore-consenso" name="consenso" data-obbligatorio aria-describedby="educatore-consenso-errore">
@@ -443,11 +458,14 @@
         </svg>
       </a>
     </div>
+    <p><a href="https://rdv.nextum.it/accesso" target="_blank" rel="noopener">Accedi all'area riservata</a> — soci, famiglie, educatori e direttivo</p>
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260824zc"></script>
-  <script src="js/candidature.js?v=20260824zc"></script>
-  <script src="js/copia.js?v=20260824zc"></script>
+  <script src="js/main.js?v=20260825a"></script>
+  <!-- gestionale.js PRIMA di candidature.js: porta l'indirizzo dell'api. -->
+  <script src="js/gestionale.js?v=20260825a"></script>
+  <script src="js/candidature.js?v=20260825a"></script>
+  <script src="js/copia.js?v=20260825a"></script>
 </body>
 </html>
