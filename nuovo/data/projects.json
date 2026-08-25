@@ -108,28 +108,43 @@
     "status": "futuro",
     "location": "DO.ME.A. — Grassina",
     "incontri": 7,
-    "description": "Laboratorio di Musica ed espressione Corporea",
+    "ore": 14.0,
+    "description": "Laboratorio di Musica ed espressione Corporea, il sabato pomeriggio, con la merenda insieme.",
     "appuntamenti": [
       {
-        "data": "2026-09-19"
+        "data": "2026-09-19",
+        "ora": "15:30",
+        "fine": "17:30"
       },
       {
-        "data": "2026-10-03"
+        "data": "2026-10-03",
+        "ora": "15:30",
+        "fine": "17:30"
       },
       {
-        "data": "2026-10-24"
+        "data": "2026-10-24",
+        "ora": "15:30",
+        "fine": "17:30"
       },
       {
-        "data": "2026-11-07"
+        "data": "2026-11-07",
+        "ora": "15:30",
+        "fine": "17:30"
       },
       {
-        "data": "2026-11-21"
+        "data": "2026-11-21",
+        "ora": "15:30",
+        "fine": "17:30"
       },
       {
-        "data": "2026-11-28"
+        "data": "2026-11-28",
+        "ora": "15:30",
+        "fine": "17:30"
       },
       {
-        "data": "2026-12-05"
+        "data": "2026-12-05",
+        "ora": "15:30",
+        "fine": "17:30"
       }
     ]
   },
@@ -158,25 +173,38 @@
     "endDate": "2026-12-26",
     "status": "futuro",
     "incontri": 6,
+    "ore": 15.0,
     "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
     "appuntamenti": [
       {
-        "data": "2026-10-17"
+        "data": "2026-10-17",
+        "ora": "16:30",
+        "fine": "19:00"
       },
       {
-        "data": "2026-10-31"
+        "data": "2026-10-31",
+        "ora": "16:30",
+        "fine": "19:00"
       },
       {
-        "data": "2026-11-14"
+        "data": "2026-11-14",
+        "ora": "16:30",
+        "fine": "19:00"
       },
       {
-        "data": "2026-11-28"
+        "data": "2026-11-28",
+        "ora": "16:30",
+        "fine": "19:00"
       },
       {
-        "data": "2026-12-12"
+        "data": "2026-12-12",
+        "ora": "16:30",
+        "fine": "19:00"
       },
       {
-        "data": "2026-12-26"
+        "data": "2026-12-26",
+        "ora": "16:30",
+        "fine": "19:00"
       }
     ]
   },
