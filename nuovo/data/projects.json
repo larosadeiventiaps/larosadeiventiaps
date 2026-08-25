@@ -101,6 +101,41 @@
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
   },
   {
+    "title": "Musica ed Espressione corporea",
+    "image": "images/progetti-nuove/loc-musica-espressione-corporea-grassina.jpg",
+    "startDate": "2026-09-19",
+    "endDate": "2027-01-16",
+    "status": "futuro",
+    "incontri": 8,
+    "description": "Laboratorio di Musica ed espressione Corporea",
+    "appuntamenti": [
+      {
+        "data": "2026-09-19"
+      },
+      {
+        "data": "2026-10-03"
+      },
+      {
+        "data": "2026-10-24"
+      },
+      {
+        "data": "2026-11-07"
+      },
+      {
+        "data": "2026-11-21"
+      },
+      {
+        "data": "2026-11-28"
+      },
+      {
+        "data": "2026-12-05"
+      },
+      {
+        "data": "2027-01-16"
+      }
+    ]
+  },
+  {
     "title": "Marciapiede Didattico",
     "image": "images/progetti-nuove/marciapiede-didattico.jpg",
     "startDate": "2026-10-10",
@@ -117,6 +152,38 @@
     ],
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli",
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
+  },
+  {
+    "title": "Cinema",
+    "image": "images/projects/cinema-movie-time.jpeg",
+    "startDate": "2026-10-17",
+    "endDate": "2027-01-06",
+    "status": "futuro",
+    "incontri": 7,
+    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
+    "appuntamenti": [
+      {
+        "data": "2026-10-17"
+      },
+      {
+        "data": "2026-10-31"
+      },
+      {
+        "data": "2026-11-14"
+      },
+      {
+        "data": "2026-11-28"
+      },
+      {
+        "data": "2026-12-12"
+      },
+      {
+        "data": "2026-12-26"
+      },
+      {
+        "data": "2027-01-06"
+      }
+    ]
   },
   {
     "title": "Aiutiamo l'ambiente",
