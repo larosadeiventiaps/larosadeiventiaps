@@ -22,10 +22,21 @@
          "titolo": "Laboratorio di teatro", "luogo": "CRC Antella" }
      ]
 
-   `titolo` e `luogo` sono facoltativi (senza titolo si usa quello del
-   progetto). ⛔ Se una voce ha `appuntamenti`, il calendario mostra QUELLI e
-   non disegna più la fascia lunga da inizio a fine: le due cose insieme
+   `titolo`, `ora`/`fine` e `luogo` sono facoltativi (senza titolo si usa
+   quello del progetto; senza `ora` l'appuntamento è su tutto il giorno).
+   ⛔ Se una voce ha `appuntamenti`, il calendario mostra QUELLI e non
+   disegna più la fascia lunga da inizio a fine: le due cose insieme
    raddoppierebbero lo stesso progetto in ogni giorno del periodo.
+
+   IL LUOGO (26/08/2026): `data/luoghi.json` è l'anagrafica dei luoghi, con
+   indirizzo. Un progetto/evento punta a un luogo abituale col campo
+   `luogoId`; un singolo appuntamento può avere il suo `luogoId` che
+   sovrascrive quello del progetto per quel giorno. Dove non c'è ancora un
+   `luogoId` si continua a mostrare il vecchio `location`/`luogo` in chiaro:
+   nessun dato scompare solo perché non è ancora agganciato all'anagrafica.
+
+   OGNI APPUNTAMENTO (mai i periodi) ha nella scheda un comando che scarica
+   un file .ics per Outlook — vedi `generaICS()` più sotto.
 
    ⚠️ `data/projects.json` è rigenerato da un Excel dagli script in
    `scripts/`: se un giorno ci si mette `appuntamenti` a mano, una
@@ -124,15 +135,46 @@ function testoSicuro(s) {
 // ------------------------------------------------------------
 // Lettura dei dati
 // ------------------------------------------------------------
+// Anagrafica dei luoghi (`data/luoghi.json`), tenuta qui e non dentro allo
+// stato del calendario: serve anche alla scheda e al generatore del .ics,
+// che vivono fuori da `avviaCalendario`.
+let LUOGHI = {}
+
 async function leggiVoci() {
-  const [eventi, progetti] = await Promise.all([
+  const [eventi, progetti, luoghi] = await Promise.all([
     leggiFile('data/events.json'),
-    leggiFile('data/projects.json')
+    leggiFile('data/projects.json'),
+    leggiFile('data/luoghi.json')
   ])
+  LUOGHI = {}
+  luoghi.forEach(l => { if (l && l.id) LUOGHI[l.id] = l })
   const voci = []
   eventi.forEach(e => aggiungiVoce(voci, e, 'evento'))
   progetti.forEach(p => aggiungiVoce(voci, p, 'progetto'))
   return voci
+}
+
+// Il luogo vero di una voce: prima l'anagrafica (via `luogoId`), poi il
+// vecchio testo libero (`luogo`/`location`) per non far sparire niente di
+// quello che c'è già scritto in giro. Restituisce null se non c'è nessuno
+// dei due.
+function risolviLuogo(voce) {
+  const luogo = voce.luogoId ? LUOGHI[voce.luogoId] : null
+  if (luogo) {
+    const cittaPezzi = [luogo.cap, luogo.comune].filter(Boolean).join(' ')
+    const cittaConProvincia = luogo.provincia && cittaPezzi ? cittaPezzi + ' (' + luogo.provincia + ')' : cittaPezzi
+    const indirizzo = [luogo.indirizzo, cittaConProvincia].filter(Boolean).join(', ')
+    return { nome: luogo.nome, indirizzo: indirizzo, mappa: luogo.mappa || null }
+  }
+  if (voce.luogo) return { nome: voce.luogo, indirizzo: '', mappa: null }
+  return null
+}
+
+// Il testo unico «nome, indirizzo» per il campo LOCATION del .ics.
+function luogoInUnaRiga(voce) {
+  const risolto = risolviLuogo(voce)
+  if (!risolto) return ''
+  return [risolto.nome, risolto.indirizzo].filter(Boolean).join(', ')
 }
 
 async function leggiFile(percorso) {
@@ -164,6 +206,7 @@ function aggiungiVoce(voci, dato, tipo) {
       voci.push({
         tipo: tipo,
         titolo: a.titolo || titolo,
+        titoloGenitore: titolo,
         progetto: a.titolo ? titolo : '',
         inizio: giorno,
         fine: giorno,
@@ -171,8 +214,14 @@ function aggiungiVoce(voci, dato, tipo) {
         inizioMinuti: inizioMinuti,
         fineMinuti: fineMinuti != null ? fineMinuti : (inizioMinuti != null ? inizioMinuti + 60 : null),
         luogo: a.luogo || dato.location || '',
+        luogoId: a.luogoId || dato.luogoId || null,
         link: dato.link || '',
-        descrizione: dato.description || ''
+        descrizione: dato.description || '',
+        // ⛔ Un vero appuntamento (giorno preciso, con o senza ora): SOLO
+        // questi hanno il comando di scarico .ics — mai la fascia lunga del
+        // progetto qui sotto. Vedi punto 1 del rapporto in cima al file.
+        periodo: false,
+        appuntamentoVero: true
       })
     })
     return
@@ -184,6 +233,7 @@ function aggiungiVoce(voci, dato, tipo) {
   voci.push({
     tipo: tipo,
     titolo: titolo,
+    titoloGenitore: titolo,
     progetto: '',
     inizio: inizio,
     fine: fine < inizio ? inizio : fine,
@@ -191,8 +241,15 @@ function aggiungiVoce(voci, dato, tipo) {
     inizioMinuti: null,
     fineMinuti: null,
     luogo: dato.location || '',
+    luogoId: dato.luogoId || null,
     link: dato.link || '',
-    descrizione: dato.description || ''
+    descrizione: dato.description || '',
+    // Fascia lunga = periodo, non un appuntamento: niente .ics, e nella
+    // vista mese/settimana prende lo stile semitrasparente tratteggiato,
+    // ma solo per i progetti — un evento con solo inizio/fine resta come
+    // prima, perché di norma è già un giorno preciso (vedi rapporto).
+    periodo: tipo === 'progetto',
+    appuntamentoVero: false
   })
 }
 
@@ -404,7 +461,8 @@ function fascia(seg, scarto) {
     'top:' + ((scarto || 0) + seg.corsia * PASSO_FASCIA) + 'px;' +
     'height:' + ALTEZZA_FASCIA + 'px'
   const orario = v.conOrario && v.inizioMinuti != null ? daMinuti(v.inizioMinuti) + ' ' : ''
-  return '<button type="button" class="cal-fascia tipo-' + v.tipo + '" style="' + stile + '" ' +
+  const classi = 'cal-fascia tipo-' + v.tipo + (v.periodo ? ' periodo' : '')
+  return '<button type="button" class="' + classi + '" style="' + stile + '" ' +
     'data-scheda="' + testoSicuro(indiceScheda(v)) + '">' +
     (seg.continuaPrima ? '<span class="cal-continua" aria-hidden="true">‹</span>' : '') +
     '<span class="cal-fascia-testo">' + testoSicuro(orario + v.titolo) + '</span>' +
@@ -560,6 +618,14 @@ function apriScheda(voce) {
   if (!voce) return
   chiudiScheda()
 
+  const luogoRisolto = risolviLuogo(voce)
+  const dove = luogoRisolto
+    ? '<p class="cal-scheda-dove">📍 ' + testoSicuro(luogoRisolto.nome) +
+      (luogoRisolto.indirizzo ? '<br><span class="cal-scheda-indirizzo">' + testoSicuro(luogoRisolto.indirizzo) + '</span>' : '') +
+      (luogoRisolto.mappa ? ' · <a href="' + testoSicuro(luogoRisolto.mappa) + '" target="_blank" rel="noopener noreferrer">mappa ↗</a>' : '') +
+      '</p>'
+    : ''
+
   const fondo = document.createElement('div')
   fondo.className = 'cal-velo'
   fondo.innerHTML =
@@ -569,9 +635,14 @@ function apriScheda(voce) {
       '<h2 id="cal-scheda-titolo">' + testoSicuro(voce.titolo) + '</h2>' +
       (voce.progetto ? '<p class="cal-scheda-progetto">' + testoSicuro(voce.progetto) + '</p>' : '') +
       '<p class="cal-scheda-quando">' + testoSicuro(quando(voce)) + '</p>' +
-      (voce.luogo ? '<p class="cal-scheda-dove">📍 ' + testoSicuro(voce.luogo) + '</p>' : '') +
+      dove +
       (voce.descrizione ? '<p class="cal-scheda-testo">' + testoSicuro(voce.descrizione) + '</p>' : '') +
       (voce.link ? '<p><a href="' + testoSicuro(voce.link) + '" target="_blank" rel="noopener noreferrer">Vai al sito ↗</a></p>' : '') +
+      // ⛔ Solo gli appuntamenti veri hanno il comando di scarico: un periodo
+      // lungo mesi non ha un giorno e un'ora da mettere su un calendario.
+      (voce.appuntamentoVero
+        ? '<p><button type="button" class="cal-scheda-ics">📅 Scarica l\'appuntamento (Outlook / calendario)</button></p>'
+        : '') +
     '</div>'
 
   document.body.appendChild(fondo)
@@ -579,6 +650,8 @@ function apriScheda(voce) {
   fondo.querySelector('.cal-scheda-chiudi').addEventListener('click', chiudiScheda)
   fondo.addEventListener('click', e => { if (e.target === fondo) chiudiScheda() })
   document.addEventListener('keydown', chiudiConEsc)
+  const bottoneIcs = fondo.querySelector('.cal-scheda-ics')
+  if (bottoneIcs) bottoneIcs.addEventListener('click', () => scaricaICS(voce))
 }
 
 function chiudiConEsc(e) {
@@ -599,3 +672,190 @@ function quando(voce) {
   if (stessoGiorno(voce.inizio, voce.fine)) return dataEstesa(voce.inizio)
   return 'Dal ' + dataEstesa(voce.inizio) + ' al ' + dataEstesa(voce.fine)
 }
+
+// ------------------------------------------------------------
+// Lo scarico su Outlook/calendario (.ics) — SOLO per gli appuntamenti veri
+// ------------------------------------------------------------
+// Tutto in JavaScript nel browser, con un Blob e un link «download»: niente
+// libreria esterna, niente chiamata di rete. La RFC di riferimento è la
+// 5545. Il blocco VTIMEZONE per l'Italia sta qui sotto, statico: le due
+// regole (ora legale dall'ultima domenica di marzo, solare dall'ultima di
+// ottobre) non cambiano da un anno all'altro.
+const VTIMEZONE_EUROPA_ROMA = [
+  'BEGIN:VTIMEZONE',
+  'TZID:Europe/Rome',
+  'X-LIC-LOCATION:Europe/Rome',
+  'BEGIN:DAYLIGHT',
+  'TZOFFSETFROM:+0100',
+  'TZOFFSETTO:+0200',
+  'TZNAME:CEST',
+  'DTSTART:19700329T020000',
+  'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU',
+  'END:DAYLIGHT',
+  'BEGIN:STANDARD',
+  'TZOFFSETFROM:+0200',
+  'TZOFFSETTO:+0100',
+  'TZNAME:CET',
+  'DTSTART:19701025T030000',
+  'RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU',
+  'END:STANDARD',
+  'END:VTIMEZONE'
+]
+
+function pad2(n) { return (n < 10 ? '0' : '') + n }
+
+// AAAAMMGG, dalla data locale (mai UTC: vedi la nota su `dataDa` in cima).
+function formattaSoloData(d) {
+  return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate())
+}
+
+// AAAAMMGGTHHMMSS in ora locale italiana, per un DTSTART/DTEND con TZID:
+// niente conversioni, sono già le cifre dell'orologio da scrivere così come
+// sono — è il TZID a dire a chi legge che quel numero è fuso orario Europa.
+function formattaLocale(giorno, minuti) {
+  const h = Math.floor(minuti / 60)
+  const m = minuti % 60
+  return formattaSoloData(giorno) + 'T' + pad2(h) + pad2(m) + '00'
+}
+
+// AAAAMMGGTHHMMSSZ in UTC, per DTSTAMP (quando è stato generato il file).
+function formattaUTC(d) {
+  return d.getUTCFullYear() + pad2(d.getUTCMonth() + 1) + pad2(d.getUTCDate()) +
+    'T' + pad2(d.getUTCHours()) + pad2(d.getUTCMinutes()) + pad2(d.getUTCSeconds()) + 'Z'
+}
+
+// Slug stabile per UID e nome del file: via gli accenti, via tutto quello
+// che non è lettera/cifra, un trattino solo dove c'erano spazi o punteggi.
+function slugifica(testo) {
+  return String(testo || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Za-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+// Le virgole, i punti e virgola e le barre rovesce si proteggono, gli a
+// capo diventano «\n» letterale: è quello che chiede la RFC 5545 per i
+// campi di testo (SUMMARY, DESCRIPTION, LOCATION).
+function escapeICS(testo) {
+  return String(testo == null ? '' : testo)
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r\n|\n|\r/g, '\\n')
+}
+
+// Piega una riga a 75 OTTETTI (non caratteri: un accento in UTF-8 pesa 2
+// byte), come chiede la RFC 5545 — senza spezzare un carattere a metà.
+// Ogni riga di continuazione comincia con uno spazio, che è lui stesso un
+// ottetto e va contato nel limite della riga successiva.
+function pieghaRiga(riga) {
+  const bytes = new TextEncoder().encode(riga)
+  if (bytes.length <= 75) return riga
+  const decoder = new TextDecoder('utf-8')
+  const pezzi = []
+  let inizio = 0
+  let primoPezzo = true
+  while (inizio < bytes.length) {
+    const massimo = primoPezzo ? 75 : 74
+    let fine = Math.min(inizio + massimo, bytes.length)
+    while (fine > inizio && (bytes[fine] & 0xC0) === 0x80) fine--
+    pezzi.push(decoder.decode(bytes.slice(inizio, fine)))
+    inizio = fine
+    primoPezzo = false
+  }
+  return pezzi.join('\r\n ')
+}
+
+// L'indirizzo della pagina del progetto/evento sul sito (progetti.html o
+// eventi.html), risolto rispetto a dove sta girando il calendario adesso:
+// così il link nel .ics è giusto sia in locale sia in produzione, senza
+// scrivere un dominio a mano che un giorno potrebbe cambiare.
+function linkPaginaVoce(voce) {
+  const pagina = voce.tipo === 'evento' ? 'eventi.html' : 'progetti.html'
+  try {
+    return new URL(pagina, window.location.href).href
+  } catch (e) {
+    return pagina
+  }
+}
+
+function uidICS(voce) {
+  const base = slugifica(voce.titoloGenitore || voce.titolo)
+  const giorno = formattaSoloData(voce.inizio)
+  const orario = voce.conOrario && voce.inizioMinuti != null
+    ? pad2(Math.floor(voce.inizioMinuti / 60)) + pad2(voce.inizioMinuti % 60)
+    : 'giorno'
+  return base + '-' + giorno + '-' + orario + '@larosadeiventiaps.org'
+}
+
+// Data col trattino SOLO per il nome del file (leggibile): dentro al .ics
+// resta AAAAMMGG senza trattini, come chiede la RFC 5545.
+function dataConTrattini(d) {
+  return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate())
+}
+
+function nomeFileICS(voce) {
+  return slugifica(voce.titolo) + '-' + dataConTrattini(voce.inizio) + '.ics'
+}
+
+// Il file .ics vero e proprio, come testo. Un solo VEVENT.
+function generaICS(voce) {
+  const usaOrario = voce.conOrario && voce.inizioMinuti != null
+  const righe = []
+  righe.push('BEGIN:VCALENDAR')
+  righe.push('VERSION:2.0')
+  righe.push('PRODID:-//La Rosa dei Venti APS//Calendario//IT')
+  righe.push('CALSCALE:GREGORIAN')
+  if (usaOrario) righe.push.apply(righe, VTIMEZONE_EUROPA_ROMA)
+  righe.push('BEGIN:VEVENT')
+  righe.push(pieghaRiga('UID:' + uidICS(voce)))
+  righe.push(pieghaRiga('DTSTAMP:' + formattaUTC(new Date())))
+  if (usaOrario) {
+    const fineMinuti = voce.fineMinuti != null ? voce.fineMinuti : voce.inizioMinuti + 60
+    righe.push(pieghaRiga('DTSTART;TZID=Europe/Rome:' + formattaLocale(voce.inizio, voce.inizioMinuti)))
+    righe.push(pieghaRiga('DTEND;TZID=Europe/Rome:' + formattaLocale(voce.inizio, fineMinuti)))
+  } else {
+    righe.push('DTSTART;VALUE=DATE:' + formattaSoloData(voce.inizio))
+    righe.push('DTEND;VALUE=DATE:' + formattaSoloData(sommaGiorni(voce.inizio, 1)))
+  }
+  righe.push(pieghaRiga('SUMMARY:' + escapeICS(voce.titolo)))
+  const descrizioneCompleta = [voce.descrizione, 'Pagina del progetto: ' + linkPaginaVoce(voce)]
+    .filter(Boolean).join('\n\n')
+  if (descrizioneCompleta) righe.push(pieghaRiga('DESCRIPTION:' + escapeICS(descrizioneCompleta)))
+  const luogoTesto = luogoInUnaRiga(voce)
+  if (luogoTesto) righe.push(pieghaRiga('LOCATION:' + escapeICS(luogoTesto)))
+  righe.push('END:VEVENT')
+  righe.push('END:VCALENDAR')
+  return righe.join('\r\n') + '\r\n'
+}
+
+function scaricaICS(voce) {
+  const testo = generaICS(voce)
+  const blob = new Blob([testo], { type: 'text/calendar;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = nomeFileICS(voce)
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
+
+// ------------------------------------------------------------
+// La legenda: due colori (tipo) e due stili (appuntamento vs periodo). I
+// due colori sono già scritti in calendario.html; qui si aggiunge solo la
+// voce che spiega il tratteggio, per non toccare l'HTML da questo file.
+// ------------------------------------------------------------
+function espandiLegenda() {
+  const legenda = document.querySelector('.cal-legenda')
+  if (!legenda || legenda.querySelector('.periodo')) return
+  const voce = document.createElement('span')
+  voce.innerHTML = '<i class="cal-pallino periodo" aria-hidden="true"></i> ' +
+    'Tratteggio semitrasparente: periodo di un progetto senza ancora le date dei singoli incontri ' +
+    '(i colori pieni sono appuntamenti con giorno e ora già fissati, e si possono scaricare su Outlook)'
+  const nota = legenda.lastElementChild
+  if (nota) legenda.insertBefore(voce, nota)
+  else legenda.appendChild(voce)
+}
+document.addEventListener('DOMContentLoaded', espandiLegenda)

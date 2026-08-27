@@ -2864,6 +2864,32 @@ main {
   filter: brightness(1.12);
 }
 
+/* Un progetto SENZA appuntamenti segnati (la fascia lunga da inizio a
+   fine, i mesi in cui non sappiamo ancora i giorni dei singoli incontri) è
+   semitrasparente e tratteggiato: diverso dagli appuntamenti veri anche a
+   occhio nudo, non solo per l'opacità — chi non distingue bene i colori
+   deve poterlo capire lo stesso dal tratteggio e dal bordo.
+   ⚠️ Il testo resta scuro (mai bianco su questo fondo chiaro): misurato,
+   il contrasto minimo qui è 6,2:1, sopra la soglia 4,5:1 richiesta. */
+.cal-fascia.periodo {
+  background-color: rgba(232, 99, 10, 0.14);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(232, 99, 10, 0.30) 0px,
+    rgba(232, 99, 10, 0.30) 6px,
+    rgba(232, 99, 10, 0.10) 6px,
+    rgba(232, 99, 10, 0.10) 12px
+  );
+  border: 2px dashed rgba(232, 99, 10, 0.8);
+  color: #7a3200;
+  font-weight: 600;
+}
+
+.cal-fascia.periodo:hover {
+  filter: none;
+  background-color: rgba(232, 99, 10, 0.22);
+}
+
 .cal-continua {
   opacity: 0.8;
   font-weight: 700;
@@ -3043,6 +3069,20 @@ main {
   background: #2f7d32;
 }
 
+/* Lo stesso tratteggio della fascia «periodo», in miniatura, per la voce
+   di legenda aggiunta da js/calendario.js (`espandiLegenda()`). */
+.cal-pallino.periodo {
+  background-color: rgba(232, 99, 10, 0.18);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(232, 99, 10, 0.55) 0px,
+    rgba(232, 99, 10, 0.55) 3px,
+    rgba(232, 99, 10, 0.15) 3px,
+    rgba(232, 99, 10, 0.15) 6px
+  );
+  border: 2px dashed rgba(232, 99, 10, 0.8);
+}
+
 /* --- la scheda che si apre cliccando una fascia --- */
 .cal-velo {
   position: fixed;
@@ -3099,6 +3139,33 @@ main {
 
 .cal-scheda-progetto {
   color: #666;
+}
+
+.cal-scheda-indirizzo {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Il comando di scarico .ics: solo sugli appuntamenti veri (lo decide
+   js/calendario.js), quindi niente classe tipo-progetto/tipo-evento qui —
+   uno stile solo, riconoscibile, per un'azione che c'è o non c'è. */
+.cal-scheda-ics {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--primary);
+  color: white;
+  border: 0;
+  border-radius: var(--radius-card);
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cal-scheda-ics:hover {
+  transform: scale(1.03);
 }
 
 .cal-scheda-chiudi {

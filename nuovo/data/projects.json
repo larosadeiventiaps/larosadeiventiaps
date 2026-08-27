@@ -125,6 +125,7 @@
     "endDate": "2026-12-05",
     "status": "futuro",
     "location": "DO.ME.A. — Grassina",
+    "luogoId": "domea-grassina",
     "incontri": 7,
     "ore": 14.0,
     "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina.",
@@ -173,6 +174,7 @@
     "endDate": "2027-06-30",
     "status": "futuro",
     "location": "Biblioteca di Bagno a Ripoli",
+    "luogoId": "biblioteca-bagno-a-ripoli",
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {

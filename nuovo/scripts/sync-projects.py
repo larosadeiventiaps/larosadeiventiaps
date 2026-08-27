@@ -183,6 +183,40 @@ def build_description(project):
     return " ".join(parts) if parts else title
 
 
+# Campi che l'Excel non conosce e che nel frattempo qualcuno può aver
+# scritto a mano in projects.json (gli appuntamenti con l'ora, il luogo
+# dell'anagrafica, il vecchio luogo in chiaro): questo script li riscrive
+# da capo a ogni sincronizzazione, e senza questa protezione una
+# rigenerazione li cancellerebbe in silenzio (26/08/2026).
+CAMPI_DA_CONSERVARE = ("appuntamenti", "luogoId", "location")
+
+
+def carica_progetti_esistenti():
+    """I progetti già in projects.json, indicizzati per (titolo, data inizio).
+
+    ⛔ Si accoppia per titolo **e** data d'inizio, mai per il solo titolo:
+    "Teatro" o "Cinema" tornano ogni anno con lo stesso nome, e agganciare
+    gli appuntamenti del laboratorio 2026 a quello del 2025 sarebbe un dato
+    sbagliato, non solo un dato perso.
+    """
+    if not os.path.exists(OUTPUT_PATH):
+        return {}
+    try:
+        with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+            vecchi = json.load(f)
+    except (OSError, ValueError):
+        return {}
+    indice = {}
+    for p in vecchi:
+        chiave = (p.get("title"), p.get("startDate"))
+        if chiave[0] is None or chiave[1] is None:
+            continue
+        conservati = {k: p[k] for k in CAMPI_DA_CONSERVARE if k in p}
+        if conservati:
+            indice[chiave] = conservati
+    return indice
+
+
 def sync(excel_path):
     """Legge l'Excel e genera projects.json."""
     try:
@@ -197,6 +231,9 @@ def sync(excel_path):
 
     wb = openpyxl.load_workbook(excel_path, data_only=True)
     ws = wb[wb.sheetnames[0]]
+
+    progetti_esistenti = carica_progetti_esistenti()
+    chiavi_riagganciate = set()
 
     projects = []
 
@@ -284,6 +321,15 @@ def sync(excel_path):
         else:
             project["description"] = build_description(project)
 
+        # Riaggancia appuntamenti/luogoId/location scritti a mano nella riga
+        # già esistente con lo stesso titolo e la stessa data d'inizio: se
+        # non lo facciamo qui, la riga sotto li perde senza dirlo a nessuno.
+        chiave = (title, start_raw)
+        if chiave in progetti_esistenti:
+            for campo, valore in progetti_esistenti[chiave].items():
+                project[campo] = valore
+            chiavi_riagganciate.add(chiave)
+
         projects.append(project)
 
     # In corso e futuri: dal più vicino al più lontano (crescente)
@@ -314,6 +360,21 @@ def sync(excel_path):
     print(f"  {tot} progetti ({in_corso} in corso, {futuro} futuri, {passato} passati)")
     print(f"  {tot_incontri} incontri, {tot_ore} ore, {tot_part} partecipanti")
     print(f"  Salvato in: {OUTPUT_PATH}")
+
+    # Appuntamenti/luogoId/location scritti a mano che c'erano nel vecchio
+    # projects.json e che questa sincronizzazione NON è riuscita a
+    # riagganciare (titolo o data d'inizio cambiati nell'Excel): sono andati
+    # persi con questo salvataggio, e va saputo subito, non scoperto dopo.
+    perse = [chiave for chiave in progetti_esistenti if chiave not in chiavi_riagganciate]
+    if perse:
+        print(f"\n  ATTENZIONE — dati scritti a mano NON riagganciati (persi in questo salvataggio):")
+        for titolo, data_inizio in perse:
+            campi = ", ".join(progetti_esistenti[(titolo, data_inizio)].keys())
+            print(f"    - \"{titolo}\" ({data_inizio}): {campi}")
+        print(f"    Titolo o data d'inizio sono cambiati nell'Excel rispetto a {OUTPUT_PATH}:")
+        print(f"    controlla a mano prima di ridare questi dati.")
+    elif progetti_esistenti:
+        print(f"\n  {len(chiavi_riagganciate)} riga/e con appuntamenti/luogoId/location scritti a mano riagganciate.")
 
     # Controlla immagini mancanti
     missing = []

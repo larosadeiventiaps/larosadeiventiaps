@@ -1,0 +1,82 @@
+[
+  {
+    "id": "domea-grassina",
+    "nome": "Associazione culturale Do.Me.A. — Donne nei mestieri delle Arti",
+    "indirizzo": "Via Tegolaia 8",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Frazione di Grassina. Nome corto in uso: DO.ME.A. Sede dell'associazione culturale in via Tegolaia 8. Indirizzo CONFERMATO dal titolare il 26/08/2026: e' qui che si fa Musica ed Espressione corporea, non solo la sede legale.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Via%20Tegolaia%208%20Grassina%20Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "biblioteca-bagno-a-ripoli",
+    "nome": "Biblioteca Comunale di Bagno a Ripoli",
+    "indirizzo": "Via di Belmonte 38",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Sede in zona Ponte a Niccheri, dal maggio 1990.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Via%20di%20Belmonte%2038%20Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "crc-antella",
+    "nome": "Circolo Ricreativo Culturale Antella",
+    "indirizzo": "Via di Pulicciano 53",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Frazione di Antella. È la casa del popolo di Antella. Nome corto in uso: CRC Antella.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Via%20di%20Pulicciano%2053%20Antella%20Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "comune-bagno-a-ripoli",
+    "nome": "Comune di Bagno a Ripoli",
+    "indirizzo": "Piazza della Vittoria 1",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Sede municipale, Palazzo Comunale.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Piazza%20della%20Vittoria%201%20Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "bagno-a-ripoli",
+    "nome": "Bagno a Ripoli",
+    "indirizzo": null,
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Indicazione generica del comune (usata per l'evento Prim'Olio), non un indirizzo puntuale. Lasciato volutamente senza indirizzo.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "ospedale-santa-maria-annunziata",
+    "nome": "Ospedale Santa Maria Annunziata",
+    "indirizzo": "Via Antella 58",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Località Ponte a Niccheri.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Via%20Antella%2058%20Ponte%20a%20Niccheri%20Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "pieve-bagno-a-ripoli",
+    "nome": "Pieve di San Pietro a Ripoli",
+    "indirizzo": "Via Poggio della Pieve 3",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Nome corto in uso: Pieve di Bagno a Ripoli. Località Sorgane, lungo l'antica via Cassia.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Via%20Poggio%20della%20Pieve%203%20Bagno%20a%20Ripoli"
+  },
+  {
+    "id": "casa-del-popolo-grassina",
+    "nome": "Casa del Popolo di Grassina",
+    "indirizzo": "Piazza Umberto I",
+    "cap": "50012",
+    "comune": "Bagno a Ripoli",
+    "provincia": "FI",
+    "note": "Frazione di Grassina. Denominazione completa (Arci): S.M.S. Filarmonica e Corale Casa del Popolo Grassina. Trovata citata in una vecchia locandina dell'associazione: aggiunta all'anagrafica.",
+    "mappa": "https://www.google.com/maps/search/?api=1&query=Piazza%20Umberto%20I%20Grassina%20Bagno%20a%20Ripoli"
+  }
+]
