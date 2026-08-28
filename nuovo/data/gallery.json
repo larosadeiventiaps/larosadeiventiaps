@@ -1,5 +1,173 @@
 [
   {
+    "title": "La mostra nella cappella",
+    "description": "Nella cappella storica, un tavolo con opere esposte per l'apertura della mostra.",
+    "image": "images/gallery/2026-06-06-cappella-mostra-artisti.jpg",
+    "date": "2026-06-06",
+    "location": "Bagno a Ripoli",
+    "progetto": "Case d'Artista"
+  },
+  {
+    "title": "Decorazioni in mostra",
+    "description": "Piccoli oggetti di creta e stucchi decorativi allineati su un davanzale in pietra.",
+    "image": "images/gallery/2026-06-06-decorazioni-creta-stucco.jpg",
+    "date": "2026-06-06",
+    "location": "Bagno a Ripoli",
+    "progetto": "Case d'Artista"
+  },
+  {
+    "title": "La visita alla mostra",
+    "description": "Il gruppo visita la mostra Case d'Artista tra affreschi e stucchi della cappella.",
+    "image": "images/gallery/2026-06-06-gruppo-visita-mostra.jpg",
+    "date": "2026-06-06",
+    "location": "Bagno a Ripoli",
+    "progetto": "Case d'Artista"
+  },
+  {
+    "title": "I veli colorati",
+    "description": "In una sala, il gruppo si scambia veli colorati durante un esercizio di movimento.",
+    "image": "images/gallery/2026-04-18-teatro-veli-colorati.jpg",
+    "date": "2026-04-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica e Movimento"
+  },
+  {
+    "title": "In fila per l'esercizio",
+    "description": "Il gruppo si dispone in fila nella sala, tra sedie e un quadro alle pareti.",
+    "image": "images/gallery/2026-04-18-teatro-esercizio-gruppo.jpg",
+    "date": "2026-04-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica e Movimento"
+  },
+  {
+    "title": "Il cerchio dell'esercizio",
+    "description": "Il gruppo si ferma in cerchio durante l'esercizio di movimento in sala.",
+    "image": "images/gallery/2026-04-18-teatro-cerchio-movimento.jpg",
+    "date": "2026-04-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica e Movimento"
+  },
+  {
+    "title": "Il tavolo della creta",
+    "description": "All'aperto, tra piatti di creta e utensili, si lavora su un tavolo coperto da un telo bianco.",
+    "image": "images/gallery/2026-03-21-tavolo-creta-giardino.jpg",
+    "date": "2026-03-21",
+    "location": "Bagno a Ripoli",
+    "progetto": null
+  },
+  {
+    "title": "Le forme di creta",
+    "description": "Piccole sculture di creta modellate a mano, disposte su carta assorbente al sole.",
+    "image": "images/gallery/2026-03-21-sculture-creta-tavolo.jpg",
+    "date": "2026-03-21",
+    "location": "Bagno a Ripoli",
+    "progetto": null
+  },
+  {
+    "title": "Colori insieme al tavolo",
+    "description": "Un gruppo disegna e colora insieme intorno a un grande foglio da disegno.",
+    "image": "images/gallery/2026-02-21-tavolo-disegno-colori.jpg",
+    "date": "2026-02-21",
+    "location": "Bagno a Ripoli",
+    "progetto": "Colori in libertà"
+  },
+  {
+    "title": "Il dipinto astratto",
+    "description": "Dettaglio di un dipinto astratto a tinte forti, tra tocchi arancioni, verdi e viola.",
+    "image": "images/gallery/2026-02-21-dipinto-astratto-dettaglio.jpg",
+    "date": "2026-02-21",
+    "location": "Bagno a Ripoli",
+    "progetto": "Colori in libertà"
+  },
+  {
+    "title": "Il salotto dell'artista",
+    "description": "Un gruppo si racconta in un salotto con quadri astratti alle pareti, durante una visita d'artista.",
+    "image": "images/gallery/2026-01-10-casa-artista-salotto.jpg",
+    "date": "2026-01-10",
+    "location": "Bagno a Ripoli",
+    "progetto": "Case d'Artista"
+  },
+  {
+    "title": "Il racconto dell'opera",
+    "description": "Chi ospita la visita racconta la propria opera al gruppo seduto intorno.",
+    "image": "images/gallery/2026-01-10-casa-artista-racconto.jpg",
+    "date": "2026-01-10",
+    "location": "Bagno a Ripoli",
+    "progetto": "Case d'Artista"
+  },
+  {
+    "title": "La recita di Natale",
+    "description": "Sul palco, un gruppo con cappelli rossi da Babbo Natale accanto a un albero disegnato.",
+    "image": "images/gallery/2025-12-13-teatro-natale-scena.jpg",
+    "date": "2025-12-13",
+    "location": "Bagno a Ripoli",
+    "progetto": "Teatro"
+  },
+  {
+    "title": "Il saluto finale",
+    "description": "Il cast in maglioni e cappotti rossi saluta il pubblico alla fine dello spettacolo.",
+    "image": "images/gallery/2025-12-13-teatro-natale-saluto.jpg",
+    "date": "2025-12-13",
+    "location": "Bagno a Ripoli",
+    "progetto": "Teatro"
+  },
+  {
+    "title": "La sciarpa arcobaleno",
+    "description": "Chi conduce l'incontro indossa una sciarpa arcobaleno davanti alla classe seduta.",
+    "image": "images/gallery/2025-12-11-incontro-bandiera-arcobaleno.jpg",
+    "date": "2025-12-11",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
+    "title": "La bandiera arcobaleno",
+    "description": "Una bandiera arcobaleno piegata a strisce colorate, appoggiata su un tavolo.",
+    "image": "images/gallery/2025-12-11-bandiera-arcobaleno-dettaglio.jpg",
+    "date": "2025-12-11",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
+    "title": "I pensieri sui post-it",
+    "description": "Cartelloni pieni di post-it colorati raccolgono i pensieri degli studenti.",
+    "image": "images/gallery/2025-12-11-cartelloni-post-it.jpg",
+    "date": "2025-12-11",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
+    "title": "Il dialogo con la classe",
+    "description": "Due persone parlano davanti a una classe seduta, con la lavagna alle spalle.",
+    "image": "images/gallery/2025-12-10-presentazione-scuola.jpg",
+    "date": "2025-12-10",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
+    "title": "Il confronto in piccoli gruppi",
+    "description": "Studenti in piedi si confrontano in piccoli gruppi durante un esercizio.",
+    "image": "images/gallery/2025-12-10-gruppo-in-piedi-cerchio.jpg",
+    "date": "2025-12-10",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
+    "title": "Incontro nelle scuole",
+    "description": "In una sala, chi guida l'incontro parla a un gruppo di studenti seduti in file.",
+    "image": "images/gallery/2025-12-09-incontro-classe-scuola.jpg",
+    "date": "2025-12-09",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
+    "title": "In cerchio tra i banchi",
+    "description": "Il gruppo di studenti si alza e si raccoglie in cerchio per un'attività.",
+    "image": "images/gallery/2025-12-09-cerchio-classe-scuola.jpg",
+    "date": "2025-12-09",
+    "location": "Bagno a Ripoli",
+    "progetto": "Settimana dei Diritti"
+  },
+  {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
     "description": "Il gruppo in posa al tramonto lungo il sentiero, vicino al cartello del percorso.",
     "image": "images/progetti-nuove/trekking-bagno-a-ripoli.jpg",
@@ -16,6 +184,14 @@
     "progetto": "Uscita con il Trekking di Bagno a Ripoli"
   },
   {
+    "title": "Mercatino di beneficenza",
+    "description": "Banchetto con abiti e oggetti in vendita sotto un gazebo rosso con lo striscione dell'associazione.",
+    "image": "images/gallery/2025-09-28-mercatino-gazebo.jpg",
+    "date": "2025-09-28",
+    "location": "Bagno a Ripoli",
+    "progetto": null
+  },
+  {
     "title": "La raccolta della lavanda",
     "description": "Il gruppo pianta nuove lavande nel campo, tra vasetti e semenzali.",
     "image": "images/progetti-nuove/il-lavandeto.jpg",
@@ -30,6 +206,62 @@
     "date": "2025-09-21",
     "location": "Bagno a Ripoli",
     "progetto": "Il Lavandeto"
+  },
+  {
+    "title": "Sacchetti di lavanda",
+    "description": "Sacchetti di lavanda essiccata in tessuto a fiori, chiusi con nastri organza viola, in un cesto.",
+    "image": "images/gallery/2025-08-16-sacchetti-lavanda-cesto.jpg",
+    "date": "2025-08-16",
+    "location": "Bagno a Ripoli",
+    "progetto": "Il Lavandeto"
+  },
+  {
+    "title": "La raccolta della lavanda",
+    "description": "Mani legano mazzi di lavanda appena raccolta con nastri rossi, su una tovaglia a quadri.",
+    "image": "images/gallery/2025-07-18-lavanda-mazzi-nastro.jpg",
+    "date": "2025-07-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica alla lavanda"
+  },
+  {
+    "title": "Concerto d'arpe tra la lavanda",
+    "description": "Due arpe suonano nel campo di lavanda al tramonto, il pubblico seduto in lontananza.",
+    "image": "images/gallery/2025-07-18-arpe-tramonto-campo.jpg",
+    "date": "2025-07-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica alla lavanda"
+  },
+  {
+    "title": "Tramonto sul concerto",
+    "description": "Panorama del campo al tramonto con due arpe in primo piano e il pubblico steso sui teli.",
+    "image": "images/gallery/2025-07-18-arpe-tramonto-pubblico.jpg",
+    "date": "2025-07-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica alla lavanda"
+  },
+  {
+    "title": "Suonare l'arpa da vicino",
+    "description": "Due persone suonano l'arpa fianco a fianco, spartiti sui leggii, prato intorno.",
+    "image": "images/gallery/2025-07-18-arpe-ravvicinate.jpg",
+    "date": "2025-07-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica alla lavanda"
+  },
+  {
+    "title": "Il pubblico nel prato",
+    "description": "Il pubblico steso sull'erba guarda il tramonto, tra picnic e chiacchiere.",
+    "image": "images/gallery/2025-07-18-pubblico-prato-tramonto.jpg",
+    "date": "2025-07-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica alla lavanda"
+  },
+  {
+    "title": "Controluce tra le arpe",
+    "description": "Due arpe illuminate dal tramonto, controluce tra gli alberi.",
+    "image": "images/gallery/2025-07-18-due-arpe-controluce.jpg",
+    "date": "2025-07-18",
+    "location": "Bagno a Ripoli",
+    "progetto": "Musica alla lavanda"
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
