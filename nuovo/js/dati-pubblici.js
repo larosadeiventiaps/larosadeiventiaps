@@ -146,35 +146,31 @@
   var avvisoMostrato = false;
 
   /**
-   * ⚠️ Testo neutro apposta: non è la frase di un errore ("guasto",
-   * "problema"), perché nella maggioranza dei casi (oggi: sempre) non lo è
-   * — è la copia locale che sta facendo il suo lavoro. Chi legge deve solo
-   * sapere che quello che vede potrebbe non essere l'ultima parola.
+   * ⛔ **Non disegna più niente in pagina** (28/08/2026). Fino a stamattina
+   * questa funzione infilava in cima una fascia «questa pagina mostra
+   * un'istantanea salvata». Il titolare: «in alcune pagine c'è una barra in
+   * cima di avvertimento, toglila».
+   *
+   * ⚠️ Aveva ragione anche nei fatti, non solo nei gusti: **oggi il ripiego
+   * non è un guasto, è la normalità**. Il gestionale risponde `[]` su tutto
+   * finché non esce la versione nuova, quindi la fascia compariva su
+   * praticamente ogni pagina — e un avviso che c'è sempre non avvisa di
+   * niente: insegna solo a non leggerlo.
+   *
+   * ⚠️ Il segnale NON è sparito, è cambiato di posto: resta il `console.warn`
+   * del guasto vero, qui sotto, e questa riga in console dice comunque quando
+   * si sta guardando la copia. Chi deve diagnosticare lo vede; chi visita il
+   * sito no.
+   *
+   * ⇒ Se un giorno servisse di nuovo dirlo in pagina, il posto è questo, ma la
+   *   condizione dev'essere «il gestionale è GUASTO», non «sto usando la
+   *   copia»: sono due cose diverse, e mescolarle è ciò che ha reso la fascia
+   *   inutile.
    */
   function mostraAvviso() {
     if (avvisoMostrato) return;
     avvisoMostrato = true;
-    if (!document.body) {
-      document.addEventListener('DOMContentLoaded', mostraAvviso, { once: true });
-      return;
-    }
-    var barra = document.createElement('div');
-    barra.className = 'avviso-dati-copia';
-    barra.setAttribute('role', 'status');
-    barra.innerHTML = '<span aria-hidden="true">ℹ️</span> Questa pagina mostra un’istantanea salvata: alcuni numeri e alcune schede potrebbero non essere aggiornatissimi.';
-    document.body.insertBefore(barra, document.body.firstChild);
-
-    // ⚠️ `.navbar` è `position: fixed; top: 0` (css/style.css), e ogni pagina
-    // scosta il proprio `<main>` di 64px per lasciarle posto — un numero
-    // scritto pensando a una barra che parte da y:0. Con l'avviso davanti a
-    // tutto, la barra continuerebbe a sedersi a y:0 e coprirebbe l'avviso
-    // (stesso `z-index`, stesso posto): la si sposta in basso della sua
-    // altezza, così la pagina resta quella di sempre, solo più in basso di
-    // quel poco. Non si tocca il CSS delle pagine per farlo: sarebbe uno
-    // scostamento fisso, sbagliato per un testo che può andare a capo in
-    // due righe su un telefono.
-    var navbar = document.querySelector('.navbar');
-    if (navbar) navbar.style.top = barra.getBoundingClientRect().height + 'px';
+    console.info('[dati-pubblici] in uso la copia locale (data/*.json).');
   }
 
   /**

@@ -6,9 +6,12 @@
   Sostienici è la più lunga del sito — sei riquadri, quattro gradini, IBAN,
   Teaming, 5x1000, enti e due moduli — e per tornare in cima si rotellava.
 
-  ⚠️ **Compare solo dopo che si è scesi davvero** (due schermate). Un pulsante
-  fisso già in cima coprirebbe il contenuto senza servire a niente: in cima
-  ci si è già.
+  ⚠️ **Compare dopo poco più di mezza schermata**, non subito: un pulsante
+  fisso già in cima coprirebbe il contenuto senza servire a niente — in cima ci
+  si è già. Ma la prima stesura aspettava DUE schermate intere, e il titolare
+  (28/08/2026): «il tasto torna su si vede solo se si scrolla tantissimo in
+  giù». Su Sostienici, alta 5.976 px, voleva dire non vederlo per il primo
+  quinto della pagina.
 
   ⚠️ **Si disegna da JavaScript e non nell'HTML delle dodici pagine**, per una
   ragione pratica: un comando che senza JavaScript non funzionerebbe non deve
@@ -18,7 +21,11 @@
 (function () {
   'use strict';
 
-  var SOGLIA = function () { return window.innerHeight * 2; };
+  // ⚠️ Frazione dell'altezza dello schermo, non un numero fisso di pixel: su un
+  // telefono alto 640 px e su un monitor da 1.200 «mezza schermata» è la stessa
+  // quantità di lettura, mentre «400 px» sarebbe metà pagina sul primo e un
+  // dito sul secondo.
+  var SOGLIA = function () { return window.innerHeight * 0.6; };
 
   var bottone = document.createElement('button');
   bottone.type = 'button';

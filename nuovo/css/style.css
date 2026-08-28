@@ -1560,6 +1560,12 @@ main {
    ancora niente da dire. Inserito come primo figlio di <body>: sta sopra
    la barra di navigazione nel flusso della pagina, non ci si sovrappone.
    ------------------------------------------------------------ */
+/* ⛔ `.avviso-dati-copia` è stata TOLTA il 28/08/2026, su richiesta del
+   titolare: la fascia compariva in cima a quasi ogni pagina perché il ripiego
+   sulla copia locale è, oggi, la normalità e non un guasto. Il segnale è
+   rimasto in console (js/dati-pubblici.js). Le regole sono qui sotto,
+   commentate: se un giorno si vorrà avvisare di un guasto VERO, si riaprono
+   invece di riscriverle.
 .avviso-dati-copia {
   display: block;
   font-size: 1rem;
@@ -1570,6 +1576,7 @@ main {
   color: var(--dark);
   border-bottom: 2px solid var(--primary);
 }
+*/
 
 /* ------------------------------------------------------------
    Responsive — 768px breakpoint
@@ -3770,9 +3777,18 @@ html {
      gli servivano 88 px e ne aveva 94 — era la forma della pastiglia a
      mangiarne gli angoli. ⇒ Le curve devono cadere FUORI dal disegno. */
   padding: 0.15rem 1.15rem;
-  /* L'ingrandimento al passaggio del mouse (vedi sotto): il punto fermo è il
-     bordo sinistro, o crescendo il marchio uscirebbe dallo schermo a sinistra. */
-  transform-origin: left center;
+  /* ⚠️ **Il punto fermo dell'ingrandimento è l'angolo in ALTO a sinistra**, e
+     tutti e due i termini sono stati pagati. `left`: crescendo dal centro il
+     marchio uscirebbe dallo schermo a sinistra. `top`: con `center` usciva
+     dallo schermo IN ALTO — il titolare, 28/08/2026: «l'ingrandimento del logo
+     va fuori dallo schermo nella parte alta».
+     Il conto: la pastiglia è alta ~61 px dentro una barra di 64, quindi il suo
+     centro sta a ~32 px dal bordo dello schermo; triplicata diventa ~183 px,
+     cioè ~91 sopra il centro — 59 px oltre il bordo, e la barra è `fixed` a
+     `top: 0`, così non c'è pagina sopra in cui traboccare: quella parte è
+     semplicemente perduta. Ancorando il bordo ALTO, il marchio cresce verso il
+     basso, sopra il contenuto della pagina, che invece c'è. */
+  transform-origin: left top;
   transition: transform 0.18s ease-out;
   position: relative;
   z-index: 1001;
