@@ -78,6 +78,11 @@
     var sfondo = document.querySelector('.hero-sfondo')
     if (!sfondo) return
 
+    // ⚠️ 28/08/2026 — resta sul file, apposta: il gestionale non ha una
+    // rotta pubblica che elenchi fotografie con didascalia, e queste sette
+    // fotografie di sfondo non hanno un progetto/edizione a cui agganciarsi
+    // per prendere in prestito una copertina. Vedi js/dati-pubblici.js, in
+    // cima, per il perimetro di questa migrazione.
     fetch('data/hero.json')
       .then(function (r) {
         if (!r.ok) throw new Error('hero.json: ' + r.status)

@@ -13,7 +13,7 @@ vecchi. L'unica leva è l'indirizzo: `?v=...` è una richiesta diversa.
 QUANDO SI LANCIA: dopo aver sostituito un'immagine, un css o un js tenendo
 lo stesso nome di file. Se il nome è nuovo non serve.
 
-    python scripts/versiona-asset.py            # versione = la data di oggi
+    python scripts/versiona-asset.py            # versione = data e ora di adesso
     python scripts/versiona-asset.py 20260901   # versione scelta a mano
 
 Va lanciato dalla cartella `nuovo/`. La versione delle immagini non è
@@ -23,9 +23,19 @@ import glob
 import io
 import re
 import sys
-from datetime import date
+from datetime import date, datetime
 
-versione = sys.argv[1] if len(sys.argv) > 1 else date.today().strftime('%Y%m%d')
+# ⛔ **La data da sola non basta, e oggi si e' visto** (28/08/2026). Pubblicando
+# due volte nello stesso giorno la versione restava `20260828`: chi era passato
+# dopo il primo rilascio si teneva i file vecchi per 120 giorni, e lo script
+# diceva serenamente «0 pagine di 12» — cioe' dichiarava di non aver fatto
+# niente, che era vero, mentre il lavoro appena fatto restava invisibile.
+#
+# ⚠️ Adesso c'e' anche l'ORA: due rilasci nello stesso giorno sono due versioni.
+# Il prezzo, dichiarato: chi ricarica il sito dopo ogni pubblicazione riscarica
+# css e js anche se non sono cambiati. Sono poche decine di kilobyte, contro il
+# rischio di un rilascio che nessuno vede.
+versione = sys.argv[1] if len(sys.argv) > 1 else datetime.now().strftime('%Y%m%d-%H%M')
 if not re.fullmatch(r'[A-Za-z0-9._-]+', versione):
     sys.exit('Versione non valida: usare solo lettere, cifre, punto, trattino.')
 

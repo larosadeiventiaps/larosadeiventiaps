@@ -88,9 +88,11 @@ async function numeriDaiDati() {
   if (!punti.length) return;
 
   try {
+    // ⭐ 28/08/2026 — dal gestionale (con la copia come ripiego): vedi
+    // js/dati-pubblici.js, dove questi due punti sono diventati uno.
     const [progetti, partner] = await Promise.all([
-      fetch('data/projects.json').then(r => r.json()),
-      fetch('data/partners.json').then(r => r.json())
+      caricaProgetti(),
+      caricaPartner()
     ]);
 
     const somma = (campo) => progetti.reduce((s, p) => s + (p[campo] || 0), 0);
@@ -391,12 +393,10 @@ async function loadStats() {
     //    «Sostienici» diceva 33. Tre numeri per la stessa cosa, tutti veri
     //    ciascuno a modo suo, e chi li leggeva di fila non poteva che
     //    concludere che uno dei tre fosse sbagliato.
-    const [res, resPartner] = await Promise.all([
-      fetch('data/projects.json'),
-      fetch('data/partners.json')
+    const [projects, partner] = await Promise.all([
+      caricaProgetti(),
+      caricaPartner()
     ]);
-    const projects = await res.json();
-    const partner = await resPartner.json();
     // ⛔ **`projects.length` sono le EDIZIONI, non i progetti.** Le 57 righe
     //    del file sono 28 progetti, ciascuno con le sue edizioni annuali:
     //    fino al 24/08/2026 la home diceva «57 progetti realizzati», cioè
@@ -450,8 +450,7 @@ async function loadProjectStats() {
   const grid = document.getElementById('progetti-stats-grid');
   if (!grid) return;
   try {
-    const res = await fetch('data/projects.json');
-    const edizioni = await res.json();
+    const edizioni = await caricaProgetti();
     const totProgetti = new Set(edizioni.map(e => e.title)).size;
     const totEdizioni = edizioni.length;
     const totIncontri = edizioni.reduce((s, p) => s + (p.incontri || 0), 0);
@@ -494,8 +493,7 @@ async function loadEventStats() {
   const grid = document.getElementById('eventi-stats-grid');
   if (!grid) return;
   try {
-    const res = await fetch('data/events.json');
-    const edizioni = await res.json();
+    const edizioni = await caricaEventi();
     const totEventi = new Set(edizioni.map(e => e.title)).size;
     const totEdizioni = edizioni.length;
     const anni = new Set(edizioni.map(e => new Date(e.startDate).getFullYear()));
@@ -523,8 +521,7 @@ async function loadPartnerStats() {
   const grid = document.getElementById('partner-stats-grid');
   if (!grid) return;
   try {
-    const res = await fetch('data/partners.json');
-    const partners = await res.json();
+    const partners = await caricaPartner();
     const perTipo = {};
     partners.forEach(p => { perTipo[p.type] = (perTipo[p.type] || 0) + 1; });
 
@@ -547,8 +544,7 @@ async function loadLatestProjects() {
   const grid = document.getElementById('latest-projects-grid');
   if (!grid) return;
   try {
-    const res = await fetch('data/projects.json');
-    const projects = await res.json();
+    const projects = await caricaProgetti();
     const inCorso = projects.filter(p => p.status === 'in_corso').slice(0, 3);
     if (inCorso.length === 0) {
       document.getElementById('latest-projects').style.display = 'none';
@@ -826,7 +822,11 @@ function messaggioElencoVuoto(stato, conteggi, frasi, etichette) {
  * commento sugli id duplicati fra progetti.html ed eventi.html più sotto.
  *
  * `config`:
- *  - datiUrl: 'data/projects.json' | 'data/events.json'
+ *  - carica: `caricaProgetti` o `caricaEventi` (js/dati-pubblici.js) — la
+ *    funzione che dà l'elenco delle edizioni, dal gestionale con la copia
+ *    locale come ripiego. Non più un indirizzo di file: da qui la funzione
+ *    condivisa non sa nemmeno se sta leggendo il gestionale o la copia.
+ *  - nome: 'progetti' | 'eventi', solo per il messaggio in console se qualcosa va storto
  *  - idGrid/idToggle/idTitolo/idVuoto: gli id degli elementi in pagina
  *    (search/data-da/data-a restano 'search-input'/'date-from'/'date-to',
  *    gli stessi ovunque nel sito)
@@ -844,8 +844,7 @@ async function avviaListaAStati(config) {
   if (!grid) return;
 
   try {
-    const res = await fetch(config.datiUrl);
-    const edizioni = await res.json();
+    const edizioni = await config.carica();
     const arricchisci = config.arricchisciGruppi || (g => g);
     const gruppi = arricchisci(raggruppaPerTitolo(edizioni));
 
@@ -966,13 +965,14 @@ async function avviaListaAStati(config) {
     dateTo.addEventListener('change', render);
     render();
   } catch (e) {
-    console.warn('Could not load ' + config.datiUrl + ':', e);
+    console.warn('Could not load ' + config.nome + ':', e);
   }
 }
 
 function loadProjects() {
   return avviaListaAStati({
-    datiUrl: 'data/projects.json',
+    carica: caricaProgetti,
+    nome: 'progetti',
     idGrid: 'progetti-grid',
     idToggle: 'stato-toggle',
     idTitolo: 'progetti-elenco-titolo',
@@ -1037,6 +1037,13 @@ function formatGalleryMeta(photo) {
   return pieces.join(' — ');
 }
 
+// ⚠️ 28/08/2026 — QUESTA resta sul file, apposta. Il gestionale filtra le foto
+// sui consensi (`GET /pubblico/media/:id`), ma quella rotta dà i BYTE di UNA
+// foto già nota per identificativo: non esiste ancora un elenco pubblico che
+// dia didascalia/data/luogo/progetto per ogni foto, cioè quello che questa
+// pagina mostra davvero. Fabbricare una galleria da soli identificativi,
+// senza didascalia, sarebbe una pagina peggiore di quella di oggi — vedi il
+// commento in cima a js/dati-pubblici.js sul perimetro di questa migrazione.
 async function loadGallery() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
@@ -1218,8 +1225,7 @@ async function loadPartners() {
   if (!grid) return;
 
   try {
-    const res = await fetch('data/partners.json');
-    const datiPartner = await res.json();
+    const datiPartner = await caricaPartner();
     // Mescolati SUBITO, prima di ogni filtro/render — non riordinando il
     // DOM dopo: così le schede nascono già nell'ordine giusto, e la
     // ricerca/il filtro per tipo (che usano Array.filter, che non cambia
@@ -1297,12 +1303,10 @@ async function loadPartnerSponsorship() {
   if (!corpo) return;
 
   try {
-    const [resProgetti, resPartner] = await Promise.all([
-      fetch('data/projects.json'),
-      fetch('data/partners.json')
+    const [edizioni, partnersData] = await Promise.all([
+      caricaProgetti(),
+      caricaPartner()
     ]);
-    const edizioni = await resProgetti.json();
-    const partnersData = await resPartner.json();
     const nomiPartner = new Set(partnersData.map(p => p.name));
 
     const perSponsor = new Map();
@@ -1409,7 +1413,8 @@ function renderEventCard(e) {
  */
 function loadEvents() {
   return avviaListaAStati({
-    datiUrl: 'data/events.json',
+    carica: caricaEventi,
+    nome: 'eventi',
     idGrid: 'eventi-grid',
     idToggle: 'eventi-stato-toggle',
     idTitolo: 'eventi-elenco-titolo',
@@ -1443,8 +1448,7 @@ async function loadUpcomingEvents() {
   if (!grid) return;
 
   try {
-    const res = await fetch('data/events.json');
-    const allEvents = await res.json();
+    const allEvents = await caricaEventi();
     const upcoming = allEvents.filter(e => e.status === 'futuro').slice(0, 3);
 
     if (upcoming.length === 0) {
@@ -1485,6 +1489,8 @@ function compassRosePlaceholder(nome, colorHex) {
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
+// ⚠️ 28/08/2026 — resta sul file: il gestionale non ha ancora una rotta
+// pubblica per il direttivo (persone, contatti). Vedi js/dati-pubblici.js.
 async function loadDirettivo() {
   const grid = document.getElementById('team-grid');
   if (!grid) return;
@@ -1546,6 +1552,8 @@ function formatBytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
 }
 
+// ⚠️ 28/08/2026 — resta sul file: il gestionale non ha ancora una rotta
+// pubblica per i documenti dell'associazione. Vedi js/dati-pubblici.js.
 async function loadDocumenti() {
   const list = document.getElementById('documenti-list');
   if (!list) return;

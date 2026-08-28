@@ -1553,6 +1553,25 @@ main {
 }
 
 /* ------------------------------------------------------------
+   Avviso "dati dalla copia" — js/dati-pubblici.js, 28/08/2026
+   ⚠️ Il committente non vede bene: mai sotto i 16px (font-size: 1rem, non
+   di meno). ⛔ Niente rosso/allarme: non è un errore, vedi il commento in
+   cima a js/dati-pubblici.js su come si tratta un gestionale che non ha
+   ancora niente da dire. Inserito come primo figlio di <body>: sta sopra
+   la barra di navigazione nel flusso della pagina, non ci si sovrappone.
+   ------------------------------------------------------------ */
+.avviso-dati-copia {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  padding: 0.7rem 1rem;
+  background: var(--primary-light);
+  color: var(--dark);
+  border-bottom: 2px solid var(--primary);
+}
+
+/* ------------------------------------------------------------
    Responsive — 768px breakpoint
    ------------------------------------------------------------ */
 @media (max-width: 768px) {
@@ -2871,23 +2890,40 @@ main {
    deve poterlo capire lo stesso dal tratteggio e dal bordo.
    ⚠️ Il testo resta scuro (mai bianco su questo fondo chiaro): misurato,
    il contrasto minimo qui è 6,2:1, sopra la soglia 4,5:1 richiesta. */
+/*
+  Il periodo di un progetto di cui non si conoscono ancora le date dei singoli
+  incontri.
+
+  ⛔ **Tinta piena e chiarissima, non un tratteggio semitrasparente**
+  (28/08/2026, il titolare: «deve essere un colore unito molto chiaro che
+  faccia vedere che c'è un progetto ma sia ben distinto dagli appuntamenti»).
+  Il tratteggio diagonale nato il 26/08 distingueva, ma faceva rumore: su un
+  mese pieno di fasce lunghe la griglia diventava una zebra, e l'occhio ci
+  inciampava invece di scorrere.
+
+  ⚠️ **Tinta PIENA e non trasparenza**: un colore con l'alfa cambia a seconda
+  di che cosa ha sotto — la riga alternata del mese, il giorno di oggi
+  evidenziato, la fascia di un altro progetto sovrapposta — e lo stesso
+  periodo appare di tre colori diversi nella stessa schermata. `#fdf0e4` è
+  quel colore, calcolato una volta sul bianco e poi fermo.
+
+  ⚠️ Il testo resta scuro (`#8a4a12` su `#fdf0e4` = **6,11:1**, misurato) e
+  il bordo continuo (`#c47a34`, **3,40:1** sul bianco e **3,04:1**
+  sul fondo della fascia) tiene il contorno leggibile a chi non distingue le tinte:
+  la differenza con un appuntamento non è affidata al solo colore, ma anche
+  al peso del carattere e al bordo.
+*/
 .cal-fascia.periodo {
-  background-color: rgba(232, 99, 10, 0.14);
-  background-image: repeating-linear-gradient(
-    135deg,
-    rgba(232, 99, 10, 0.30) 0px,
-    rgba(232, 99, 10, 0.30) 6px,
-    rgba(232, 99, 10, 0.10) 6px,
-    rgba(232, 99, 10, 0.10) 12px
-  );
-  border: 2px dashed rgba(232, 99, 10, 0.8);
-  color: #7a3200;
+  background-color: #fdf0e4;
+  background-image: none;
+  border: 1px solid #c47a34;
+  color: #8a4a12;
   font-weight: 600;
 }
 
 .cal-fascia.periodo:hover {
   filter: none;
-  background-color: rgba(232, 99, 10, 0.22);
+  background-color: #fbe4d0;
 }
 
 .cal-continua {
@@ -3072,7 +3108,8 @@ main {
 /* Lo stesso tratteggio della fascia «periodo», in miniatura, per la voce
    di legenda aggiunta da js/calendario.js (`espandiLegenda()`). */
 .cal-pallino.periodo {
-  background-color: rgba(232, 99, 10, 0.18);
+  background-color: #fdf0e4;
+  border: 1px solid #c47a34;
   background-image: repeating-linear-gradient(
     135deg,
     rgba(232, 99, 10, 0.55) 0px,
@@ -3616,4 +3653,163 @@ main {
   #stats-grid .stat-card {
     flex: 0 0 calc((100% - 1.5rem) / 2);
   }
+}
+
+/* ---------------------------------------------------------------------------
+   L'ancora che finiva sotto l'intestazione, e il «torna su»
+   --------------------------------------------------------------------------- */
+/*
+  ⛔ **`scroll-padding-top` sull'elemento radice, non un margine su ogni
+  bersaglio** (28/08/2026, segnalato dal titolare: «quando clicco su una
+  casella non si posiziona nella pagina nel modo corretto, sembra che vada più
+  in basso dell'altezza dell'intestazione»).
+
+  La barra è `position: fixed` e alta **64 px**: il browser porta il bersaglio
+  a y=0, che è dietro la barra. Non era un difetto di una pagina — succedeva a
+  **ogni** ancora del sito, e nessuno l'aveva mai scritto.
+
+  ⚠️ 80 px e non 64: appoggiare il titolo esattamente al bordo inferiore della
+  barra lo fa sembrare incastrato. I 16 di margine sono quelli che fanno
+  leggere «questa sezione comincia qui».
+*/
+html {
+  scroll-padding-top: 80px;
+}
+
+/*
+  Il pulsante «torna su» — vedi `js/torna-su.js` per il quando e il perché.
+  ⚠️ **48 px di lato pieni**: è la misura minima di un bersaglio da toccare col
+  dito, e su questo sito vale ovunque (il committente non vede bene e non ha la
+  mira di un mouse).
+*/
+.torna-su {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 48px;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font: 600 16px/1 inherit;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+}
+
+.torna-su:hover {
+  background: #c65208;
+}
+
+.torna-su:focus-visible {
+  outline: 3px solid #7a3200;
+  outline-offset: 2px;
+}
+
+.torna-su[hidden] {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  /* Da telefono sta più in basso a destra e più stretto: non deve coprire
+     l'ultima riga di un modulo mentre si compila. */
+  .torna-su {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.75rem 0.9rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Il marchio nella barra: una pastiglia bianca, non un tondo
+   --------------------------------------------------------------------------- */
+/*
+  ⛔ **Era `border-radius: 50%` scritto INLINE nell'immagine**, in tutte e dodici
+  le pagine: il logo — che è largo e porta la scritta «La Rosa dei Venti» — veniva
+  ritagliato in un cerchio, e di quel cerchio si vedeva quasi solo il sole con
+  due pezzi di lettere ai lati.
+
+  Il titolare, il 28/08/2026: «lo potresti fare come un pulsante bianco (tipo
+  dona ora) ma con al suo interno un contorno arancione fine».
+
+  ⚠️ La pastiglia è la stessa di «Dona ora» (`999px`, fondo bianco): la barra ha
+  già quella forma per i comandi, e il marchio non deve inventarne una seconda.
+  Il contorno arancione sta **dentro** la pastiglia — è un `box-shadow: inset`,
+  non un `border`, così non allarga l'ingombro e non fa saltare l'allineamento
+  delle voci del menù.
+
+  ⚠️ **`object-fit: contain`**: il logo si vede intero, non si ritaglia. È la
+  stessa regola delle locandine, e per lo stesso motivo — un marchio tagliato è
+  un marchio sbagliato.
+*/
+.navbar-brand img {
+  /* ⭐ **56 px, e il bianco attorno se n'è andato dal FILE** (28/08/2026,
+     «fai il logo più grande lasciando meno bianco intorno»). Il margine non
+     era il riempimento della pastiglia: era cotto dentro `logo.jpg`, dove il
+     disegno occupava il **65% della larghezza e il 70% dell'altezza** — il
+     resto bianco. Ritagliato al contenuto in `logo-marchio.png`, il marchio
+     riempie la pastiglia invece di galleggiarci dentro, e a parità di ingombro
+     si legge molto più grande. ⚠️ Il file ritagliato è alto 200 px e non 56:
+     serve la risoluzione vera per il triplo del passaggio del mouse. */
+  height: 56px;
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1.5px var(--primary);
+  /* ⚠️ **Il riempimento ai lati è largo apposta, e non è spreco di spazio.**
+     La pastiglia è a estremità tonde (`999px`): le due curve rientrano proprio
+     dove stanno lo svolazzo della «L» e la «i» finale di «Venti», e il marchio
+     sembrava tagliato ai bordi. Il disegno non veniva rimpicciolito — misurato:
+     gli servivano 88 px e ne aveva 94 — era la forma della pastiglia a
+     mangiarne gli angoli. ⇒ Le curve devono cadere FUORI dal disegno. */
+  padding: 0.15rem 1.15rem;
+  /* L'ingrandimento al passaggio del mouse (vedi sotto): il punto fermo è il
+     bordo sinistro, o crescendo il marchio uscirebbe dallo schermo a sinistra. */
+  transform-origin: left center;
+  transition: transform 0.18s ease-out;
+  position: relative;
+  z-index: 1001;
+}
+
+/*
+  ⭐ **Il marchio triplica passandoci sopra** (28/08/2026, chiesto dal titolare:
+  «è possibile fare in modo che se ci passi sopra diventi il triplo più
+  grande?»). Serve a leggerlo: a 52 px la scritta a mano dentro il logo è un
+  ghirigoro, a 156 px si legge «La Rosa dei Venti».
+
+  ⚠️ **`transform`, non `height`**: cambiare l'altezza rifà l'impaginazione della
+  barra e le voci del menù saltano a destra a ogni passaggio del mouse. Una
+  trasformazione disegna e basta, senza spostare niente.
+  ⚠️ **`z-index` alto e `overflow: visible` sulla barra**: senza, il marchio
+  ingrandito verrebbe tagliato dai 64 px della barra e si vedrebbe una fetta.
+  ⚠️ **Solo dove c'è un puntatore vero** (`@media (hover: hover)`): su un
+  telefono `:hover` resta appiccicato dopo un tocco, e il marchio resterebbe
+  gigante finché non si tocca altrove.
+*/
+@media (hover: hover) and (pointer: fine) {
+  .navbar-brand img:hover,
+  .navbar-brand:focus-visible img {
+    transform: scale(3);
+  }
+}
+
+/* Chi ha chiesto meno animazioni ottiene comunque l'ingrandimento — è la cosa
+   utile — ma senza la crescita animata, che è l'ornamento. */
+@media (prefers-reduced-motion: reduce) {
+  .navbar-brand img {
+    transition: none;
+  }
+}
+
+/* Il marchio ingrandito deve poter uscire dalla barra, invece di essere
+   tagliato dal suo bordo inferiore. */
+.navbar {
+  overflow: visible;
 }
