@@ -523,7 +523,21 @@ async function loadPartnerStats() {
   try {
     const partners = await caricaPartner();
     const perTipo = {};
-    partners.forEach(p => { perTipo[p.type] = (perTipo[p.type] || 0) + 1; });
+    // ⚠️ **Un partner può non avere categoria** (`tipo: null` dal gestionale:
+    // `pubblicatoSulSito` si accende prima che qualcuno scelga la categoria).
+    // Non lo si nasconde: resta nel totale e nell'elenco senza filtro — il
+    // filtro lo prevede già (`p.type !== type` solo se un filtro è scelto) e
+    // l'etichetta ripiega su stringa vuota. ⇒ Il totale può quindi essere
+    // maggiore della somma delle cinque categorie, ed è la lettura giusta:
+    // dice che qualcuno è online senza categoria, invece di farlo sparire.
+    let senzaCategoria = 0;
+    partners.forEach(p => {
+      if (!p.type) { senzaCategoria++; return; }
+      perTipo[p.type] = (perTipo[p.type] || 0) + 1;
+    });
+    if (senzaCategoria) {
+      console.info('[partner] ' + senzaCategoria + ' senza categoria: compaiono nel totale e senza filtro, non nelle cinque schede.');
+    }
 
     const stats = [
       { number: partners.length, label: 'Partner totali', icona: '🤝' },
