@@ -1,6 +1,13 @@
 [
   {
-    "name": "Angeli del Bello",
+    "name": "ADRA Italia",
+    "type": "associazione",
+    "description": "Agenzia umanitaria della Chiesa Cristiana Avventista: aiuta le persone in difficoltà in Italia e nel mondo con progetti contro la povertà, per l’istruzione e nelle emergenze.",
+    "logo": "images/partners/adra-italia.png",
+    "url": "https://adraitalia.org/"
+  },
+  {
+    "name": "Angeli del bello",
     "type": "associazione",
     "description": "Fondazione di volontari dedicata alla cura, al decoro e alla valorizzazione degli spazi pubblici di Firenze e dintorni.",
     "logo": "images/partners/angeli-del-bello.png",
@@ -14,13 +21,6 @@
     "url": "https://apicolturasanmartino.com/"
   },
   {
-    "name": "Associazione Gabriele Borgogni",
-    "type": "associazione",
-    "description": "Associazione di Firenze impegnata nella sicurezza stradale e nel sostegno ai familiari delle vittime della strada.",
-    "logo": "images/partners/borgogni.jpg",
-    "url": "https://gabrieleborgogni.com/"
-  },
-  {
     "name": "Auser",
     "type": "associazione",
     "description": "Associazione di volontariato e promozione sociale dedicata alla valorizzazione degli anziani e all'invecchiamento attivo.",
@@ -28,7 +28,7 @@
     "url": "https://www.auser.it"
   },
   {
-    "name": "BE Care Srl",
+    "name": "Be Care Srl",
     "type": "azienda",
     "description": "Azienda di servizi ICT con ventennale esperienza nel settore informatico, partner tecnologico dell'associazione.",
     "logo": "images/partners/becare.png",
@@ -42,18 +42,39 @@
     "url": "https://www.comune.bagno-a-ripoli.fi.it/biblioteca/home"
   },
   {
-    "name": "Casa del Popolo Balatro",
+    "name": "Borgogni",
+    "type": "associazione",
+    "description": "Associazione di Firenze impegnata nella sicurezza stradale e nel sostegno ai familiari delle vittime della strada.",
+    "logo": "images/partners/borgogni.jpg",
+    "url": "https://gabrieleborgogni.com/"
+  },
+  {
+    "name": "Carp Team Leccatori di Passera",
+    "type": "associazione",
+    "description": "Squadra di pesca alla carpa nata dalla passione di un gruppo di amici, presente alle manifestazioni del settore con il proprio stand.",
+    "logo": "images/partners/leccatori-di-passera.png",
+    "url": "https://www.facebook.com/carpteamleccatoridipassera/"
+  },
+  {
+    "name": "CdP Balatro",
     "type": "associazione",
     "description": "Circolo ricreativo e culturale affiliato ARCI, fondato nel 1892, con corsi (ginnastica, yoga, arti marziali), tornei di burraco e attività sociali a Balatro.",
     "logo": "images/partners/casa-popolo-balatro.jpg",
     "url": "https://www.facebook.com/profile.php?id=100057785044390"
   },
   {
-    "name": "Casa del Popolo Grassina",
+    "name": "CdP Grassina",
     "type": "associazione",
     "description": "Circolo ricreativo e culturale fondato nel 1893, con teatro, pizzeria, corsi e attività sociali a Grassina.",
     "logo": "images/partners/casa-popolo-grassina.jpg",
     "url": "https://www.facebook.com/profile.php?id=100065550367411"
+  },
+  {
+    "name": "Circolo ACLI Ponte a Ema",
+    "type": "associazione",
+    "description": "Circolo ACLI di Ponte a Ema: centro per la cultura del Comune di Bagno a Ripoli, ospita la stagione teatrale e le attività ricreative del quartiere, in una sede senza barriere.",
+    "logo": "images/partners/circolo-acli-ponte-a-ema.png",
+    "url": "https://teatroponteaema.com/"
   },
   {
     "name": "Circolo Vie Nuove",
@@ -70,14 +91,14 @@
     "url": "https://www.comune.bagno-a-ripoli.fi.it"
   },
   {
-    "name": "Consorzio Blu",
+    "name": "Consorzio blu Ancora",
     "type": "cooperativa",
     "description": "Consorzio di cooperative sociali nato dall'esperienza di Àncora e In Cammino, per servizi educativi, di inclusione e assistenza.",
     "logo": "images/partners/consorzio-blu.png",
     "url": "https://www.consorzioblu.it"
   },
   {
-    "name": "Contrada dell'Alfiere",
+    "name": "Contrada Alfiere - Bagno a Ripoli",
     "type": "associazione",
     "description": "Associazione culturale fondata nel 1993 per la rievocazione storica rinascimentale con sbandieratori, musici e danze.",
     "logo": "images/partners/contrada-alfiere.png",
@@ -91,11 +112,25 @@
     "url": "https://www.fontenuovacoop.it/"
   },
   {
+    "name": "Cooperativa Matrix",
+    "type": "cooperativa",
+    "description": "Cooperativa sociale fiorentina che si occupa di persone con disabilità fisica, psichica e di chi si trova in difficoltà sociale, con servizi diurni e residenziali e percorsi educativi e riabilitativi.",
+    "logo": "images/partners/cooperativa-matrix.png",
+    "url": "https://www.coopmatrix.it/"
+  },
+  {
     "name": "CRC Antella",
     "type": "associazione",
     "description": "Circolo Ricreativo Culturale fondato nel 1958, con teatro, cinema, corsi e attività aggregative per la comunità di Antella.",
     "logo": "images/partners/crc-antella.png",
     "url": "https://crcantella.it"
+  },
+  {
+    "name": "CRI Bagno a Ripoli",
+    "type": "associazione",
+    "description": "Organizzazione umanitaria di volontariato impegnata nel soccorso sanitario, nella protezione civile e nell'assistenza sociale.",
+    "logo": "images/partners/croce-rossa-italiana.png",
+    "url": "https://www.cri.it"
   },
   {
     "name": "Croce d'Oro Ponte a Ema",
@@ -105,11 +140,11 @@
     "url": "https://www.crocedoroponteaema.it"
   },
   {
-    "name": "Croce Rossa Italiana",
-    "type": "associazione",
-    "description": "Organizzazione umanitaria di volontariato impegnata nel soccorso sanitario, nella protezione civile e nell'assistenza sociale.",
-    "logo": "images/partners/croce-rossa-italiana.png",
-    "url": "https://www.cri.it"
+    "name": "Elsa Morante",
+    "type": "scuola",
+    "description": "Istituto di istruzione superiore Morante-Ginori Conti con indirizzi socio-sanitari, tecnici e liceali a Firenze.",
+    "logo": "images/partners/elsa-morante.png",
+    "url": "https://www.elsamorante.edu.it"
   },
   {
     "name": "Fondazione Claudio Ciai",
@@ -126,7 +161,14 @@
     "url": "https://fondazionecrfirenze.it"
   },
   {
-    "name": "Fratellanza Popolare Grassina",
+    "name": "Fondazione Nuovi Giorni",
+    "type": "associazione",
+    "description": "Fondazione di Bagno a Ripoli che accompagna le persone con disabilità fisica, psichica e sensoriale verso l’autonomia abitativa, anche in assenza di sostegni familiari: appartamenti e progetti di vita indipendente del «Durante e Dopo di Noi».",
+    "logo": "images/partners/fondazione-nuovi-giorni.png",
+    "url": "https://fondazionenuovigiorni.org/"
+  },
+  {
+    "name": "Fratellanza Popolare di Grassina",
     "type": "associazione",
     "description": "Pubblica Assistenza e Croce d'Oro affiliata ANPAS, per soccorso sanitario, poliambulatorio e attività sociali a Grassina.",
     "logo": "images/partners/fratellanza-grassina.webp",
@@ -147,17 +189,10 @@
     "url": "https://www.intesasanpaolo.com/"
   },
   {
-    "name": "Istituto Elsa Morante",
-    "type": "scuola",
-    "description": "Istituto di istruzione superiore Morante-Ginori Conti con indirizzi socio-sanitari, tecnici e liceali a Firenze.",
-    "logo": "images/partners/elsa-morante.png",
-    "url": "https://www.elsamorante.edu.it"
-  },
-  {
     "name": "La Lanterna",
     "type": "associazione",
     "description": "Associazione di promozione sociale di Bagno a Ripoli, nata nel 2011: si occupa di disabilità media e grave e di difficolta' scolastiche, insieme a professionisti e famiglie.",
-    "logo": "images/partners/la-lanterna.jpg",
+    "logo": "images/partners/la-lanterna.png",
     "url": "https://www.facebook.com/asslalanterna/"
   },
   {
@@ -168,14 +203,21 @@
     "url": "https://www.legambiente.it"
   },
   {
-    "name": "Misericordia di Antella",
+    "name": "LSG - Logistic & Service Group Srl",
+    "type": "azienda",
+    "description": "Operatore logistico fiorentino: magazzini, trasporti e logistica del freddo per le aziende del territorio.",
+    "logo": "images/partners/lsg.png",
+    "url": "https://gruppolsg.it/"
+  },
+  {
+    "name": "Misericordia Antella",
     "type": "associazione",
     "description": "Confraternita di Misericordia fondata nel 1852, con poliambulatorio, trasporto sanitario e assistenza alla comunità.",
     "logo": "images/partners/misericordia-antella.png",
     "url": "https://misericordia-antella.it"
   },
   {
-    "name": "Misericordia di Badia a Ripoli",
+    "name": "Misericordia Badia a Ripoli",
     "type": "associazione",
     "description": "Confraternita di Misericordia fondata nel 1968, per servizi sanitari, trasporti sociali e protezione civile.",
     "logo": "images/partners/misericordia-badia.png",
@@ -189,28 +231,28 @@
     "url": "https://www.publiacqua.it/qualita/bagno-ripoli"
   },
   {
-    "name": "Scuola Francesco Redi",
+    "name": "Scuola Redi - IC Caponnetto",
     "type": "scuola",
     "description": "Scuola secondaria di primo grado dell'IC Caponnetto a Bagno a Ripoli, partner in progetti educativi e didattici.",
-    "logo": "images/partners/scuola-redi.svg",
+    "logo": "images/partners/scuola-redi.png",
     "url": "https://www.caponnetto.edu.it/"
   },
   {
-    "name": "SdS Firenze Sud-Est",
+    "name": "Società della Salute Firenze Sud-Est",
     "type": "istituzionale",
     "description": "Società della Salute, consorzio pubblico per i servizi socio-sanitari della zona fiorentina sud-est.",
     "logo": "images/partners/sds-firenze-sudest.png",
     "url": "https://sds-firenzesudest.055055.it"
   },
   {
-    "name": "Trekking BaR",
+    "name": "Trekking di Bagno a Ripoli",
     "type": "associazione",
     "description": "Gruppo escursionistico fondato nel 1987 per passeggiate e trekking nel territorio di Bagno a Ripoli e dintorni.",
     "logo": "images/partners/trekking-bar.png",
     "url": "https://www.trekkingbagnoaripoli.it/gtbr/"
   },
   {
-    "name": "VAB",
+    "name": "VAB Bagno a Ripoli",
     "type": "associazione",
     "description": "Vigilanza Antincendi Boschivi, sezione di Bagno a Ripoli: prevenzione e lotta agli incendi boschivi, protezione civile e gestione dei parchi Fontesanta e Mondeggi.",
     "logo": "images/partners/vab.png",
@@ -221,6 +263,6 @@
     "type": "associazione",
     "description": "Associazione che promuove il volontariato attraverso contest musicali tra band emergenti delle associazioni del territorio.",
     "logo": "images/partners/volontmusic.png",
-    "url": ""
+    "url": "https://www.youtube.com/@VolontMusic"
   }
 ]

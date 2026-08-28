@@ -273,17 +273,31 @@
               incontri: (ed.numeri && ed.numeri.incontri) || 0,
               ore: (ed.numeri && ed.numeri.ore) || 0,
               partecipanti: (ed.numeri && ed.numeri.partecipanti) || 0,
+              /*
+                ⚠️ **Chiave assente e zero sono due cose diverse, e qui la
+                differenza si vede in pagina.** Il gestionale non manda la
+                chiave quando non sa quanti erano; `renderNumeriProgetto` in
+                `main.js` mostra la riga **solo se il numero è maggiore di
+                zero**, quindi «non lo sappiamo» e «non ce n'erano» finiscono
+                giustamente nello stesso posto: niente riga, invece di un «0
+                educatori» che sarebbe una bugia.
+                ⛔ Qui prima non c'erano affatto, con un commento che diceva
+                «il gestionale non li conta ancora per il canale pubblico»:
+                era vero fino al 28/08/2026, e da allora non lo era più. Il
+                titolare: «mancano ancora i numeri degli educatori coinvolti e
+                i volontari coinvolti». È lo stesso mezzo ponte delle
+                copertine, nello stesso file, trovato lo stesso giorno.
+              */
+              educatori: (ed.numeri && ed.numeri.educatori) || 0,
+              volontari: (ed.numeri && ed.numeri.volontari) || 0,
+              professionisti: (ed.numeri && ed.numeri.professionisti) || 0,
               description: dettaglio.descrizionePubblica || '',
               // ⚠️ Un solo partner per progetto nel gestionale (denominazione,
               // mai una persona): il sito porta `sponsor` come elenco, qui è
               // un elenco di zero o un elemento, mai di più.
               sponsor: dettaglio.partner ? [dettaglio.partner] : []
-              // ⛔ Nessun `educatori`/`volontari`/`professionisti`/`collaboratori`:
-              // il gestionale non li conta ancora per il canale pubblico. Le
-              // schede che li leggono trattano un campo assente come zero e
-              // non mostrano quella riga — vedi `renderNumeriProgetto` in
-              // main.js: non è un dato mancante mostrato male, è un dato che
-              // oggi non si può dire.
+              // ⛔ `collaboratori` resta fuori: quello il gestionale non lo
+              // conta davvero, e un campo assente qui è la verità.
             });
           });
         });
