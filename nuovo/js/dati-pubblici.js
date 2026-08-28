@@ -249,7 +249,20 @@
         var edizioni = [];
         dettagli.forEach(function (dettaglio) {
           if (!dettaglio || !Array.isArray(dettaglio.edizioni)) return;
-          var immagine = dettaglio.copertinaMediaId ? urlMedia(dettaglio.copertinaMediaId) : SEGNAPOSTO_PROGETTO;
+          /*
+            ⚠️ **Tre strade, in quest'ordine, e l'ordine è il contratto.**
+            `copertinaMediaId` è l'immagine caricata nel gestionale e vince
+            sempre; `copertinaUrl` è il percorso a un file che questo sito già
+            serve — il ripiego con cui oggi vivono 29 progetti su 33; il
+            segnaposto è l'ultima spiaggia.
+            ⛔ Fino al 28/08/2026 qui c'erano solo la prima e la terza, e
+            siccome nel gestionale **nessun progetto aveva una copertina**, il
+            sito mostrava trentatré segnaposti identici. Il titolare, guardando
+            la pagina: «non vedo le immagini dei progetti, come mai?».
+          */
+          var immagine = dettaglio.copertinaMediaId
+            ? urlMedia(dettaglio.copertinaMediaId)
+            : (dettaglio.copertinaUrl || SEGNAPOSTO_PROGETTO);
           dettaglio.edizioni.forEach(function (ed) {
             edizioni.push({
               title: dettaglio.titolo,
@@ -295,7 +308,10 @@
       return righe.map(function (r) {
         return {
           title: r.titolo,
-          image: SEGNAPOSTO_EVENTO,
+          // ⚠️ Come per i progetti: la copertina se c'è, il segnaposto se no.
+          // `Evento.copertinaUrl` è arrivato il 28/08/2026 proprio perché senza
+          // di lui accendere gli eventi avrebbe tolto le foto alla pagina.
+          image: r.copertinaUrl || SEGNAPOSTO_EVENTO,
           startDate: r.dataInizio,
           endDate: r.dataFine,
           status: statoDaDate(r.dataInizio, r.dataFine),
