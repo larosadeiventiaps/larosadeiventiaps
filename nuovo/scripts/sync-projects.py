@@ -55,6 +55,41 @@ MESI_IT = {
 
 
 
+# ---------------------------------------------------------------------------
+# I corsi che hanno cambiato nome, e l'Excel non lo sa
+# ---------------------------------------------------------------------------
+# ⛔ **Un corso rinominato dopo la prima edizione.** Il titolare, il 28/08/2026:
+# «il primo progetto si chiama "Musica ed espressione Corporea" con una sola
+# edizione; tutti gli altri sono "Musica e Movimento" con tutte le varie
+# edizioni». Il foglio Excel storico porta ancora il nome vecchio su tutte le
+# righe, e non lo si riscrive: e' l'originale, e serve a ritrovare da dove
+# viene un dato il giorno che un accostamento si rivelasse sbagliato — la
+# stessa ragione per cui `ProgettoPartner.nomeOriginale` esiste nel gestionale.
+#
+# ⚠️ **La chiave e' (titolo, data d'inizio), non il solo titolo**: rinominare
+# per titolo cambierebbe anche la prima edizione, che il nome vecchio deve
+# tenerlo. E' la stessa trappola gia' pagata il 24/08 separando i progetti
+# dagli eventi — «Prim'Olio» esiste in tre anni, e per titolo si cancellavano
+# anche le edizioni sbagliate.
+#
+# ⚠️ **Senza questa tabella la rigenerazione non "sbaglia il nome": perde i
+# dati.** Il riaggancio di `appuntamenti` e `luogoId` piu' sotto cerca la riga
+# vecchia per (titolo, data d'inizio); con il titolo rimesso a quello
+# dell'Excel, le righe gia' rinominate in `projects.json` non si trovano piu',
+# e quel che gli era attaccato resta indietro. L'avviso lo direbbe, ma dopo.
+RINOMINATI = {
+    # (titolo nell'Excel, data d'inizio): titolo giusto
+    ("Musica ed Espressione corporea", "2025-09-27"): "Musica e Movimento",
+    ("Musica ed Espressione corporea", "2026-02-07"): "Musica e Movimento",
+    ("Musica ed Espressione corporea", "2026-09-19"): "Musica e Movimento",
+}
+
+
+def rinomina(titolo, data_inizio):
+    """Il nome giusto per questa riga, o quello che aveva se non e' cambiato."""
+    return RINOMINATI.get((titolo, data_inizio), titolo)
+
+
 def risolvi_sponsor(grezzo):
     """I nomi degli sponsor, risolti con la stessa tabella di sync-partners.py.
 
@@ -258,6 +293,13 @@ def sync(excel_path):
         # Se non c'è data fine, usa data inizio
         if not end_raw and start_raw:
             end_raw = start_raw
+
+        # Qui, e non prima: la chiave di `RINOMINATI` e' (titolo, data
+        # d'inizio), quindi il nome giusto si sa solo dopo aver letto la data.
+        # Risolvendolo in questo punto vale sia per la riga che si scrive sia
+        # per `chiave = (title, start_raw)` del riaggancio piu' sotto - un
+        # posto solo, che e' il motivo per cui non si risolve in due punti.
+        title = rinomina(title, start_raw)
 
         status = determine_status(start_raw, end_raw)
 
