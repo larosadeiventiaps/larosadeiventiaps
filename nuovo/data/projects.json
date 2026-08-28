@@ -106,7 +106,9 @@
     "educatori": 2,
     "volontari": 2,
     "professionisti": 4,
-    "sponsor": [],
+    "sponsor": [
+      "Publiacqua"
+    ],
     "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme",
     "collaboratori": "Associazione Nomya"
   },
@@ -233,7 +235,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
     "collaboratori": "Cooperativa Fontenuova"
   },
@@ -249,7 +253,9 @@
     "educatori": 3,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
     "collaboratori": "Cooperativa Fontenuova"
   },
@@ -265,7 +271,9 @@
     "educatori": 2,
     "volontari": 0,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
     "collaboratori": "Cooperativa Fontenuova"
   },
@@ -313,7 +321,10 @@
     "educatori": 1,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Be Care Srl",
+      "CRI Bagno a Ripoli"
+    ],
     "description": "Corso di alfabetizzazione informatica per imparare ad usare il computer, navigare in internet e utilizzare i principali strumenti digitali.",
     "collaboratori": "La Lanterna"
   },
@@ -329,7 +340,9 @@
     "educatori": 1,
     "volontari": 2,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Scuola Redi - IC Caponnetto"
+    ],
     "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra.",
     "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto"
   },
@@ -345,7 +358,9 @@
     "educatori": 1,
     "volontari": 2,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Scuola Redi - IC Caponnetto"
+    ],
     "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra.",
     "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto"
   },
@@ -377,7 +392,9 @@
     "educatori": 4,
     "volontari": 2,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
     "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
@@ -393,7 +410,9 @@
     "educatori": 6,
     "volontari": 2,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
     "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
@@ -409,7 +428,9 @@
     "educatori": 6,
     "volontari": 2,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
     "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
@@ -505,7 +526,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -520,7 +543,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -535,7 +560,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -550,7 +577,9 @@
     "educatori": 2,
     "volontari": 1,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Biblioteca di Bagno a Ripoli"
+    ],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
   },
   {
@@ -582,7 +611,9 @@
     "educatori": 2,
     "volontari": 5,
     "professionisti": 2,
-    "sponsor": [],
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni.",
     "collaboratori": "Comune di Bagno a Ripoli, Il Teatro dell'Inutile, Apicoltura San Martino"
   },
@@ -613,7 +644,9 @@
     "educatori": 2,
     "volontari": 28,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Scuola Redi - IC Caponnetto"
+    ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
@@ -629,7 +662,10 @@
     "educatori": 2,
     "volontari": 25,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Scuola Redi - IC Caponnetto",
+      "Fondazione Claudio Ciai"
+    ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
@@ -645,7 +681,9 @@
     "educatori": 2,
     "volontari": 25,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
@@ -661,7 +699,9 @@
     "educatori": 2,
     "volontari": 25,
     "professionisti": 1,
-    "sponsor": [],
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
     "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
@@ -709,7 +749,9 @@
     "educatori": 0,
     "volontari": 0,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina."
   },
   {
@@ -724,7 +766,9 @@
     "educatori": 0,
     "volontari": 0,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Intesa Sanpaolo"
+    ],
     "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina."
   },
   {
@@ -793,7 +837,9 @@
     "educatori": 0,
     "volontari": 0,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Comune di Bagno a Ripoli"
+    ],
     "description": "Progetto di orti sociali nel verde del bosco, per coltivare insieme ortaggi e piante promuovendo la socializzazione all'aria aperta.",
     "collaboratori": "Auser, Legambiente"
   },
@@ -856,7 +902,9 @@
     "educatori": 0,
     "volontari": 1,
     "professionisti": 5,
-    "sponsor": [],
+    "sponsor": [
+      "Scuola Redi - IC Caponnetto"
+    ],
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
     "collaboratori": "Comune di Bagno a Ripoli"
   },
@@ -952,7 +1000,9 @@
     "educatori": 0,
     "volontari": 0,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "description": "Iniziativa di volontariato per portare comfort e vicinanza ai pazienti ricoverati attraverso piccoli gesti di cura e attenzione.",
     "collaboratori": "Borgogni"
   },
@@ -984,7 +1034,9 @@
     "educatori": 0,
     "volontari": 0,
     "professionisti": 0,
-    "sponsor": [],
+    "sponsor": [
+      "Fondazione CR Firenze"
+    ],
     "description": "Progetto di socializzazione attraverso il gioco per bambini e ragazzi con disabilità, favorendo l'inclusione e il divertimento condiviso.",
     "collaboratori": "Borgogni"
   },
