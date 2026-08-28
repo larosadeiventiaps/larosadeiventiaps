@@ -29,3 +29,8 @@ desktop.ini
 
 # artefatti di lavoro delle skill, non fanno parte del sito
 .superpowers/
+
+# Le cartelle di bytecode di Python: le crea l'interprete a ogni giro,
+# non sono sorgente e su un rilascio FTP finirebbero online.
+__pycache__/
+*.pyc
