@@ -12,7 +12,8 @@
     "volontari": 2,
     "professionisti": 3,
     "sponsor": [],
-    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
+    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
+    "collaboratori": "Angeli del bello"
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -27,7 +28,8 @@
     "volontari": 2,
     "professionisti": 3,
     "sponsor": [],
-    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
+    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
+    "collaboratori": "Angeli del bello"
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -42,7 +44,8 @@
     "volontari": 2,
     "professionisti": 3,
     "sponsor": [],
-    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
+    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
+    "collaboratori": "Angeli del bello"
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -57,7 +60,8 @@
     "volontari": 2,
     "professionisti": 3,
     "sponsor": [],
-    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello."
+    "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
+    "collaboratori": "Angeli del bello"
   },
   {
     "title": "Autonomia",
@@ -87,7 +91,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Giochi, spesa, cena, pizza in compagnia"
+    "description": "Giochi, spesa, cena, pizza in compagnia",
+    "collaboratori": "Fondazione Nuovi Giorni"
   },
   {
     "title": "Case d'Artista",
@@ -102,7 +107,8 @@
     "volontari": 2,
     "professionisti": 4,
     "sponsor": [],
-    "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme"
+    "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme",
+    "collaboratori": "Associazione Nomya"
   },
   {
     "title": "Centro Estivo",
@@ -117,7 +123,8 @@
     "volontari": 10,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Settimana di attività estive per ragazzi con giochi, laboratori, uscite e momenti di socializzazione durante l'estate."
+    "description": "Settimana di attività estive per ragazzi con giochi, laboratori, uscite e momenti di socializzazione durante l'estate.",
+    "collaboratori": "Cooperativa Fontenuova"
   },
   {
     "title": "Cinema",
@@ -132,7 +139,8 @@
     "volontari": 1,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo."
+    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
+    "collaboratori": "CRC Antella"
   },
   {
     "title": "Cinema",
@@ -147,7 +155,8 @@
     "volontari": 1,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo."
+    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
+    "collaboratori": "CRC Antella"
   },
   {
     "title": "Cinema",
@@ -162,7 +171,8 @@
     "volontari": 1,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo."
+    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
+    "collaboratori": "CRC Antella"
   },
   {
     "title": "Cinema",
@@ -177,7 +187,39 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo."
+    "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
+    "appuntamenti": [
+      {
+        "data": "2026-10-17",
+        "ora": "16:30",
+        "fine": "19:00"
+      },
+      {
+        "data": "2026-10-31",
+        "ora": "16:30",
+        "fine": "19:00"
+      },
+      {
+        "data": "2026-11-14",
+        "ora": "16:30",
+        "fine": "19:00"
+      },
+      {
+        "data": "2026-11-28",
+        "ora": "16:30",
+        "fine": "19:00"
+      },
+      {
+        "data": "2026-12-12",
+        "ora": "16:30",
+        "fine": "19:00"
+      },
+      {
+        "data": "2026-12-26",
+        "ora": "16:30",
+        "fine": "19:00"
+      }
+    ]
   },
   {
     "title": "Colori in libertà",
@@ -192,7 +234,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
+    "collaboratori": "Cooperativa Fontenuova"
   },
   {
     "title": "Colori in libertà",
@@ -207,7 +250,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
+    "collaboratori": "Cooperativa Fontenuova"
   },
   {
     "title": "Colori in libertà",
@@ -222,7 +266,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
+    "collaboratori": "Cooperativa Fontenuova"
   },
   {
     "title": "Colori in libertà",
@@ -237,7 +282,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
+    "collaboratori": "Cooperativa Fontenuova"
   },
   {
     "title": "Colori in libertà",
@@ -252,7 +298,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà."
+    "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
+    "collaboratori": "Cooperativa Sociale Fontenuova"
   },
   {
     "title": "Conversazioni con il pc",
@@ -267,7 +314,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Corso di alfabetizzazione informatica per imparare ad usare il computer, navigare in internet e utilizzare i principali strumenti digitali."
+    "description": "Corso di alfabetizzazione informatica per imparare ad usare il computer, navigare in internet e utilizzare i principali strumenti digitali.",
+    "collaboratori": "La Lanterna"
   },
   {
     "title": "Dall'orto con amore",
@@ -282,7 +330,8 @@
     "volontari": 2,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra."
+    "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra.",
+    "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto"
   },
   {
     "title": "Dall'orto con amore",
@@ -297,7 +346,8 @@
     "volontari": 2,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra."
+    "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra.",
+    "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto"
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
@@ -312,7 +362,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
+    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
+    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
@@ -327,7 +378,8 @@
     "volontari": 2,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
+    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
+    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
@@ -342,7 +394,8 @@
     "volontari": 2,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
+    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
+    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
@@ -357,7 +410,8 @@
     "volontari": 2,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
+    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
+    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
@@ -372,7 +426,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano."
+    "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
+    "collaboratori": "Istituto Morante-Ginori Conti"
   },
   {
     "title": "Genitori a confronto",
@@ -387,7 +442,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli."
+    "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli.",
+    "collaboratori": "Circolo Vie Nuove"
   },
   {
     "title": "Genitori a confronto",
@@ -402,7 +458,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli."
+    "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli.",
+    "collaboratori": "Circolo Vie Nuove"
   },
   {
     "title": "Genitori a confronto",
@@ -417,7 +474,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli."
+    "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli.",
+    "collaboratori": "Circolo Vie Nuove"
   },
   {
     "title": "Giochiamo con l'inglese",
@@ -432,7 +490,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
+    "collaboratori": "CdP Balatro"
   },
   {
     "title": "Giochiamo con l'inglese",
@@ -507,7 +566,9 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
+    "location": "Biblioteca di Bagno a Ripoli",
+    "luogoId": "biblioteca-bagno-a-ripoli"
   },
   {
     "title": "Il Lavandeto",
@@ -522,7 +583,8 @@
     "volontari": 5,
     "professionisti": 2,
     "sponsor": [],
-    "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni."
+    "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni.",
+    "collaboratori": "Comune di Bagno a Ripoli, Il Teatro dell'Inutile, Apicoltura San Martino"
   },
   {
     "title": "Il Lavandeto",
@@ -552,7 +614,8 @@
     "volontari": 28,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
+    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
+    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
   {
     "title": "Marciapiede Didattico",
@@ -567,7 +630,8 @@
     "volontari": 25,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
+    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
+    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
   {
     "title": "Marciapiede Didattico",
@@ -582,7 +646,8 @@
     "volontari": 25,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
+    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
+    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
   {
     "title": "Marciapiede Didattico",
@@ -597,7 +662,8 @@
     "volontari": 25,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare."
+    "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
+    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
   },
   {
     "title": "Musica alla lavanda",
@@ -612,7 +678,8 @@
     "volontari": 0,
     "professionisti": 2,
     "sponsor": [],
-    "description": "Pomeriggio di merenda in compagnia della musica di due giovani arpiste"
+    "description": "Pomeriggio di merenda in compagnia della musica di due giovani arpiste",
+    "collaboratori": "Comune di Bagno a Ripoli"
   },
   {
     "title": "Musica ed Espressione corporea",
@@ -627,7 +694,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio di Musica ed espressione Corporea"
+    "description": "Laboratorio di Musica ed espressione Corporea",
+    "collaboratori": "CdP Grassina"
   },
   {
     "title": "Musica e Movimento",
@@ -672,7 +740,46 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina."
+    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina.",
+    "appuntamenti": [
+      {
+        "data": "2026-09-19",
+        "ora": "15:30",
+        "fine": "17:30"
+      },
+      {
+        "data": "2026-10-03",
+        "ora": "15:30",
+        "fine": "17:30"
+      },
+      {
+        "data": "2026-10-24",
+        "ora": "15:30",
+        "fine": "17:30"
+      },
+      {
+        "data": "2026-11-07",
+        "ora": "15:30",
+        "fine": "17:30"
+      },
+      {
+        "data": "2026-11-21",
+        "ora": "15:30",
+        "fine": "17:30"
+      },
+      {
+        "data": "2026-11-28",
+        "ora": "15:30",
+        "fine": "17:30"
+      },
+      {
+        "data": "2026-12-05",
+        "ora": "15:30",
+        "fine": "17:30"
+      }
+    ],
+    "location": "DO.ME.A. — Grassina",
+    "luogoId": "domea-grassina"
   },
   {
     "title": "Orto nel bosco Orti sociali",
@@ -687,7 +794,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Progetto di orti sociali nel verde del bosco, per coltivare insieme ortaggi e piante promuovendo la socializzazione all'aria aperta."
+    "description": "Progetto di orti sociali nel verde del bosco, per coltivare insieme ortaggi e piante promuovendo la socializzazione all'aria aperta.",
+    "collaboratori": "Auser, Legambiente"
   },
   {
     "title": "Passeggiate Ripolesi",
@@ -717,7 +825,8 @@
     "volontari": 20,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Escursione naturalistica al parco di Villa Mondeggi per scoprire la biodiversità, le piante e gli animali del territorio."
+    "description": "Escursione naturalistica al parco di Villa Mondeggi per scoprire la biodiversità, le piante e gli animali del territorio.",
+    "collaboratori": "VAB Bagno a Ripoli"
   },
   {
     "title": "Pomeriggio con i lego",
@@ -732,7 +841,8 @@
     "volontari": 4,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Pomeriggio creativo con i mattoncini Lego per stimolare la fantasia, la manualità e la collaborazione tra i partecipanti."
+    "description": "Pomeriggio creativo con i mattoncini Lego per stimolare la fantasia, la manualità e la collaborazione tra i partecipanti.",
+    "collaboratori": "CdP Grassina"
   },
   {
     "title": "Settimana dei Diritti",
@@ -747,7 +857,8 @@
     "volontari": 1,
     "professionisti": 5,
     "sponsor": [],
-    "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette."
+    "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
+    "collaboratori": "Comune di Bagno a Ripoli"
   },
   {
     "title": "Settimana dei Diritti",
@@ -762,7 +873,8 @@
     "volontari": 1,
     "professionisti": 4,
     "sponsor": [],
-    "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette."
+    "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
+    "collaboratori": "Comune di Bagno a Ripoli"
   },
   {
     "title": "Settimana dei Diritti",
@@ -777,7 +889,8 @@
     "volontari": 1,
     "professionisti": 4,
     "sponsor": [],
-    "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette."
+    "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
+    "collaboratori": "Comune di Bagno a Ripoli"
   },
   {
     "title": "Teatro",
@@ -792,7 +905,8 @@
     "volontari": 0,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
+    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale.",
+    "collaboratori": "CRC Antella"
   },
   {
     "title": "Teatro",
@@ -807,7 +921,8 @@
     "volontari": 0,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
+    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale.",
+    "collaboratori": "CRC Antella. Il teatro dell'Inutile"
   },
   {
     "title": "Teatro",
@@ -822,7 +937,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale."
+    "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale.",
+    "collaboratori": "CRC Antella, Il Teatro dell'Inutile"
   },
   {
     "title": "Una coccola in corsia",
@@ -837,7 +953,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Iniziativa di volontariato per portare comfort e vicinanza ai pazienti ricoverati attraverso piccoli gesti di cura e attenzione."
+    "description": "Iniziativa di volontariato per portare comfort e vicinanza ai pazienti ricoverati attraverso piccoli gesti di cura e attenzione.",
+    "collaboratori": "Borgogni"
   },
   {
     "title": "Un dolce ronzio",
@@ -852,7 +969,8 @@
     "volontari": 2,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio di apicoltura didattica per scoprire il mondo delle api, la produzione del miele e l'importanza degli impollinatori."
+    "description": "Laboratorio di apicoltura didattica per scoprire il mondo delle api, la produzione del miele e l'importanza degli impollinatori.",
+    "collaboratori": "Apicoltura San Martino"
   },
   {
     "title": "Un gioco per tutti",
@@ -867,7 +985,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Progetto di socializzazione attraverso il gioco per bambini e ragazzi con disabilità, favorendo l'inclusione e il divertimento condiviso."
+    "description": "Progetto di socializzazione attraverso il gioco per bambini e ragazzi con disabilità, favorendo l'inclusione e il divertimento condiviso.",
+    "collaboratori": "Borgogni"
   },
   {
     "title": "Un pennello per amico",
@@ -882,7 +1001,8 @@
     "volontari": 1,
     "professionisti": 1,
     "sponsor": [],
-    "description": "Laboratorio di pittura e arti visive dove esprimere la propria creatività attraverso colori, pennelli e tecniche artistiche diverse."
+    "description": "Laboratorio di pittura e arti visive dove esprimere la propria creatività attraverso colori, pennelli e tecniche artistiche diverse.",
+    "collaboratori": "CRC Antella"
   },
   {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
@@ -897,7 +1017,8 @@
     "volontari": 1,
     "professionisti": 5,
     "sponsor": [],
-    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti."
+    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti.",
+    "collaboratori": "Trekking di Bagno a Ripoli"
   },
   {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
@@ -912,7 +1033,8 @@
     "volontari": 1,
     "professionisti": 5,
     "sponsor": [],
-    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti."
+    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti.",
+    "collaboratori": "Trekking di Bagno a Ripoli"
   },
   {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
@@ -927,6 +1049,7 @@
     "volontari": 6,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti."
+    "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti.",
+    "collaboratori": "Trekking di Bagno a Ripoli"
   }
 ]

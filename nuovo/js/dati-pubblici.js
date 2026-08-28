@@ -292,10 +292,25 @@
               volontari: (ed.numeri && ed.numeri.volontari) || 0,
               professionisti: (ed.numeri && ed.numeri.professionisti) || 0,
               description: dettaglio.descrizionePubblica || '',
-              // ⚠️ Un solo partner per progetto nel gestionale (denominazione,
-              // mai una persona): il sito porta `sponsor` come elenco, qui è
-              // un elenco di zero o un elemento, mai di più.
-              sponsor: dettaglio.partner ? [dettaglio.partner] : []
+              /*
+                ⭐ **Gli sponsor stanno sull'EDIZIONE, non sul progetto**
+                (28/08/2026). Qui c'era `dettaglio.partner`, cioè l'unico
+                partner del progetto intero: e siccome nel gestionale non era
+                valorizzato per nessuno dei 28, la tabella «Con il sostegno di»
+                in fondo a `partner.html` era **vuota**. Il titolare se n'è
+                accorto guardandola.
+                ⚠️ E un solo partner per progetto non bastava comunque: nel
+                file storico tre progetti ne hanno più d'uno — «Marciapiede
+                Didattico» ne ha tre — e lo sponsor cambia di anno in anno.
+                Sommargli i numeri dell'intero progetto gli attribuirebbe
+                incontri e ore che non ha finanziato: è la regola che
+                `loadPartnerSponsorship` in `main.js` già scriveva, e che il
+                modello dei dati non sapeva ancora rispettare.
+                ⚠️ `|| []` e non `?? []`: la rotta promette sempre l'elenco,
+                ma un gestionale più vecchio del sito non lo manderebbe, e una
+                pagina bianca per un campo in meno non è un buon affare.
+              */
+              sponsor: ed.sponsor || []
               // ⛔ `collaboratori` resta fuori: quello il gestionale non lo
               // conta davvero, e un campo assente qui è la verità.
             });

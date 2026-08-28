@@ -16,7 +16,8 @@
     "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio.",
     "image": "images/events/primolio.jpg",
     "status": "passato",
-    "link": "https://www.oliobagnoaripoli.it/"
+    "link": "https://www.oliobagnoaripoli.it/",
+    "luogoId": "bagno-a-ripoli"
   },
   {
     "title": "VolontMusic",
@@ -26,7 +27,8 @@
     "description": "Contest musicale fra le band emergenti delle associazioni di volontariato del territorio, per far conoscere il volontariato attraverso la musica.",
     "image": "images/events/Volontmusic.png",
     "status": "passato",
-    "link": "https://www.youtube.com/channel/UCFGszTo63mRTSlNrtNXDiHA/featured"
+    "link": "https://www.youtube.com/channel/UCFGszTo63mRTSlNrtNXDiHA/featured",
+    "luogoId": "crc-antella"
   },
   {
     "title": "Riforma sulla disabilità",
@@ -35,7 +37,8 @@
     "location": "Ospedale Santa Maria Annunziata",
     "description": "Incontro pubblico sulla nuova riforma della disabilità e sul Progetto Vita, con la Società della Salute Firenze Sud-Est e il Comune di Bagno a Ripoli.",
     "image": "images/events/Disabilita.jpg",
-    "status": "passato"
+    "status": "passato",
+    "luogoId": "ospedale-santa-maria-annunziata"
   },
   {
     "title": "Prim'Olio",
@@ -45,7 +48,8 @@
     "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio.",
     "image": "images/events/primolio.jpg",
     "status": "passato",
-    "link": "https://www.oliobagnoaripoli.it/"
+    "link": "https://www.oliobagnoaripoli.it/",
+    "luogoId": "bagno-a-ripoli"
   },
   {
     "title": "Prim'Olio",
@@ -55,7 +59,8 @@
     "description": "Giornata dedicata alla raccolta delle olive e alla produzione dell'olio, per vivere insieme le tradizioni agricole del territorio.",
     "image": "images/events/primolio.jpg",
     "status": "passato",
-    "link": "https://www.oliobagnoaripoli.it/"
+    "link": "https://www.oliobagnoaripoli.it/",
+    "luogoId": "bagno-a-ripoli"
   },
   {
     "title": "Frittelle alla Pieve di Bagno a Ripoli",
@@ -65,7 +70,8 @@
     "description": "Laboratorio di cucina e convivialità legato alle tradizioni locali, con preparazione di frittelle e momenti di festa insieme.",
     "image": "images/events/loc-frittelle-pieve.jpg",
     "status": "passato",
-    "link": "https://www.quiantella.it/a-bagno-a-ripoli-torna-la-sagra-delle-frittelle/"
+    "link": "https://www.quiantella.it/a-bagno-a-ripoli-torna-la-sagra-delle-frittelle/",
+    "luogoId": "pieve-bagno-a-ripoli"
   },
   {
     "title": "Diritto parità di genere",
@@ -74,6 +80,7 @@
     "location": "Comune di Bagno a Ripoli",
     "description": "Incontro di sensibilizzazione sulla parità di genere e i diritti delle persone con disabilità, in collaborazione con il Comune di Bagno a Ripoli.",
     "image": "images/events/parita-di-genere.jpg",
-    "status": "passato"
+    "status": "passato",
+    "luogoId": "comune-bagno-a-ripoli"
   }
 ]
