@@ -358,10 +358,22 @@ function setupCardLightbox() {
  * uno solo invece di essere copiato quattro volte.
  */
 function renderStatCards(grid, stats) {
+  // ⛔ **Il numero nasce GIUSTO, non a zero** (28/08/2026). Prima queste caselle
+  //    nascevano con «0» e `animaNumeri` le portava al valore vero contando su
+  //    `requestAnimationFrame`. Ma rAF **non gira in una scheda in secondo
+  //    piano**: misurato dal vivo su `partner.html`, con la scheda nascosta la
+  //    fascia diceva «0 Partner totali» accanto a 32 schede visibili, e ci
+  //    restava. Succede a chiunque apra il sito in una scheda che non guarda
+  //    subito — un caso normalissimo, non un caso limite.
+  //
+  //    ⚠️ È lo stesso principio già scritto per `data-numero` e per il saldo di
+  //    cassa del gestionale: **uno zero è una bugia scritta bene**, peggio di un
+  //    dato assente, perché si legge con fiducia. L'animazione è un ornamento e
+  //    resta un ornamento: se non parte, il numero è comunque quello vero.
   grid.innerHTML = stats.map(s => `
     <div class="stat-card">
       <span class="stat-icona" aria-hidden="true">${s.icona}</span>
-      <span class="stat-number" data-valore="${s.number}">0</span>
+      <span class="stat-number" data-valore="${s.number}">${formattaNumero(s.number)}</span>
       <span class="stat-label">${escapeHTML(s.label)}</span>
     </div>
   `).join('');

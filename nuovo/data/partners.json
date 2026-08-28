@@ -9,9 +9,16 @@
   {
     "name": "Apicoltura San Martino",
     "type": "azienda",
-    "description": "Azienda agricola dedicata all'apicoltura e alla produzione di miele artigianale nel territorio fiorentino.",
-    "logo": "",
-    "url": "https://apicolturasanmartino.com"
+    "description": "Azienda agricola di Bagno a Ripoli: mieli e prodotti dell’alveare.",
+    "logo": "images/partners/apicoltura-san-martino.png",
+    "url": "https://apicolturasanmartino.com/"
+  },
+  {
+    "name": "Associazione Gabriele Borgogni",
+    "type": "azienda",
+    "description": "Associazione di Firenze impegnata nella sicurezza stradale e nel sostegno ai familiari delle vittime della strada.",
+    "logo": "images/partners/borgogni.jpg",
+    "url": "https://gabrieleborgogni.com/"
   },
   {
     "name": "Auser",
@@ -31,22 +38,15 @@
     "name": "Biblioteca di Bagno a Ripoli",
     "type": "istituzionale",
     "description": "Biblioteca comunale con servizi di prestito, consultazione e iniziative culturali per il territorio.",
-    "logo": "",
+    "logo": "images/partners/biblioteca-bagno-a-ripoli.png",
     "url": "https://www.comune.bagno-a-ripoli.fi.it/biblioteca/home"
-  },
-  {
-    "name": "Borgogni",
-    "type": "azienda",
-    "description": "Realtà locale che collabora con l'associazione nella realizzazione di progetti sociali.",
-    "logo": "",
-    "url": ""
   },
   {
     "name": "Casa del Popolo Balatro",
     "type": "associazione",
     "description": "Circolo ricreativo e culturale affiliato ARCI, fondato nel 1892, con corsi (ginnastica, yoga, arti marziali), tornei di burraco e attività sociali a Balatro.",
-    "logo": "",
-    "url": ""
+    "logo": "images/partners/casa-popolo-balatro.jpg",
+    "url": "https://www.facebook.com/profile.php?id=100057785044390"
   },
   {
     "name": "Casa del Popolo Grassina",
@@ -59,8 +59,8 @@
     "name": "Circolo Vie Nuove",
     "type": "associazione",
     "description": "Circolo ARCI fondato nel 1944 che promuove attività sociali, sportive e culturali nel quartiere dell'Isolotto a Firenze.",
-    "logo": "",
-    "url": "https://www.arcifirenze.it/circoli/circolo-vie-nuove/"
+    "logo": "images/partners/circolo-vie-nuove.jpg",
+    "url": "https://www.facebook.com/circolo.vienuove/"
   },
   {
     "name": "Comune di Bagno a Ripoli",
@@ -86,9 +86,9 @@
   {
     "name": "Cooperativa Fontenuova",
     "type": "cooperativa",
-    "description": "Cooperativa sociale che gestisce un centro diurno per persone con disabilità, con laboratori di tessitura, orto e piante aromatiche.",
-    "logo": "",
-    "url": "https://www.fontenuovacoop.it"
+    "description": "Cooperativa sociale attiva nella cura del verde e in iniziative sociali e culturali del territorio.",
+    "logo": "images/partners/cooperativa-fontenuova.jpg",
+    "url": "https://www.fontenuovacoop.it/"
   },
   {
     "name": "CRC Antella",
@@ -135,16 +135,16 @@
   {
     "name": "Il Teatro dell'Inutile",
     "type": "associazione",
-    "description": "Associazione teatrale che promuove la cultura teatrale con corsi per bambini e giovani, attiva al CRC Antella.",
-    "logo": "",
-    "url": "https://www.facebook.com/ilteatro.dellinutile/"
+    "description": "Compagnia teatrale di Bagno a Ripoli: spettacoli dal classico al contemporaneo e corsi di teatro.",
+    "logo": "images/partners/teatro-dell-inutile.jpg",
+    "url": "https://ilteatrodellinutile.it/"
   },
   {
     "name": "Intesa Sanpaolo",
     "type": "azienda",
     "description": "Primo gruppo bancario italiano che sostiene progetti sociali e di inclusione sul territorio.",
-    "logo": "",
-    "url": "https://www.intesasanpaolo.com"
+    "logo": "images/partners/intesa-sanpaolo.png",
+    "url": "https://www.intesasanpaolo.com/"
   },
   {
     "name": "Istituto Elsa Morante",
@@ -156,9 +156,9 @@
   {
     "name": "La Lanterna",
     "type": "associazione",
-    "description": "Associazione onlus per il sostegno a persone con disabilità e famiglie, con laboratori esperienziali e gruppi di auto-aiuto.",
-    "logo": "",
-    "url": ""
+    "description": "Associazione di promozione sociale di Bagno a Ripoli, nata nel 2011: si occupa di disabilità media e grave e di difficolta' scolastiche, insieme a professionisti e famiglie.",
+    "logo": "images/partners/la-lanterna.jpg",
+    "url": "https://www.facebook.com/asslalanterna/"
   },
   {
     "name": "Legambiente",
@@ -182,25 +182,18 @@
     "url": "https://misericordiadibadia.it"
   },
   {
-    "name": "Misericordia di Ponte a Ema",
-    "type": "associazione",
-    "description": "Confraternita di Misericordia per servizi di soccorso, trasporto sanitario e attività sociali a Ponte a Ema.",
-    "logo": "",
-    "url": ""
-  },
-  {
     "name": "Publiacqua",
     "type": "azienda",
     "description": "Gestore del servizio idrico integrato in Toscana centrale, sostenitore di progetti di educazione ambientale.",
-    "logo": "",
-    "url": "https://www.publiacqua.it"
+    "logo": "images/partners/publiacqua.png",
+    "url": "https://www.publiacqua.it/qualita/bagno-ripoli"
   },
   {
     "name": "Scuola Francesco Redi",
     "type": "scuola",
     "description": "Scuola secondaria di primo grado dell'IC Caponnetto a Bagno a Ripoli, partner in progetti educativi e didattici.",
-    "logo": "",
-    "url": "https://www.caponnetto.edu.it"
+    "logo": "images/partners/scuola-redi.svg",
+    "url": "https://www.caponnetto.edu.it/"
   },
   {
     "name": "SdS Firenze Sud-Est",

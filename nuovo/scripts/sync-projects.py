@@ -433,6 +433,46 @@ def sync(excel_path):
             print(f"    - {m}")
 
 
+# ---------------------------------------------------------------------------
+# ⛔⛔ CHIUSO A CHIAVE — il sito non si rigenera piu' dall'Excel (28/08/2026)
+# ---------------------------------------------------------------------------
+# Il titolare: «puoi bloccare l'aggiornamento automatico del sito dai file di
+# excel. Bisogna fare in modo che il sito si aggiorni dal gestionale».
+#
+# ⚠️ **Non e' una precauzione teorica: questo script DISTRUGGE lavoro vero.**
+# I file in `data/` portano ormai cose che nell'Excel non ci sono e non ci
+# possono stare — le date dei singoli incontri, i luoghi con l'indirizzo, i
+# loghi dei partner, le descrizioni, i nomi corretti dei progetti rinominati.
+# Una rigenerazione le riportava tutte a stringa vuota **senza un errore e
+# senza un avviso**: il sito si svuotava, e lo si scopriva guardandolo.
+#
+# ⛔ **Non si cancella lo script.** L'Excel resta la fonte storica del lavoro
+# di sei anni, e il giorno in cui quei dati si travaseranno nel gestionale
+# questo codice serve a rileggerlo. Chi lo lancia oggi, pero', quasi sempre non
+# sa che cosa sta per perdere.
+#
+# ⇒ Per usarlo davvero: `--forza-so-cosa-sto-facendo`, e prima si fa una copia
+#   di `data/`. Il nome dell'interruttore e' lungo apposta.
+def _fermati_se_non_forzato():
+    import sys as _sys
+    if "--forza-so-cosa-sto-facendo" in _sys.argv:
+        _sys.argv.remove("--forza-so-cosa-sto-facendo")
+        print("\u26a0\ufe0f  Rigenerazione FORZATA: quel che era scritto a mano e a rischio.")
+        return
+    print(__doc__ or "")
+    print("\u26d4 Questo script e' CHIUSO A CHIAVE dal 28/08/2026.")
+    print()
+    print("   Il sito non si rigenera piu' dall'Excel: i file in data/ contengono")
+    print("   ormai dati che nell'Excel non esistono (appuntamenti, luoghi con")
+    print("   indirizzo, loghi, descrizioni, nomi corretti), e rigenerare li")
+    print("   cancella in silenzio.")
+    print()
+    print("   La strada nuova e' il gestionale: vedi docs/ e la memoria di")
+    print("   progetto. Se DEVI davvero rigenerare, fai una copia di data/ e")
+    print("   rilancia con  --forza-so-cosa-sto-facendo")
+    raise SystemExit(2)
+
 if __name__ == "__main__":
+    _fermati_se_non_forzato()
     excel_path = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_EXCEL
     sync(excel_path)

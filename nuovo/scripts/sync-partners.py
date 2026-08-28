@@ -50,7 +50,13 @@ ALIASES = {
     "contrada alfiere": "Contrada dell'Alfiere",
     "becare": "BE Care S.r.l.",
     "mise antella": "Misericordia di Antella",
-    "mise ponte a ema": "Misericordia di Ponte a Ema",
+    # ⛔ **Non e' la Misericordia: a Ponte a Ema la pubblica assistenza e' la
+    # CROCE D'ORO** (titolare, 28/08/2026). Nel foglio storico la sigla e'
+    # scritta «mise ponte a ema» per simmetria con «mise antella» e «mise
+    # badia», che invece sono Misericordie vere. ⚠️ La sigla nell'Excel NON si
+    # corregge: e' l'originale, e questa tabella esiste proprio per tradurre
+    # le grafie storiche senza riscrivere la fonte.
+    "mise ponte a ema": "Croce d'Oro Ponte a Ema",
     "mise badia": "Misericordia di Badia a Ripoli",
     "fpgrassina": "Fratellanza Popolare Grassina",
     "croce d'oro ponte a ema": "Croce d'Oro Ponte a Ema",
@@ -75,7 +81,7 @@ COMPOSITE_EXPANSIONS = {
         "Croce Rossa Italiana",
         "Misericordia di Antella",
         "Fratellanza Popolare Grassina",
-        "Misericordia di Ponte a Ema",
+        "Croce d'Oro Ponte a Ema",
         "Misericordia di Badia a Ripoli",
     ],
     "sds firenze sud-est e comune bar": [
@@ -222,6 +228,51 @@ def extract_from_projects(path):
     return names
 
 
+def conserva_lavoro_a_mano(partners):
+    """Rimette descrizione, logo e url gia' scritti a mano in `partners.json`.
+
+    ⛔ **Senza questa funzione la rigenerazione SVUOTA la pagina Partner.**
+    `read_partner_excel` legge logo e url dall'Excel (colonne 3 e 4), che per
+    quasi tutti sono vuote, e la **descrizione nell'Excel non c'e' affatto**: i
+    partner che arrivano dal foglio progetti nascono con tutti e tre i campi a
+    stringa vuota. Chi rilanciava lo script si ritrovava 32 schede senza logo e
+    senza una riga di testo, e nulla glielo diceva — nessun errore, nessun
+    avviso, solo un sito improvvisamente vuoto.
+
+    ⚠️ **Vince sempre il valore gia' presente, non quello dell'Excel.** Il JSON
+    e' il posto dove quel lavoro e' stato fatto; l'Excel e' un elenco di nomi. Se
+    un giorno si vorra' governare i loghi dal foglio, questa regola va rovesciata
+    **di proposito**, non per caso.
+
+    ⚠️ L'accostamento e' per nome normalizzato: un ente rinominato nell'Excel
+    perde quel che aveva, e **lo si dice** invece di lasciarlo sparire in
+    silenzio. E' la stessa lezione di `sync-projects.py`, dove il riaggancio
+    degli appuntamenti si fa per (titolo, data d'inizio).
+    """
+    try:
+        with open(OUTPUT_PATH, encoding="utf-8") as f:
+            vecchi = json.load(f)
+    except (FileNotFoundError, ValueError):
+        return partners, []
+
+    per_nome = {normalize_name(v.get("name", "")): v for v in vecchi}
+    ripresi = 0
+    for p in partners:
+        v = per_nome.pop(normalize_name(p["name"]), None)
+        if not v:
+            continue
+        for campo in ("description", "logo", "url"):
+            if not p.get(campo) and v.get(campo):
+                p[campo] = v[campo]
+                ripresi += 1
+
+    # Chi c'era nel JSON e non torna dall'Excel: non lo si cancella di nascosto.
+    persi = sorted(v.get("name", "?") for v in per_nome.values()
+                   if v.get("description") or v.get("logo") or v.get("url"))
+    print(f"  conservati {ripresi} campi scritti a mano")
+    return partners, persi
+
+
 def sync(partner_excel=None, projects_excel=None):
     """Sincronizza partners.json."""
     partner_path = partner_excel or DEFAULT_PARTNER_EXCEL
@@ -248,7 +299,15 @@ def sync(partner_excel=None, projects_excel=None):
             known_names.add(normalize_name(name))
             added += 1
 
-    # 4. Ordina per nome
+    # 4. Rimetti il lavoro fatto a mano PRIMA di salvare (vedi la funzione)
+    partners, persi = conserva_lavoro_a_mano(partners)
+    if persi:
+        print("  \u26a0\ufe0f  ATTENZIONE: questi partner avevano descrizione/logo/url nel JSON")
+        print("      e non tornano dall'Excel. Rinominati? Tolti? Vanno guardati:")
+        for n in persi:
+            print(f"        - {n}")
+
+    # 5. Ordina per nome
     partners.sort(key=lambda p: p["name"].lower())
 
     # 5. Salva JSON
@@ -281,7 +340,47 @@ def sync(partner_excel=None, projects_excel=None):
             print(f"    - {n}")
 
 
+# ---------------------------------------------------------------------------
+# ⛔⛔ CHIUSO A CHIAVE — il sito non si rigenera piu' dall'Excel (28/08/2026)
+# ---------------------------------------------------------------------------
+# Il titolare: «puoi bloccare l'aggiornamento automatico del sito dai file di
+# excel. Bisogna fare in modo che il sito si aggiorni dal gestionale».
+#
+# ⚠️ **Non e' una precauzione teorica: questo script DISTRUGGE lavoro vero.**
+# I file in `data/` portano ormai cose che nell'Excel non ci sono e non ci
+# possono stare — le date dei singoli incontri, i luoghi con l'indirizzo, i
+# loghi dei partner, le descrizioni, i nomi corretti dei progetti rinominati.
+# Una rigenerazione le riportava tutte a stringa vuota **senza un errore e
+# senza un avviso**: il sito si svuotava, e lo si scopriva guardandolo.
+#
+# ⛔ **Non si cancella lo script.** L'Excel resta la fonte storica del lavoro
+# di sei anni, e il giorno in cui quei dati si travaseranno nel gestionale
+# questo codice serve a rileggerlo. Chi lo lancia oggi, pero', quasi sempre non
+# sa che cosa sta per perdere.
+#
+# ⇒ Per usarlo davvero: `--forza-so-cosa-sto-facendo`, e prima si fa una copia
+#   di `data/`. Il nome dell'interruttore e' lungo apposta.
+def _fermati_se_non_forzato():
+    import sys as _sys
+    if "--forza-so-cosa-sto-facendo" in _sys.argv:
+        _sys.argv.remove("--forza-so-cosa-sto-facendo")
+        print("\u26a0\ufe0f  Rigenerazione FORZATA: quel che era scritto a mano e a rischio.")
+        return
+    print(__doc__ or "")
+    print("\u26d4 Questo script e' CHIUSO A CHIAVE dal 28/08/2026.")
+    print()
+    print("   Il sito non si rigenera piu' dall'Excel: i file in data/ contengono")
+    print("   ormai dati che nell'Excel non esistono (appuntamenti, luoghi con")
+    print("   indirizzo, loghi, descrizioni, nomi corretti), e rigenerare li")
+    print("   cancella in silenzio.")
+    print()
+    print("   La strada nuova e' il gestionale: vedi docs/ e la memoria di")
+    print("   progetto. Se DEVI davvero rigenerare, fai una copia di data/ e")
+    print("   rilancia con  --forza-so-cosa-sto-facendo")
+    raise SystemExit(2)
+
 if __name__ == "__main__":
+    _fermati_se_non_forzato()
     import argparse
     parser = argparse.ArgumentParser(description="Sincronizza partners.json")
     parser.add_argument("--partner-excel", help="Percorso Partner.xlsx")
