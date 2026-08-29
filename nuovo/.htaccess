@@ -75,10 +75,10 @@ Options -Indexes
 	</FilesMatch>
 </IfModule>
 
-# ⚠️ La pagina 404 sopra punta alla radice del dominio, dove c'e' ancora
-# WordPress: finche' il sito sta in sottocartella deve puntare qui dentro.
-# Quando prendera' il posto del sito principale, va rimessa a /404.html.
-ErrorDocument 404 /nuovo/404.html
+# ⚠️ Qui c'era un secondo `ErrorDocument` verso /nuovo/404.html, che
+# serviva finche' il sito stava in sottocartella su Ergonet. Tolto il 29/08/2026,
+# quando il sito e' passato a Serverplan **alla radice del dominio**: vale quello
+# in cima al file. In Apache vince l'ultimo, ed era per questo che restava sotto.
 
 # ⚠️ Le pagine e i dati NON si tengono in cache. Questa e' una versione che
 # si guarda per correggerla: con la cache si rivedrebbe sempre la stessa
