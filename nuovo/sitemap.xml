@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Mappa del sito.
+
+  !! Oggi NON serve a niente, ed e' voluto: il sito e' `noindex` per intero
+     (vedi `.htaccess`) e nessun motore deve ancora passare di qui. Esiste
+     perche' il giorno in cui si toglie il `noindex` la mappa dev'essere gia'
+     pronta e gia' giusta, non da scrivere di fretta.
+
+  !! Gli indirizzi sono sotto `/nuovo/`. Il giorno in cui il sito prendera' il
+     posto di quello principale vanno tolti di un livello, INSIEME ai
+     `rel="canonical"` delle pagine: due elenchi di indirizzi che dicono cose
+     diverse sono peggio di nessun elenco.
+
+  X  Fuori restano `404.html` (una pagina d'errore non si indicizza) e
+     `app.html` (la porta dell'area riservata: non e' un contenuto).
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/calendario.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/contatti.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/documenti.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/eventi.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/gallery.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/mission.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/partner.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/progetti.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.larosadeiventiaps.org/nuovo/sostienici.html</loc>
+    <lastmod>2026-08-29</lastmod>
+    <priority>0.9</priority>
+  </url>
+</urlset>

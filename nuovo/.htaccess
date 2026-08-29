@@ -56,6 +56,23 @@ Options -Indexes
 # decide da qui.
 <IfModule mod_headers.c>
 	Header set X-Robots-Tag "noindex, nofollow, noarchive, noimageindex"
+
+	# ⛔⛔ **La riga sopra NON arrivava sulle immagini** (misurato il 29/08/2026
+	# con richieste vere al sito): `gallery.html` e `data/gallery.json`
+	# rispondono con l'intestazione, `images/gallery/*.jpg`, `css/style.css`,
+	# `js/main.js` e i PDF **no**. L'hosting serve gli allegati statici da un
+	# livello che scavalca queste regole.
+	# ⚠️ Non era un dettaglio: significa che **sessantasei fotografie di persone
+	# con disabilità e minori erano indicizzabili dalla ricerca per immagini**,
+	# mentre la pagina che le mostra non lo era. Il commento qui sopra diceva
+	# «foto comprese»: era quello che si voleva, non quello che succedeva.
+	# ⇒ `always`, e nominando i tipi di file uno per uno: `Header set` non
+	#   tocca le risposte servite fuori dal giro normale, `Header always set`
+	#   sì. Se anche così non basta, la protezione non può stare qui e va
+	#   chiesta all'hosting — e allora **si toglie il file, non si spera**.
+	<FilesMatch "\.(jpe?g|png|gif|webp|svg|avif|pdf|css|js|json|xml|txt)$">
+		Header always set X-Robots-Tag "noindex, nofollow, noarchive, noimageindex"
+	</FilesMatch>
 </IfModule>
 
 # ⚠️ La pagina 404 sopra punta alla radice del dominio, dove c'e' ancora

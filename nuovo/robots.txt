@@ -1,0 +1,23 @@
+# Regole per i motori di ricerca.
+#
+# ⛔⛔ ATTENZIONE: oggi questo file NON viene letto da nessuno, ed è giusto
+#    saperlo. Un `robots.txt` vale solo se sta nella RADICE del dominio
+#    (`larosadeiventiaps.org/robots.txt`), e quella radice oggi è occupata dal
+#    sito WordPress vecchio, il cui `robots.txt` di `/nuovo/` non dice niente.
+#    ⇒ La protezione vera, adesso, è l'intestazione `X-Robots-Tag` in
+#      `.htaccess`, non questo file.
+#
+# ⚠️ Esiste per il giorno in cui il sito prenderà il posto di quello
+#    principale: allora va spostato nella radice, e questo contenuto diventa
+#    quello vero. È anche il posto dove ricordarsi di dichiarare la mappa.
+#
+# ⚠️ E vale la pena ricordare la differenza, perché è la fonte di metà degli
+#    equivoci: `Disallow` dice «non passare di qui», NON «non mostrare nei
+#    risultati». Una pagina non scansionata ma collegata da fuori può comparire
+#    lo stesso. Chi vuole davvero tenere qualcosa fuori dai risultati usa
+#    `noindex` — che infatti è quello che stiamo usando.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.larosadeiventiaps.org/nuovo/sitemap.xml

@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contatti — La Rosa dei Venti APS</title>
   <meta name="description" content="La Rosa dei Venti APS — Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
+  <!--
+    ⚠️ Indirizzo canonico. Oggi il sito vive in `/nuovo/`: **il giorno in cui
+    prenderà il posto di quello principale, questi vanno tolti di un livello**,
+    o diranno a un motore che la pagina vera sta in una cartella che non
+    esisterà più. È scritto anche nel «punto zero» della verifica SEO.
+  -->
+  <link rel="canonical" href="https://www.larosadeiventiaps.org/nuovo/contatti.html">
   <meta property="og:title" content="Contatti — La Rosa dei Venti APS">
   <meta property="og:description" content="Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260829-1227">
+  <link rel="stylesheet" href="css/style.css?v=20260829-1638">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -209,8 +216,37 @@
         </form>
       </div>
     </div>
+    <!--
+      ⛔⛔ **La mappa non si carica da sola.** Qui c'era un `<iframe>` di Google
+      Maps: apriva una connessione ai server di Google **per chiunque aprisse
+      questa pagina**, prima di qualunque consenso, e con essa l'indirizzo IP
+      di chi guarda. È il caso su cui il Garante è intervenuto più volte, ed è
+      la sola cosa del sito che mandasse dati a terzi senza chiederlo — non
+      c'è nessun analytics, nessun pixel, nessun tracciatore.
+      ⚠️ E l'informativa privacy dichiara che il sito «non utilizza strumenti
+      di tracciamento»: con la mappa incorporata quella frase era falsa.
+      ⇒ Adesso si carica **solo se qualcuno la chiede**, e la richiesta è
+        preceduta dalla frase che dice che cosa comporta. Chi non clicca non
+        manda niente a nessuno, e chi vuole la mappa ce l'ha in un gesto.
+      ⚠️ L'indirizzo del posto resta scritto qui sotto in chiaro: la mappa è
+        una comodità, non l'unico modo di sapere dove si va.
+    -->
     <div class="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23104.5!2d11.29!3d43.74!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a53d4e0e7c4f5%3A0x4063460044010d0!2sBagno%20a%20Ripoli%2C%20FI!5e0!3m2!1sit!2sit!4v1710000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="mappa-consenso" id="mappa-consenso">
+        <p class="mappa-consenso-titolo">Mappa di Bagno a Ripoli</p>
+        <p class="mappa-consenso-nota">
+          La mappa è di Google: caricandola, il tuo indirizzo IP e alcuni dati
+          del tuo browser vengono inviati ai server di Google, che possono
+          usare cookie. Se preferisci non caricarla, l'indirizzo lo trovi qui
+          sopra e puoi aprirlo nella mappa che usi di solito.
+        </p>
+        <button type="button" class="btn-primary" id="mappa-carica">Carica la mappa di Google</button>
+        <p class="mappa-consenso-nota">
+          <a href="https://www.openstreetmap.org/search?query=Bagno%20a%20Ripoli"
+             target="_blank" rel="noopener noreferrer">Apri su OpenStreetMap</a>
+          — non serve caricare niente qui dentro.
+        </p>
+      </div>
     </div>
   </main>
 
@@ -240,11 +276,12 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/main.js?v=20260829-1227"></script>
-  <script src="js/torna-su.js?v=20260829-1227"></script>
+  <script src="js/main.js?v=20260829-1638"></script>
+  <script src="js/torna-su.js?v=20260829-1638"></script>
+  <script src="js/mappa.js?v=20260829-1638"></script>
   <!-- gestionale.js PRIMA di informazioni.js: porta l'indirizzo dell'api. -->
-  <script src="js/gestionale.js?v=20260829-1227"></script>
-  <script src="js/dati-pubblici.js?v=20260829-1227"></script>
-  <script src="js/informazioni.js?v=20260829-1227"></script>
+  <script src="js/gestionale.js?v=20260829-1638"></script>
+  <script src="js/dati-pubblici.js?v=20260829-1638"></script>
+  <script src="js/informazioni.js?v=20260829-1638"></script>
 </body>
 </html>

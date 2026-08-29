@@ -3829,3 +3829,40 @@ html {
 .navbar {
   overflow: visible;
 }
+
+/* ---------------------------------------------------------------------------
+   Il riquadro che sostituisce la mappa finché nessuno la chiede (29/08/2026).
+   Vedi `js/mappa.js` per il perché: l'iframe di Google mandava l'indirizzo IP
+   di chiunque aprisse la pagina, prima di qualunque consenso.
+   ⚠️ Stessa altezza della mappa che sostituisce: senza, la pagina cambierebbe
+   forma nel momento in cui si carica, e il contenuto sotto salterebbe.
+   --------------------------------------------------------------------------- */
+.mappa-consenso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 320px;
+  padding: 1.5rem;
+  text-align: center;
+  background: #f7f8f6;
+  border: 1px dashed #c6cdc6;
+  border-radius: 12px;
+}
+
+.mappa-consenso-titolo {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* ⚠️ Non più stretta di ~65 caratteri: è un testo che spiega una scelta, e va
+   letto per intero, non scorso con gli occhi. */
+.mappa-consenso-nota {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #414c4d;
+}
