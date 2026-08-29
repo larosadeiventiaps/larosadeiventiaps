@@ -158,8 +158,24 @@ Options -Indexes
 # contenuti non cambieranno piu' ogni giorno, questo blocco va tolto e
 # le immagini tornano a essere tenute a lungo — ma allora un logo sostituito
 # dovra' cambiare nome, o il problema torna identico.
+# ⛔⛔ **Il guasto del 29/08/2026, e perche' `js` e `css` sono in elenco.**
+# Le pagine escono con `no-store` (arrivano sempre nuove), ma il foglio di
+# stile e gli script uscivano con `max-age` di un mese. Quel giorno ho tolto
+# dalle pagine i due campi data e ho cambiato `main.js` di conseguenza: chi
+# aveva gia' visitato il sito si e' ritrovato la **pagina nuova** insieme al
+# **codice vecchio**, che quei campi li cercava ancora. `dateFrom.value` su
+# `null` e' un errore che ferma tutto: Progetti, Eventi e Galleria hanno
+# smesso di mostrare qualunque cosa. Nessun errore lato server, il sito
+# rispondeva 200 a tutto: se ne e' accorto il titolare guardandolo.
+# ⇒ Con `no-cache` il browser il file lo tiene, ma prima di riusarlo chiede
+#   se e' cambiato: se non lo e' torna un 304 di poche decine di byte, quindi
+#   il risparmio resta e la pagina non puo' piu' finire disallineata dal suo
+#   codice.
+# ⚠️ Il timbro `?v=...` (`scripts/versiona-asset.py`) resta e va comunque
+#    lanciato: e' la difesa che funziona anche dove `.htaccess` non arriva.
+#    Quel giorno non l'avevo lanciato, ed e' stata la causa prima.
 <IfModule mod_headers.c>
-	<FilesMatch "\.(png|jpe?g|webp|gif|svg|ico)$">
+	<FilesMatch "\.(png|jpe?g|webp|gif|svg|ico|css|js)$">
 		Header set Cache-Control "no-cache, must-revalidate"
 		Header unset Expires
 	</FilesMatch>
