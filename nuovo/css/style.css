@@ -3467,19 +3467,32 @@ main {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  /* ⛔ Lo stacco dall'alto e' `padding`, NON `margin`, e la differenza qui si
+     vede. Questa e' la prima cosa dentro `<main>`, e `<main>` non ha ne'
+     bordo ne' riempimento: un `margin-top` **collassa** attraverso di lui e
+     sposta `main` invece di aprire spazio dentro. Misurato il 29/08/2026: coi
+     28px di margine, navigazione, `main`, contenitore e primo pulsante
+     stavano tutti a y=64 — il margine c'era, lo spazio no.
+     ⚠️ Sulle altre pagine il problema non si pone perche' lo spazio lo da'
+        `.project-section` col suo `padding: 2rem`; qui quella sezione non c'e'. */
   margin: 0 auto 1.25rem;
   max-width: 1200px;
-  padding: 0 1rem;
+  padding: 1.75rem 1rem 0;
 }
 
 .gallery-anno {
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   min-height: 44px;
   padding: 0.35rem 1rem;
   border: 1px solid #ddd;
-  border-radius: 999px;
+  /* ⛔ Non `999px`. Le pastiglie dei progetti qui sotto sono capsule perche'
+     portano una miniatura tonda dentro; queste sono solo un'etichetta corta,
+     e con il raggio pieno «2026» diventava una pillola. Squadrate come il
+     resto dei comandi del sito (`--radius-card`), che le distingue anche dal
+     filtro principale: il progetto si sceglie, l'anno restringe. */
+  border-radius: var(--radius-card, 8px);
   background: #fff;
   color: #555;
   cursor: pointer;
