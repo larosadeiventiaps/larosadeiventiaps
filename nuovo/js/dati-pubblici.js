@@ -49,7 +49,14 @@
  * (`GESTIONALE_FONTE_DATI`), apposta accanto agli indirizzi: si cambia lì,
  * non qui.
  *
- * ⛔ **Fuori da questo file**: `data/gallery.json`, `data/hero.json`,
+ * ⚠️ **`data/gallery.json` è entrato qui il 29/08/2026**, quando il gestionale
+ * ha guadagnato un registro delle foto del sito (`GET /pubblico/foto`) con
+ * didascalia, data, luogo e progetto. Fino ad allora restava fuori per la
+ * ragione scritta qui sotto, che era vera e ha smesso di esserlo: **un
+ * commento che descrive un mondo scomparso è peggio di nessun commento**,
+ * perché chi legge si fida e non va a guardare.
+ *
+ * ⛔ **Fuori da questo file**: `data/hero.json`,
  * `data/direttivo.json`, `data/documenti.json` restano come sono, letti
  * solo dal file. Non per una dimenticanza: nessuna rotta pubblica del
  * gestionale oggi restituisce un elenco di fotografie con didascalia/data/
@@ -380,10 +387,46 @@
   }
 
   /* ---------------------------------------------------------------------
-     Le tre funzioni che js/main.js chiama davvero.
+     Galleria: GET /pubblico/foto — arrivata il 29/08/2026, quando il
+     gestionale ha smesso di non sapere niente delle fotografie del sito.
+     Contratto: [{ id, titolo, descrizione, data, luogo, progetto, url }].
+     --------------------------------------------------------------------- */
+
+  /**
+   * ⭐ **Il registro delle foto esiste per una ragione che è già costata.**
+   * Otto fotografie sono state pubblicate **coricate su un fianco** e ci sono
+   * rimaste finché non le ho guardate a una a una: nessuna schermata le
+   * mostrava insieme. Il gestionale adesso le mostra, e questa funzione è il
+   * verso opposto — il sito che legge quel registro invece del proprio file.
+   *
+   * ⛔ **Il filtro dei consensi vive lato server e non si tocca da qui.** Una
+   * foto che non passa quel filtro non arriva proprio: non c'è nessun campo,
+   * in questo contratto, che dica perché — e non deve esserci. Dire a chi
+   * guarda il sito «manca il consenso di qualcuno» sarebbe raccontare di una
+   * persona che non ha acconsentito a essere raccontata.
+   */
+  function galleriaDaApi() {
+    return fetchConTimeout(BASE_API + '/foto').then(risposteJsonOk).then(function (righe) {
+      if (!Array.isArray(righe)) return [];
+      return righe.map(function (r) {
+        return {
+          title: r.titolo,
+          description: r.descrizione || '',
+          image: r.url,
+          date: r.data,
+          location: r.luogo || '',
+          progetto: r.progetto || null
+        };
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------------
+     Le funzioni che js/main.js chiama davvero.
      --------------------------------------------------------------------- */
 
   window.caricaProgetti = function () { return caricaConRipiego('progetti', 'data/projects.json', progettiDaApi); };
   window.caricaEventi = function () { return caricaConRipiego('eventi', 'data/events.json', eventiDaApi); };
   window.caricaPartner = function () { return caricaConRipiego('partner', 'data/partners.json', partnerDaApi); };
+  window.caricaGalleria = function () { return caricaConRipiego('galleria', 'data/gallery.json', galleriaDaApi); };
 })();

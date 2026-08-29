@@ -1055,16 +1055,22 @@ function formatGalleryMeta(photo) {
 // sui consensi (`GET /pubblico/media/:id`), ma quella rotta dà i BYTE di UNA
 // foto già nota per identificativo: non esiste ancora un elenco pubblico che
 // dia didascalia/data/luogo/progetto per ogni foto, cioè quello che questa
-// pagina mostra davvero. Fabbricare una galleria da soli identificativi,
-// senza didascalia, sarebbe una pagina peggiore di quella di oggi — vedi il
-// commento in cima a js/dati-pubblici.js sul perimetro di questa migrazione.
+// pagina mostra davvero.
+// ⚠️ **Quel motivo è scaduto il 29/08/2026**: qui si diceva che fabbricare una
+// galleria da soli identificativi, senza didascalia, sarebbe stata una pagina
+// peggiore di quella di allora — vero, e infatti non si è fatto. Poi il
+// gestionale ha guadagnato un registro delle foto **con** didascalia, data,
+// luogo e progetto, e la ragione è caduta.
 async function loadGallery() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
 
   try {
-    const res = await fetch('data/gallery.json');
-    const allPhotos = await res.json();
+    // ⚠️ Dal gestionale, col file come copia di sicurezza — come progetti,
+    // eventi e partner (vedi `js/dati-pubblici.js`). Fino al 29/08/2026 qui
+    // c'era un `fetch` diretto al file, perché una rotta che desse le foto
+    // **con la didascalia** non esisteva: adesso esiste.
+    const allPhotos = await caricaGalleria();
 
     const searchInput = document.getElementById('search-input');
     const dateFrom = document.getElementById('date-from');
