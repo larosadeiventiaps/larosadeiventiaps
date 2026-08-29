@@ -1,4 +1,4 @@
-name: Deploy su FTP Ergonet
+name: Deploy su FTP Serverplan
 
 on:
   push:
@@ -16,16 +16,31 @@ jobs:
       - name: Sync con FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ftp.larosadeiventiaps.org
+          # ⚠️ L'indirizzo del server e' quello VERO, non `ftp.larosadeiventiaps.org`:
+          #    quel record punta ancora a Ergonet e continuerebbe a pubblicare
+          #    sul server sbagliato senza dare il minimo errore.
+          server: ahsoka.dnshigh.com
+          protocol: ftps
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /httpdocs/
+          # L'utente `rilascio@` atterra gia' dentro la cartella web: la radice
+          # per lui e' `./`. E' confinato li' — non vede posta ne' backup.
+          server-dir: ./
+          # Dal 29/08/2026 il sito sta alla RADICE del dominio: sale solo
+          # `nuovo/`, non piu' tutto il repository dentro una sottocartella.
+          local-dir: ./nuovo/
+          # ⛔⛔ Questa azione CANCELLA dal server quel che non trova in locale.
+          #    Le righe qui sotto non sono un elenco di file da saltare: sono le
+          #    cose del server che devono SOPRAVVIVERE al rilascio.
+          #    `.well-known` e' dove Let's Encrypt scrive la prova per rinnovare
+          #    il certificato: cancellarla fa scadere l'HTTPS settimane dopo,
+          #    senza che niente qui dia errore.
           exclude: |
             **/.git*
             **/.git*/**
-            .github/**
-            .claude/**
-            .superpowers/**
-            docs/**
-            new-site/**
-            README.md
+            .well-known/**
+            .user.ini
+            php.ini
+            cgi-bin/**
+            .ftpquota
+            scripts/**

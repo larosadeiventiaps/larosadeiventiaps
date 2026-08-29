@@ -1,3 +1,38 @@
+# ── Gli indirizzi del sito vecchio ─────────────────────────────
+#
+# Il 29/08/2026 il sito nuovo prende il posto di quello WordPress. La sitemap
+# del vecchio dichiarava **31 indirizzi**, che oggi stanno nella memoria di
+# Google e nei preferiti delle persone: senza queste righe finirebbero tutti
+# sulla pagina «non trovata».
+#
+# ⚠️ Un 301 dice «si e' spostato per sempre», e i motori trasferiscono al nuovo
+#    indirizzo quel che il vecchio si era guadagnato. Un 302 no.
+# ⚠️ L'ordine conta: `RedirectMatch` guarda le regole dall'alto. Le pagine
+#    nostre finiscono in `.html`, i vecchi indirizzi no — per questo nessuna di
+#    queste regole puo' agganciare per sbaglio una pagina di adesso.
+<IfModule mod_alias.c>
+  # Il contenitore dei progetti e ogni singolo progetto
+  RedirectMatch 301 ^/progetti(/.*)?/?$        /progetti.html
+  # Le notizie diventano gli eventi
+  RedirectMatch 301 ^/news/?$                  /eventi.html
+  # Pagine di servizio che hanno un corrispondente preciso
+  RedirectMatch 301 ^/dona-il-5-x-1000/?$      /sostienici.html
+  RedirectMatch 301 ^/estratto-dallo-statuto/?$ /documenti.html
+  # Le feste e le serate: erano eventi, sono eventi
+  RedirectMatch 301 ^/aperipizza/?$            /eventi.html
+  RedirectMatch 301 ^/brindisi-di-natale-per-la-rosa-dei-venti/?$ /eventi.html
+  RedirectMatch 301 ^/its-movie-time(-[0-9]+)?/?$ /eventi.html
+  # Le attivita' con le persone: sono progetti
+  RedirectMatch 301 ^/a-s-passo-con-la-cultura/?$ /progetti.html
+  RedirectMatch 301 ^/giocare-con-linglese/?$  /progetti.html
+  RedirectMatch 301 ^/laboratorio-musica-movimento/?$ /progetti.html
+  RedirectMatch 301 ^/flow/?$                  /progetti.html
+  # Restano due indirizzi senza un erede naturale: una campagna del 2020 e una
+  # pagina che WordPress aveva chiamato col suo numero interno. Vanno a casa.
+  RedirectMatch 301 ^/campagna-associazioni-ottobre-2020/?$ /
+  RedirectMatch 301 ^/896-2/?$                 /
+</IfModule>
+
 # Error pages
 ErrorDocument 404 /404.html
 
