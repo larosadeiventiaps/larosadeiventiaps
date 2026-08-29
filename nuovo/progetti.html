@@ -59,10 +59,17 @@
   </nav>
 
   <main>
+    <!-- ⛔ I due `input type="date"` (Dal / Al) sono stati tolti il 29/08/2026,
+         su decisione del titolare: sul telefono comparivano come **due
+         rettangoli grigi** — e su Progetti/Eventi il periodo lo danno gia' i
+         tre pulsanti In corso / Futuri / Passati, in Galleria le pastiglie
+         degli anni. Erano uno strumento fine che nessuno apriva da un
+         telefono, messo davanti a tutti gli altri.
+         ⚠️ Se un giorno servisse di nuovo un intervallo preciso, non tornare
+            a due campi data in cima: vanno dentro un pannello richiudibile,
+            chiuso di suo, come il pulsante Azioni del gestionale. -->
     <div class="filter-bar">
-      <input type="text" id="search-input" placeholder="🔍 Cerca progetti...">
-      <input type="date" id="date-from" title="Da">
-      <input type="date" id="date-to" title="A">
+      <input type="text" id="search-input" placeholder="🔍 Cerca: titolo, sponsor, anno…">
     </div>
 
     <div class="project-section" id="progetti-stats-section">

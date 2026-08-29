@@ -79,34 +79,43 @@ Options -Indexes
 	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 </IfModule>
 
-# ------------------------------------------------------------------
-# Indirizzo provvisorio — 22/08/2026
-# ------------------------------------------------------------------
-# Il sito nuovo vive in questa sottocartella SENZA sostituire quello
-# principale: chi non conosce l'indirizzo non ci arriva, perche' nessuna
-# pagina del sito vecchio lo nomina. Ma «non collegato» non vuol dire «non
-# trovabile»: senza la direttiva qui sotto un motore di ricerca che
-# incontrasse l'indirizzo una volta sola indicizzerebbe tutto, foto
-# comprese, e toglierlo dai risultati non sarebbe piu' una cosa che si
-# decide da qui.
+# ── Chi entra nella ricerca, e chi no ─────────────────────────────────
+#
+# Deciso dal titolare il 29/08/2026, appena il sito e' andato online al posto
+# del vecchio: **le pagine si trovano su Google, le fotografie no.**
+#
+# Fino a quel giorno il sito mandava `noindex` su tutto, perche' viveva in una
+# sottocartella di prova. Adesso e' il sito dell'associazione: se restasse
+# nascosto, chi cerca «La Rosa dei Venti Bagno a Ripoli» non lo troverebbe.
+#
+# ⛔⛔ **Le immagini restano fuori, ed e' il motivo per cui siamo su questo
+#    server.** Sono fotografie di persone con disabilita': dentro il sito
+#    hanno il loro contesto — il progetto, la data, la didascalia — in Google
+#    Immagini no. Su Ergonet questa riga NON arrivava sugli allegati statici
+#    (misurato il 29/08/2026: le pagine sì, le foto no), e non poterla far
+#    rispettare e' stata la ragione del trasloco. Qui arriva: verificato il
+#    29/08/2026 su `images/`, `documenti/`, CSS e JS.
+#
+# ⚠️ `noimageindex` su una PAGINA dice «non indicizzare le immagini che
+#    contiene»; sui FILE immagine e' l'intestazione qui sotto che conta. Servono
+#    tutte e due: una pagina trovabile che rimanda a una foto trovabile
+#    rimetterebbe le foto in circolazione dalla porta di servizio.
+#
+# ⚠️ `Header always set`, non `Header set`: senza `always` l'intestazione non
+#    finisce sulle risposte servite fuori dal giro normale — ed e' esattamente
+#    li' che passavano le immagini.
 <IfModule mod_headers.c>
-	Header set X-Robots-Tag "noindex, nofollow, noarchive, noimageindex"
+	# Le pagine: trovabili, ma senza portarsi dietro le foto.
+	<FilesMatch "\.html$">
+		Header always set X-Robots-Tag "index, follow, noimageindex"
+	</FilesMatch>
 
-	# ⛔⛔ **La riga sopra NON arrivava sulle immagini** (misurato il 29/08/2026
-	# con richieste vere al sito): `gallery.html` e `data/gallery.json`
-	# rispondono con l'intestazione, `images/gallery/*.jpg`, `css/style.css`,
-	# `js/main.js` e i PDF **no**. L'hosting serve gli allegati statici da un
-	# livello che scavalca queste regole.
-	# ⚠️ Non era un dettaglio: significa che **sessantasei fotografie di persone
-	# con disabilità e minori erano indicizzabili dalla ricerca per immagini**,
-	# mentre la pagina che le mostra non lo era. Il commento qui sopra diceva
-	# «foto comprese»: era quello che si voleva, non quello che succedeva.
-	# ⇒ `always`, e nominando i tipi di file uno per uno: `Header set` non
-	#   tocca le risposte servite fuori dal giro normale, `Header always set`
-	#   sì. Se anche così non basta, la protezione non può stare qui e va
-	#   chiesta all'hosting — e allora **si toglie il file, non si spera**.
-	<FilesMatch "\.(jpe?g|png|gif|webp|svg|avif|pdf|css|js|json|xml|txt)$">
-		Header always set X-Robots-Tag "noindex, nofollow, noarchive, noimageindex"
+	# Foto, disegni, documenti e file di servizio: fuori dai risultati.
+	# ⚠️ `.xml` NON e' in elenco apposta: l'unico file xml e' `sitemap.xml`,
+	#    che ai motori deve arrivare leggibile. Nasconderlo vorrebbe dire
+	#    dichiarare una mappa e poi impedire di aprirla.
+	<FilesMatch "\.(jpe?g|png|gif|webp|svg|avif|pdf|css|js|json)$">
+		Header always set X-Robots-Tag "noindex, noimageindex"
 	</FilesMatch>
 </IfModule>
 
@@ -124,15 +133,16 @@ Options -Indexes
 	</FilesMatch>
 </IfModule>
 
-# ⛔ QUESTO BLOCCO SULLE IMMAGINI NON HA EFFETTO, ed e' tenuto solo perche' lo
-# avrebbe se un giorno Apache tornasse a servirle. Provato il 24/08/2026: le
-# immagini escono comunque con `Cache-Control: max-age=10368000` (120 giorni)
-# e senza `Expires`, cioe' non le sta servendo Apache — davanti c'e' un
-# server che consegna i file statici da se' e non legge questo file. Le
-# pagine `.html` invece rispettano il blocco qui sopra: si vede dalla
-# risposta, che porta `no-store`.
-# La cache delle immagini quindi NON si governa da qui: si governa
-# dall'indirizzo, con `?v=...` — vedi `VERSIONE_IMMAGINI` in `js/main.js`.
+# ✅ Questo blocco ADESSO ha effetto. Su Ergonet non l'aveva: le immagini
+# uscivano con `max-age=10368000` (120 giorni) perche' davanti c'era un
+# server che consegnava i file statici da se' e non leggeva questo file.
+# Dal 29/08/2026 il sito e' su Serverplan, dove le immagini le serve Apache:
+# misurato lo stesso giorno, `images/logo-rdv.png` risponde con
+# `no-cache, must-revalidate`. ⇒ La cache delle immagini si governa di nuovo
+# da qui.
+# ⚠️ Resta valido `?v=...` (`VERSIONE_IMMAGINI` in `js/main.js`) come
+#    seconda cintura: non fa male, e serve se un giorno si torna a tenere le
+#    immagini a lungo.
 #
 # Il 23/08/2026 sei
 # loghi dei partner sono stati sostituiti mantenendo lo stesso nome di file

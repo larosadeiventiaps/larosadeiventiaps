@@ -3436,6 +3436,41 @@ main {
    La miniatura davanti al nome è la ragione per cui questi pulsanti
    funzionano: una fila di pastiglie tutte uguali si legge una per una,
    con l'immagine si riconosce quella che si cerca senza leggere. */
+/* Le pastiglie degli anni: piu' piccole di quelle dei progetti, perche'
+   contano meno — il progetto e' il filtro principale, l'anno il secondario.
+   ⚠️ `min-height: 44px`: e' la misura sotto la quale un dito sbaglia
+      bersaglio. Sono nate per il telefono, devono restare comode li'. */
+.gallery-anni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 auto 1.25rem;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.gallery-anno {
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-height: 44px;
+  padding: 0.35rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  background: #fff;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.gallery-anno:hover { border-color: #bbb; }
+
+.gallery-anno.attivo {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
 .gallery-filtri {
   display: flex;
   flex-wrap: wrap;

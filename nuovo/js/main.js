@@ -677,26 +677,31 @@ function statoGruppo(edizioni) {
 }
 
 /**
- * «Il filtro per data mostra i progetti che hanno UNA EDIZIONE in quel
- * periodo» — parole del committente, valide allo stesso modo per gli
- * eventi. Si guarda edizione per edizione: il gruppo passa se ALMENO UNA
- * delle sue edizioni tocca l'intervallo scelto, anche se le altre sono
- * fuori (es. "dal 2025-01-01" tiene un laboratorio che va da settembre a
- * giugno, perché l'edizione lo tocca).
+ * Il testo su cui cerca la ricerca libera: **tutto quello che la scheda
+ * mostra davvero**, non solo il titolo.
  *
- * ⚠️ Una volta che il gruppo passa il filtro, la scheda mostra comunque
- * TUTTE le sue edizioni — numeri sommati compresi: il filtro decide CHI
- * entra in elenco, non quali edizioni contare nella scheda.
+ * ⛔ Fino al 29/08/2026 qui si guardava soltanto `title` e la descrizione
+ * dell'edizione. La scheda però mostra anche gli sponsor, il luogo e gli
+ * anni: chi cercava «Fondazione Ciai» o «Bagno a Ripoli» non trovava
+ * niente pur avendolo letto un istante prima. Il titolare: «la ricerca non
+ * è allineata ai contenuti». Non era un'impressione, era questa riga.
+ *
+ * ⚠️ Si costruisce dai campi del GRUPPO già arricchito (sponsor e luogo li
+ * aggiunge `arricchisciGruppi`), quindi vale sia per i progetti sia per gli
+ * eventi senza doverla scrivere due volte.
+ * ⚠️ `fasciaAnni` è già la stringa che si legge in scheda («2022–2026»):
+ * cercare «2026» trova anche i gruppi che quell'anno lo attraversano.
  */
-function gruppoNelPeriodo(gruppo, from, to) {
-  if (!from && !to) return true;
-  return gruppo.edizioni.some(e => {
-    const inizio = new Date(e.startDate);
-    const fine = new Date(e.endDate || e.startDate);
-    if (from && fine < from) return false;
-    if (to && inizio > to) return false;
-    return true;
-  });
+function testoCercabileGruppo(g) {
+  const pezzi = [
+    g.title,
+    g.fasciaAnni,
+    ...(g.sponsor || []),
+    g.location || '',
+    ...g.edizioni.map(e => e.description || ''),
+    ...g.edizioni.map(e => e.location || '')
+  ];
+  return pezzi.join(' ').toLowerCase();
 }
 
 // "45" se è un numero intero di ore, "45,5" con la virgola italiana se no.
@@ -842,8 +847,8 @@ function messaggioElencoVuoto(stato, conteggi, frasi, etichette) {
  *    condivisa non sa nemmeno se sta leggendo il gestionale o la copia.
  *  - nome: 'progetti' | 'eventi', solo per il messaggio in console se qualcosa va storto
  *  - idGrid/idToggle/idTitolo/idVuoto: gli id degli elementi in pagina
- *    (search/data-da/data-a restano 'search-input'/'date-from'/'date-to',
- *    gli stessi ovunque nel sito)
+ *    (la ricerca e' 'search-input', lo stesso id ovunque nel sito; i due campi
+ *    data non ci sono piu' — vedi il commento in cima a progetti.html)
  *  - statoIniziale: FORZA il pulsante premuto all'apertura. Se non lo si
  *    indica — ed è il caso normale — la lista si apre da sola sul primo
  *    stato che ha qualcosa dentro: in corso, poi futuri, poi passati.
@@ -863,8 +868,6 @@ async function avviaListaAStati(config) {
     const gruppi = arricchisci(raggruppaPerTitolo(edizioni));
 
     const searchInput = document.getElementById('search-input');
-    const dateFrom = document.getElementById('date-from');
-    const dateTo = document.getElementById('date-to');
     const toggle = document.getElementById(config.idToggle);
     const titolo = document.getElementById(config.idTitolo);
     const vuoto = document.getElementById(config.idVuoto);
@@ -896,19 +899,11 @@ async function avviaListaAStati(config) {
     }
 
     function render() {
-      const query = searchInput.value.toLowerCase();
-      const from = dateFrom.value ? new Date(dateFrom.value) : null;
-      const to = dateTo.value ? new Date(dateTo.value) : null;
+      const query = searchInput.value.trim().toLowerCase();
 
-      const filtrati = gruppi.filter(g => {
-        if (query) {
-          const inTitolo = g.title.toLowerCase().includes(query);
-          const inEdizioni = g.edizioni.some(e => (e.description || '').toLowerCase().includes(query));
-          if (!inTitolo && !inEdizioni) return false;
-        }
-        if ((from || to) && !gruppoNelPeriodo(g, from, to)) return false;
-        return true;
-      });
+      const filtrati = query
+        ? gruppi.filter(g => testoCercabileGruppo(g).includes(query))
+        : gruppi;
 
       const conteggi = { in_corso: 0, futuro: 0, passato: 0 };
       const perStato = { in_corso: [], futuro: [], passato: [] };
@@ -975,8 +970,6 @@ async function avviaListaAStati(config) {
     });
 
     searchInput.addEventListener('input', render);
-    dateFrom.addEventListener('change', render);
-    dateTo.addEventListener('change', render);
     render();
   } catch (e) {
     console.warn('Could not load ' + config.nome + ':', e);
@@ -1073,15 +1066,42 @@ async function loadGallery() {
     const allPhotos = await caricaGalleria();
 
     const searchInput = document.getElementById('search-input');
-    const dateFrom = document.getElementById('date-from');
-    const dateTo = document.getElementById('date-to');
     const contenitoreFiltri = document.getElementById('gallery-filtri');
+    const contenitoreAnni = document.getElementById('gallery-anni');
     const vuoto = document.getElementById('gallery-vuoto');
     const lightbox = setupCardLightbox();
 
     // `null` = «tutte»: è lo stato di partenza e resta distinto da
     // `progetto === null`, che invece vuol dire «le foto senza progetto».
     let progettoScelto = null;
+
+    // ⭐ L'anno ha preso il posto dei due campi data il 29/08/2026.
+    // `null` = «tutti gli anni».
+    let annoScelto = null;
+
+    /**
+     * Le pastiglie degli anni, costruite dalle date delle fotografie.
+     *
+     * ⚠️ Solo gli anni che hanno davvero delle foto, in ordine dal più
+     * recente: una pastiglia che apre il vuoto è peggio che non esserci.
+     * ⛔ Le foto SENZA data non spariscono mai per colpa dell'anno — vedi il
+     *    commento in `renderGallery`. Per questo qui non si crea nessuna
+     *    pastiglia «senza data»: non è una scelta che si offre, è una
+     *    garanzia che si mantiene.
+     */
+    function disegnaAnni() {
+      if (!contenitoreAnni) return;
+      const anni = [...new Set(
+        allPhotos.filter(f => f.date).map(f => new Date(f.date).getFullYear())
+      )].sort((a, b) => b - a);
+
+      // Con un anno solo il filtro non filtra niente: si toglie di mezzo.
+      if (anni.length < 2) { contenitoreAnni.hidden = true; return; }
+
+      contenitoreAnni.innerHTML =
+        `<button type="button" class="gallery-anno${annoScelto === null ? ' attivo' : ''}" data-anno="" aria-pressed="${annoScelto === null}">Tutti gli anni</button>` +
+        anni.map(a => `<button type="button" class="gallery-anno${annoScelto === a ? ' attivo' : ''}" data-anno="${a}" aria-pressed="${annoScelto === a}">${a}</button>`).join('');
+    }
 
     /**
      * I pulsanti nascono dai dati, non da un elenco scritto a mano.
@@ -1143,23 +1163,18 @@ async function loadGallery() {
     }
 
     function renderGallery() {
-      const query = searchInput.value.toLowerCase();
-      const from = dateFrom.value ? new Date(dateFrom.value) : null;
-      const to = dateTo.value ? new Date(dateTo.value) : null;
+      const query = searchInput.value.trim().toLowerCase();
 
       const visiblePhotos = allPhotos.filter(p => {
         if (!passaIlProgetto(p)) return false;
         if (query && !p.title.toLowerCase().includes(query) && !(p.description || '').toLowerCase().includes(query)) return false;
-        // Il filtro per data si applica SOLO alle foto che una data ce
-        // l'hanno. Scelta esplicita (non un effetto collaterale): una foto
-        // senza data resta SEMPRE visibile — non sappiamo se cade
-        // nell'intervallo scelto, e farla sparire in silenzio sarebbe
-        // l'errore peggiore, perché nessuno se ne accorgerebbe.
-        if ((from || to) && p.date) {
-          const pDate = new Date(p.date);
-          if (from && pDate < from) return false;
-          if (to && pDate > to) return false;
-        }
+        // ⛔ L'anno filtra SOLO le foto che una data ce l'hanno. Scelta
+        // esplicita, ereditata dai due campi data che c'erano prima: una foto
+        // senza data resta SEMPRE visibile — non sappiamo in che anno cada, e
+        // farla sparire in silenzio sarebbe l'errore peggiore, perché nessuno
+        // se ne accorgerebbe. Delle 53 foto del sito, 91 su 701 dell'archivio
+        // hanno la data: WhatsApp la cancella.
+        if (annoScelto !== null && p.date && new Date(p.date).getFullYear() !== annoScelto) return false;
         return true;
       });
 
@@ -1223,9 +1238,19 @@ async function loadGallery() {
     });
 
     searchInput.addEventListener('input', renderGallery);
-    dateFrom.addEventListener('change', renderGallery);
-    dateTo.addEventListener('change', renderGallery);
+
+    if (contenitoreAnni) {
+      contenitoreAnni.addEventListener('click', e => {
+        const b = e.target.closest('.gallery-anno');
+        if (!b) return;
+        annoScelto = b.dataset.anno === '' ? null : Number(b.dataset.anno);
+        disegnaAnni();
+        renderGallery();
+      });
+    }
+
     disegnaFiltri();
+    disegnaAnni();
     renderGallery();
   } catch (e) {
     console.warn('Could not load gallery:', e);
