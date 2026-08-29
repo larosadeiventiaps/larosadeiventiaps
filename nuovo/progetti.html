@@ -15,7 +15,7 @@
   <meta property="og:title" content="Progetti — La Rosa dei Venti APS">
   <meta property="og:description" content="Associazione di Promozione Sociale. Scopri i nostri progetti e le nostre iniziative per la comunità.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260829-1927">
+  <link rel="stylesheet" href="css/style.css?v=20260829-1932">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -59,18 +59,6 @@
   </nav>
 
   <main>
-    <!-- ⛔ I due `input type="date"` (Dal / Al) sono stati tolti il 29/08/2026,
-         su decisione del titolare: sul telefono comparivano come **due
-         rettangoli grigi** — e su Progetti/Eventi il periodo lo danno gia' i
-         tre pulsanti In corso / Futuri / Passati, in Galleria le pastiglie
-         degli anni. Erano uno strumento fine che nessuno apriva da un
-         telefono, messo davanti a tutti gli altri.
-         ⚠️ Se un giorno servisse di nuovo un intervallo preciso, non tornare
-            a due campi data in cima: vanno dentro un pannello richiudibile,
-            chiuso di suo, come il pulsante Azioni del gestionale. -->
-    <div class="filter-bar">
-      <input type="text" id="search-input" placeholder="🔍 Cerca: titolo, sponsor, anno…">
-    </div>
 
     <div class="project-section" id="progetti-stats-section">
       <div class="stats-grid stats-una-riga" id="progetti-stats-grid"></div>
@@ -87,6 +75,15 @@
         <button type="button" class="stato-btn" data-stato="in_corso" aria-pressed="false">In corso <span class="stato-conteggio" data-stato-conteggio="in_corso">0</span></button>
         <button type="button" class="stato-btn" data-stato="futuro" aria-pressed="false">Futuri <span class="stato-conteggio" data-stato-conteggio="futuro">0</span></button>
         <button type="button" class="stato-btn" data-stato="passato" aria-pressed="false">Passati <span class="stato-conteggio" data-stato-conteggio="passato">0</span></button>
+      </div>
+
+      <!-- ⭐ 29/08/2026: la barra della ricerca sta SOTTO i pulsanti, non
+           sopra. Prima era la prima cosa della pagina e i pulsanti — che
+           sono il filtro che si usa davvero — restavano sotto. Ordine
+           deciso dal titolare: prima si sceglie il gruppo, poi
+           eventualmente si cerca dentro. -->
+      <div class="filter-bar">
+        <input type="text" id="search-input" placeholder="🔍 Cerca: titolo, sponsor, anno…">
       </div>
 
       <h2 class="project-section-title" id="progetti-elenco-titolo"></h2>
@@ -134,9 +131,9 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/gestionale.js?v=20260829-1927"></script>
-  <script src="js/dati-pubblici.js?v=20260829-1927"></script>
-  <script src="js/main.js?v=20260829-1927"></script>
-  <script src="js/torna-su.js?v=20260829-1927"></script>
+  <script src="js/gestionale.js?v=20260829-1932"></script>
+  <script src="js/dati-pubblici.js?v=20260829-1932"></script>
+  <script src="js/main.js?v=20260829-1932"></script>
+  <script src="js/torna-su.js?v=20260829-1932"></script>
 </body>
 </html>

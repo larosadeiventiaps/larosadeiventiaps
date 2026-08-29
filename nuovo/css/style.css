@@ -359,29 +359,52 @@ main {
 /* ------------------------------------------------------------
    Filter Bar
    ------------------------------------------------------------ */
+/* La barra della ricerca.
+   ⭐ 29/08/2026: non e' piu' una fascia a tutta larghezza appiccicata in cima
+   alla pagina. E' un campo solo, che sta SOTTO i pulsanti e dentro il
+   contenuto — prima si sceglie il gruppo, poi eventualmente si cerca dentro.
+   ⛔ Niente `position: sticky`: aveva senso quando stava in testa e la si
+      voleva sempre a portata; ora seguirebbe lo scorrimento sovrapponendosi
+      alle schede.
+   ⚠️ `font-size: 1rem` non e' un dettaglio estetico: sotto i 16px iOS
+      ingrandisce da solo la pagina appena si tocca il campo, e chi guarda si
+      ritrova il sito spostato senza aver fatto niente.
+   ⚠️ `min-height: 44px`: la misura sotto la quale un dito sbaglia bersaglio. */
 .filter-bar {
-  background: #fafafa;
-  border-bottom: 1px solid #eee;
-  padding: 1rem 2rem;
   display: flex;
   gap: 1rem;
   align-items: center;
-  position: sticky;
-  top: 64px;
-  z-index: 100;
   flex-wrap: wrap;
-}
-
-.filter-bar input {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: var(--radius-input);
-  font-size: 0.9rem;
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  padding: 0 1rem;
 }
 
 .filter-bar input[type="text"] {
   flex: 1;
   min-width: 200px;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-input);
+  font: inherit;
+  font-size: 1rem;
+}
+
+.filter-bar input[type="text"]:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+/* Dentro una sezione il rientro orizzontale ce l'ha gia' la sezione: se lo
+   mettesse anche la barra, il campo risulterebbe spostato di 1rem rispetto ai
+   pulsanti che gli stanno sopra. */
+.project-section .filter-bar {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 1.5rem;
 }
 
 /* ------------------------------------------------------------

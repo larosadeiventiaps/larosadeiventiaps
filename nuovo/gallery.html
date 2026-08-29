@@ -15,7 +15,7 @@
   <meta property="og:title" content="Gallery — La Rosa dei Venti APS">
   <meta property="og:description" content="Guarda le foto dei nostri eventi, attività e momenti speciali condivisi insieme.">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="css/style.css?v=20260829-1927">
+  <link rel="stylesheet" href="css/style.css?v=20260829-1932">
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -59,18 +59,6 @@
   </nav>
 
   <main>
-    <!-- ⛔ I due `input type="date"` (Dal / Al) sono stati tolti il 29/08/2026,
-         su decisione del titolare: sul telefono comparivano come **due
-         rettangoli grigi** — e su Progetti/Eventi il periodo lo danno gia' i
-         tre pulsanti In corso / Futuri / Passati, in Galleria le pastiglie
-         degli anni. Erano uno strumento fine che nessuno apriva da un
-         telefono, messo davanti a tutti gli altri.
-         ⚠️ Se un giorno servisse di nuovo un intervallo preciso, non tornare
-            a due campi data in cima: vanno dentro un pannello richiudibile,
-            chiuso di suo, come il pulsante Azioni del gestionale. -->
-    <div class="filter-bar">
-      <input type="text" id="search-input" placeholder="🔍 Cerca fra le foto…">
-    </div>
 
     <!-- ⚠️ I pulsanti nascono da `data/gallery.json` (campo `progetto`), non
          sono scritti qui: se domani si aggiunge una fotografia di un progetto
@@ -86,6 +74,15 @@
     <div class="gallery-anni" id="gallery-anni" role="group" aria-label="Filtra le fotografie per anno"></div>
 
     <div class="gallery-filtri" id="gallery-filtri" role="group" aria-label="Filtra le fotografie per progetto"></div>
+
+    <!-- ⭐ 29/08/2026: la barra della ricerca sta SOTTO i pulsanti, non
+         sopra. Prima era la prima cosa della pagina e i pulsanti — che
+         sono il filtro che si usa davvero — restavano sotto. Ordine
+         deciso dal titolare: prima si sceglie il gruppo, poi
+         eventualmente si cerca dentro. -->
+    <div class="filter-bar">
+      <input type="text" id="search-input" placeholder="🔍 Cerca fra le foto…">
+    </div>
 
     <div class="gallery-grid" id="gallery-grid"></div>
     <p class="gallery-vuoto" id="gallery-vuoto" hidden></p>
@@ -125,9 +122,9 @@
     <p>&copy; 2026 La Rosa dei Venti APS. Tutti i diritti riservati.</p>
   </footer>
 
-  <script src="js/gestionale.js?v=20260829-1927"></script>
-  <script src="js/dati-pubblici.js?v=20260829-1927"></script>
-  <script src="js/main.js?v=20260829-1927"></script>
-  <script src="js/torna-su.js?v=20260829-1927"></script>
+  <script src="js/gestionale.js?v=20260829-1932"></script>
+  <script src="js/dati-pubblici.js?v=20260829-1932"></script>
+  <script src="js/main.js?v=20260829-1932"></script>
+  <script src="js/torna-su.js?v=20260829-1932"></script>
 </body>
 </html>
