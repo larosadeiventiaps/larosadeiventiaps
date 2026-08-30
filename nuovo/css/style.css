@@ -3803,6 +3803,62 @@ html {
   }
 }
 
+/*
+  Il pulsante «Dona ora» fisso da telefono — vedi `js/dona-fisso.js` per il
+  quando, il dove e il perché.
+  ⚠️ **A sinistra**: a destra c'è già «Torna su», e alla stessa altezza.
+  ⚠️ 48 px di lato pieni, come tutti i bersagli da toccare col dito su questo
+     sito: il committente non vede bene e non ha la mira di un mouse.
+  ⛔ Colori invertiti rispetto a «Torna su» (fondo bianco, testo arancione)
+     per la stessa ragione per cui «Accedi» nella barra è un contorno e non un
+     pieno: due pastiglie piene identiche agli angoli opposti si contendono
+     l'attenzione, e non si capirebbe più quale delle due è l'azione.
+*/
+.dona-fisso {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 48px;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--primary);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--primary);
+  font: 700 16px/1 inherit;
+  font-family: inherit;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+}
+
+.dona-fisso:hover,
+.dona-fisso:focus-visible {
+  background: var(--primary);
+  color: #fff;
+}
+
+.dona-fisso:focus-visible {
+  outline: 3px solid #7a3200;
+  outline-offset: 2px;
+}
+
+.dona-fisso[hidden] {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  /* Come «Torna su»: più vicino al bordo, per non coprire l'ultima riga di un
+     modulo mentre la si compila. */
+  .dona-fisso {
+    left: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.75rem 0.9rem;
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Il marchio nella barra: una pastiglia bianca, non un tondo
    --------------------------------------------------------------------------- */
