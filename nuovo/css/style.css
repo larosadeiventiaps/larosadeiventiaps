@@ -603,6 +603,30 @@ main {
   border-radius: 999px;
 }
 
+/* Riga «▸ Edizione 2026/2027 — 6 ott 2026 – 15 giu 2027» sotto la fascia
+   anni: SOLO progetti (renderRigaEdizioneRilevante in js/main.js). È
+   l'edizione in corso adesso, o la prossima futura, o l'ultima conclusa —
+   mai l'elenco di tutte.
+   ⭐ Il committente non vede bene: 1rem (16px) come il resto della scheda,
+   non una didascalia minuscola. */
+.progetto-edizione-rilevante {
+  margin: 0.4rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.progetto-edizione-label {
+  display: block;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.progetto-edizione-date {
+  display: block;
+  padding-left: 1.1rem;
+  color: var(--dark);
+}
+
 /* I numeri sommati sulle edizioni: solo quelli che il progetto ha
    davvero (vedi renderNumeriProgetto in js/main.js) — un campo che
    nessuna edizione conta non compare come "0", sparisce del tutto. */

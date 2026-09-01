@@ -191,6 +191,10 @@ function mescolaCasuale(elenco) {
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr);
+  // Una data che non si legge (formato sbagliato dal gestionale, per
+  // esempio) non deve mai uscire come «Invalid Date»: si tratta come se
+  // non ci fosse, e chi chiama decide se far sparire la riga intera.
+  if (isNaN(d.getTime())) return '';
   return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
@@ -677,6 +681,90 @@ function statoGruppo(edizioni) {
 }
 
 /**
+ * QUALE edizione mostrare in scheda accanto alla fascia di anni — quella
+ * che conta ADESSO, non l'elenco di tutte (progetti.html, 01/09/2026).
+ *
+ * Stessa urgenza di `statoGruppo`, applicata per scegliere UNA edizione
+ * invece che uno stato: se una o più sono in corso ORA si mostra quella
+ * (la più recente, se sono più d'una); altrimenti, se ce n'è almeno una
+ * futura, la prossima in arrivo; altrimenti — progetto tutto passato — si
+ * mostra l'ultima conclusa, non la prima mai fatta.
+ */
+function edizioneRilevante(edizioni) {
+  // Un gruppo senza edizioni non esiste (raggruppaPerTitolo li costruisce
+  // dalle edizioni stesse), ma se un giorno esistesse, qui salterebbe
+  // TUTTA la pagina dei progetti invece di una riga sola.
+  if (!Array.isArray(edizioni) || !edizioni.length) return null;
+  const oggi = new Date();
+  const conStato = edizioni.map(e => ({ e, stato: statoEdizione(e, oggi) }));
+
+  const inCorso = conStato.filter(x => x.stato === 'in_corso');
+  if (inCorso.length) {
+    return inCorso.sort((a, b) => new Date(b.e.startDate) - new Date(a.e.startDate))[0].e;
+  }
+
+  const future = conStato.filter(x => x.stato === 'futuro');
+  if (future.length) {
+    return future.sort((a, b) => new Date(a.e.startDate) - new Date(b.e.startDate))[0].e;
+  }
+
+  return conStato.sort((a, b) =>
+    new Date(b.e.endDate || b.e.startDate) - new Date(a.e.endDate || a.e.startDate)
+  )[0].e;
+}
+
+/**
+ * Etichetta «Edizione 2026/2027» di UNA edizione, derivata dalle date.
+ *
+ * ⚠️ NON dal gestionale: l'adattatore manda solo `startDate`/`endDate`,
+ * un'eventuale etichetta dell'edizione lato gestionale non arriva al sito.
+ * Anno di inizio, e anno di fine solo se diverso da quello di inizio
+ * (un'edizione che comincia e finisce nello stesso anno solare è
+ * «Edizione 2026», non «Edizione 2026/2026»).
+ */
+function etichettaEdizione(e) {
+  // ⭐ Se il gestionale manda la sua etichetta, vince lei: è il nome che il
+  // direttivo ha scelto, e derivarlo dalle date lo contraddirebbe — il
+  // Cinema «2026/2027» sta tutto dentro il 2026 e uscirebbe «Edizione
+  // 2026». La derivazione qui sotto resta per la copia di sicurezza
+  // (`data/projects.json`), che l'etichetta non ce l'ha.
+  if (e.etichetta) return `Edizione ${e.etichetta}`;
+  const inizio = new Date(e.startDate);
+  if (isNaN(inizio.getTime())) return '';
+  const fine = new Date(e.endDate || e.startDate);
+  const annoInizio = inizio.getFullYear();
+  const annoFine = isNaN(fine.getTime()) ? annoInizio : fine.getFullYear();
+  return annoInizio === annoFine ? `Edizione ${annoInizio}` : `Edizione ${annoInizio}/${annoFine}`;
+}
+
+/**
+ * Riga «▸ Edizione 2026/2027 — 6 ott 2026 – 15 giu 2027» sotto la fascia
+ * di anni della scheda progetto — SOLO progetti (progetti.html).
+ *
+ * ⚠️ L'etichetta si mostra ANCHE quando il progetto ha una sola edizione:
+ * a differenza del badge "N edizioni" (dove "1 edizione" sembrerebbe un
+ * errore perché dichiara un CONTEGGIO sbagliato), qui non si conta niente
+ * — si dice solo a quale anno appartiene l'edizione descritta sotto, ed è
+ * un'informazione utile anche quando è l'unica che il progetto ha mai
+ * avuto.
+ *
+ * ⚠️ Se la data di inizio manca o non si legge, la riga sparisce del
+ * tutto — niente «Invalid Date» — stessa convenzione già usata in
+ * `formatGalleryMeta`.
+ */
+function renderRigaEdizioneRilevante(edizione) {
+  if (!edizione) return '';
+  const etichetta = etichettaEdizione(edizione);
+  const date = eventDateDisplay(edizione);
+  if (!etichetta || !date) return '';
+  return `
+        <p class="progetto-edizione-rilevante">
+          <span class="progetto-edizione-label">▸ ${escapeHTML(etichetta)}</span>
+          <span class="progetto-edizione-date">${escapeHTML(date)}</span>
+        </p>`;
+}
+
+/**
  * Il testo su cui cerca la ricerca libera: **tutto quello che la scheda
  * mostra davvero**, non solo il titolo.
  *
@@ -742,7 +830,13 @@ function renderNumeriProgetto(numeri) {
     numeri.ore > 0 ? `⏱️ ${formattaOre(numeri.ore)} ore` : '',
     numeri.partecipanti > 0 ? `🧑‍🤝‍🧑 ${conta(numeri.partecipanti, 'partecipante', 'partecipanti')}` : '',
     numeri.educatori > 0 ? `🎓 ${conta(numeri.educatori, 'educatore', 'educatori')}` : '',
-    numeri.volontari > 0 ? `🤝 ${conta(numeri.volontari, 'volontario', 'volontari')}` : ''
+    numeri.volontari > 0 ? `🤝 ${conta(numeri.volontari, 'volontario', 'volontari')}` : '',
+    // ⚠️ Aggiunta 01/09/2026: NON si somma a `numeri.incontri` — sono due
+    // fatti diversi (già successi / ancora da fare). ⏳ invece di 🗓️
+    // apposta: la parola "in programma" da sola non basta al committente
+    // (non vede bene, l'icona conta quanto il testo), quindi anche
+    // l'icona dei due gettoni deve leggersi diversa a colpo d'occhio.
+    numeri.incontriInProgramma > 0 ? `⏳ ${conta(numeri.incontriInProgramma, 'incontro in programma', 'incontri in programma')}` : ''
   ].filter(Boolean);
   if (!voci.length) return '';
   return `<div class="progetto-numeri">${voci.map(v => `<span>${escapeHTML(v)}</span>`).join('')}</div>`;
@@ -762,6 +856,7 @@ function renderProjectCard(progetto, index) {
           <span>${escapeHTML(progetto.fasciaAnni)}</span>
           ${renderBadgeEdizioni(progetto.numEdizioni)}
         </div>
+        ${renderRigaEdizioneRilevante(progetto.edizioneRilevante)}
         <p>${escapeHTML(progetto.descrizione)}</p>
         ${renderNumeriProgetto(progetto.numeri)}
         ${sponsorHtml}
@@ -998,6 +1093,12 @@ function loadProjects() {
       ...g,
       immagine: g.piuRecente.image,
       descrizione: g.piuRecente.description,
+      // L'edizione da mostrare nella riga sotto la fascia anni: quella in
+      // corso adesso, o la prossima futura, o l'ultima conclusa — vedi
+      // edizioneRilevante(). Diversa da `piuRecente` (ereditato da `...g`),
+      // che è sempre l'edizione con la data di inizio più alta a
+      // prescindere dallo stato, e serve per l'immagine/descrizione.
+      edizioneRilevante: edizioneRilevante(g.edizioni),
       // Uno sponsor che ha sostenuto più edizioni dello stesso progetto va
       // scritto una volta sola sulla scheda, non ripetuto.
       sponsor: Array.from(new Set(g.edizioni.flatMap(e => e.sponsor || []))),
@@ -1006,7 +1107,11 @@ function loadProjects() {
         ore: sommaCampoEdizioni(g.edizioni, 'ore'),
         partecipanti: sommaCampoEdizioni(g.edizioni, 'partecipanti'),
         educatori: sommaCampoEdizioni(g.edizioni, 'educatori'),
-        volontari: sommaCampoEdizioni(g.edizioni, 'volontari')
+        volontari: sommaCampoEdizioni(g.edizioni, 'volontari'),
+        // ⚠️ Aggiunto 01/09/2026: incontri ancora da fare, non già fatti —
+        // stesso trattamento generico degli altri campi (somma sulle
+        // edizioni del gruppo), il campo lo porta l'API/adattatore.
+        incontriInProgramma: sommaCampoEdizioni(g.edizioni, 'incontriInProgramma')
       }
     })),
     renderScheda: renderProjectCard,

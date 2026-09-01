@@ -241,6 +241,37 @@
    * gli altri: si scarta quel progetto solo, con un avviso in console, non
    * si rifiuta l'intera promessa.
    */
+  /**
+   * Gli incontri di un'edizione, nella forma che `js/calendario.js` legge già:
+   * `[{ data: '2026-10-06', ora: '15:30', fine: '17:00', luogo: '...' }]`.
+   *
+   * ⛔ **Le due stringhe si TAGLIANO, non si convertono con `new Date`.**
+   * L'api manda l'istante con l'offset di Europe/Rome scritto per esteso
+   * (`2026-10-06T15:30:00+02:00`), quindi il giorno e l'ora che servono sono
+   * già lì, nei primi sedici caratteri. Passarli da `new Date(...)` e poi
+   * `getHours()` li riporterebbe nel fuso **del browser**: un genitore che
+   * apre il sito in vacanza a Londra vedrebbe le 14.30, e in Italia
+   * l'errore non si vedrebbe mai perché i due fusi coincidono. Questo è lo
+   * stesso motivo per cui il blocco VTIMEZONE del file .ics è scritto a mano.
+   *
+   * ⚠️ `ora` resta facoltativo per contratto col calendario (senza, l'incontro
+   * è una fascia sul giorno) — ma il gestionale ha `inizio` e `fine`
+   * obbligatori, quindi da questa parte ci sono sempre.
+   */
+  function appuntamentiDa(incontri) {
+    if (!Array.isArray(incontri)) return [];
+    return incontri
+      .filter(function (i) { return i && typeof i.inizio === 'string' && i.inizio.length >= 16; })
+      .map(function (i) {
+        return {
+          data: i.inizio.slice(0, 10),
+          ora: i.inizio.slice(11, 16),
+          fine: typeof i.fine === 'string' && i.fine.length >= 16 ? i.fine.slice(11, 16) : undefined,
+          luogo: i.luogo || ''
+        };
+      });
+  }
+
   function progettiDaApi() {
     return fetchConTimeout(BASE_API + '/progetti').then(risposteJsonOk).then(function (elenco) {
       if (!Array.isArray(elenco) || elenco.length === 0) return [];
@@ -274,6 +305,19 @@
             edizioni.push({
               title: dettaglio.titolo,
               image: immagine,
+              /*
+                ⭐ **L'etichetta vera dell'edizione, quella scelta a mano nel
+                gestionale.** Serve perché ricavarla dalle date sbaglia: il
+                Cinema 2026/2027 va dal 17 ottobre al 26 dicembre — tutto
+                dentro il 2026 — e chi la deriva scrive «Edizione 2026»
+                mentre il direttivo l'ha chiamata «2026/2027». Due nomi per
+                la stessa cosa, e quello sbagliato è sul sito pubblico.
+                ⚠️ Resta facoltativa: `data/projects.json`, la copia di
+                sicurezza, non ce l'ha e non l'avrà mai (è generata da un
+                Excel di edizioni senza etichetta). Chi la usa deve saper
+                ricadere sulla derivazione dalle date.
+              */
+              etichetta: ed.etichetta || '',
               startDate: ed.dal,
               endDate: ed.al,
               status: statoDaDate(ed.dal, ed.al),
@@ -317,7 +361,35 @@
                 ma un gestionale più vecchio del sito non lo manderebbe, e una
                 pagina bianca per un campo in meno non è un buon affare.
               */
-              sponsor: ed.sponsor || []
+              sponsor: ed.sponsor || [],
+              /*
+                ⭐ **Le date dei singoli incontri, dal gestionale al calendario.**
+                Senza questa riga il calendario del sito non può fare altro che
+                disegnare la fascia tratteggiata da inizio a fine edizione: un
+                corso da ottobre a giugno diventa una striscia lunga nove mesi
+                invece dei suoi trenta sabati. È esattamente il guasto che il
+                titolare ha visto — «ho messo gli incontri e non li vedo nel
+                calendario» — e non dava nessun errore da nessuna parte.
+                ⚠️ `js/calendario.js` mostra i giorni singoli **solo** se la voce
+                ha `appuntamenti`; se l'elenco è vuoto torna da solo alla fascia
+                lunga, che per un'edizione senza incontri inseriti resta la cosa
+                giusta da mostrare. Per questo `[]` e chiave assente vanno bene
+                entrambi e non serve distinguerli qui.
+              */
+              appuntamenti: appuntamentiDa(ed.incontri),
+              /*
+                ⛔ **Un numero SEPARATO, mai sommato a `incontri`.** `incontri`
+                è quello che è già successo (svolti, o il consuntivo del foglio
+                storico per le edizioni concluse); questo è quello che deve
+                ancora succedere. Sommarli darebbe «180 incontri» su un
+                progetto che ne ha fatti 150 e ne ha trenta in calendario: un
+                numero che mescola due fatti e che nessuno può più smontare.
+                ⚠️ `|| 0` e non `?? 0`: l'api manda la chiave **solo** se è
+                maggiore di zero (è la stessa regola di `educatori` qui sopra),
+                e `sommaCampoEdizioni` in `main.js` somma numeri, non
+                `undefined`.
+              */
+              incontriInProgramma: (ed.numeri && ed.numeri.incontriInProgramma) || 0
               // ⛔ `collaboratori` resta fuori: quello il gestionale non lo
               // conta davvero, e un campo assente qui è la verità.
             });
