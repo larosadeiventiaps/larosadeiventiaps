@@ -140,10 +140,26 @@ function testoSicuro(s) {
 // che vivono fuori da `avviaCalendario`.
 let LUOGHI = {}
 
+/*
+  ⛔⛔ **Il calendario legge dal GESTIONALE, non dai file** (01/09/2026).
+  Fino a oggi questa funzione chiamava `leggiFile('data/projects.json')` e
+  `leggiFile('data/events.json')` direttamente, saltando `dati-pubblici.js`:
+  il resto del sito era passato all'api il 28/08, il calendario **no**, e
+  nessuno se n'è accorto perché i file di copia ci sono e rispondono. Il
+  titolare ha messo trentasette incontri nel gestionale e sul calendario è
+  rimasta la fascia tratteggiata letta dal file — senza un errore, senza una
+  riga di log, con la pagina che sembrava funzionare.
+  ⚠️ `caricaProgetti`/`caricaEventi` hanno già il ripiego sui file dentro di
+  loro (vedi `caricaConRipiego`): qui non serve rifarlo, e rifarlo vorrebbe
+  dire due regole diverse per la stessa domanda.
+  ⚠️ `data/luoghi.json` resta un file: l'anagrafica dei luoghi non ha una
+  rotta pubblica, e `luogoId` continua ad arrivare dalla copia.
+*/
 async function leggiVoci() {
+  const daiDatiPubblici = typeof window.caricaProgetti === 'function' && typeof window.caricaEventi === 'function'
   const [eventi, progetti, luoghi] = await Promise.all([
-    leggiFile('data/events.json'),
-    leggiFile('data/projects.json'),
+    daiDatiPubblici ? window.caricaEventi() : leggiFile('data/events.json'),
+    daiDatiPubblici ? window.caricaProgetti() : leggiFile('data/projects.json'),
     leggiFile('data/luoghi.json')
   ])
   LUOGHI = {}
