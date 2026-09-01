@@ -757,10 +757,28 @@ function renderRigaEdizioneRilevante(edizione) {
   const etichetta = etichettaEdizione(edizione);
   const date = eventDateDisplay(edizione);
   if (!etichetta || !date) return '';
+  /*
+    ⭐ **Gli incontri in programma stanno QUI, sotto le date** (scelta del
+    titolare, 01/09/2026), e non fra i gettoni dei numeri più sotto.
+    ⛔ **E il numero è quello di QUESTA edizione, non la somma del gruppo.**
+    I gettoni sommano tutte le edizioni di un progetto («sei anni, 150
+    incontri»), ma «37 incontri in programma» è una promessa su un anno
+    scolastico preciso — quello nominato nella riga qui sopra. Sommarci
+    un'altra edizione futura direbbe un numero che nessuna delle due mantiene.
+    ⚠️ Solo se maggiore di zero: un'edizione senza calendario deve tacere,
+    non scrivere «0 incontri in programma».
+    ⚠️ Il singolare non è un vezzo: «1 incontri» è la sciatteria che chi
+    legge nota subito, e sulle schede vere capita.
+  */
+  const n = edizione.incontriInProgramma;
+  const programma = n > 0
+    ? `<span class="progetto-edizione-programma">${n} ${n === 1 ? 'incontro' : 'incontri'} in programma</span>`
+    : '';
   return `
         <p class="progetto-edizione-rilevante">
           <span class="progetto-edizione-label">▸ ${escapeHTML(etichetta)}</span>
           <span class="progetto-edizione-date">${escapeHTML(date)}</span>
+          ${programma}
         </p>`;
 }
 
@@ -830,13 +848,7 @@ function renderNumeriProgetto(numeri) {
     numeri.ore > 0 ? `⏱️ ${formattaOre(numeri.ore)} ore` : '',
     numeri.partecipanti > 0 ? `🧑‍🤝‍🧑 ${conta(numeri.partecipanti, 'partecipante', 'partecipanti')}` : '',
     numeri.educatori > 0 ? `🎓 ${conta(numeri.educatori, 'educatore', 'educatori')}` : '',
-    numeri.volontari > 0 ? `🤝 ${conta(numeri.volontari, 'volontario', 'volontari')}` : '',
-    // ⚠️ Aggiunta 01/09/2026: NON si somma a `numeri.incontri` — sono due
-    // fatti diversi (già successi / ancora da fare). ⏳ invece di 🗓️
-    // apposta: la parola "in programma" da sola non basta al committente
-    // (non vede bene, l'icona conta quanto il testo), quindi anche
-    // l'icona dei due gettoni deve leggersi diversa a colpo d'occhio.
-    numeri.incontriInProgramma > 0 ? `⏳ ${conta(numeri.incontriInProgramma, 'incontro in programma', 'incontri in programma')}` : ''
+    numeri.volontari > 0 ? `🤝 ${conta(numeri.volontari, 'volontario', 'volontari')}` : ''
   ].filter(Boolean);
   if (!voci.length) return '';
   return `<div class="progetto-numeri">${voci.map(v => `<span>${escapeHTML(v)}</span>`).join('')}</div>`;
@@ -1107,11 +1119,7 @@ function loadProjects() {
         ore: sommaCampoEdizioni(g.edizioni, 'ore'),
         partecipanti: sommaCampoEdizioni(g.edizioni, 'partecipanti'),
         educatori: sommaCampoEdizioni(g.edizioni, 'educatori'),
-        volontari: sommaCampoEdizioni(g.edizioni, 'volontari'),
-        // ⚠️ Aggiunto 01/09/2026: incontri ancora da fare, non già fatti —
-        // stesso trattamento generico degli altri campi (somma sulle
-        // edizioni del gruppo), il campo lo porta l'API/adattatore.
-        incontriInProgramma: sommaCampoEdizioni(g.edizioni, 'incontriInProgramma')
+        volontari: sommaCampoEdizioni(g.edizioni, 'volontari')
       }
     })),
     renderScheda: renderProjectCard,

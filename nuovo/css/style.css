@@ -621,6 +621,14 @@ main {
   color: var(--primary);
 }
 
+/* Gli incontri in programma dell'edizione nominata sopra: allineati con la
+   data, non con l'etichetta, perche' sono due fatti sullo stesso anno. */
+.progetto-edizione-programma {
+  display: block;
+  padding-left: 1.1rem;
+  color: var(--dark);
+}
+
 .progetto-edizione-date {
   display: block;
   padding-left: 1.1rem;
