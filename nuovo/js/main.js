@@ -1534,9 +1534,13 @@ function renderEventCard(e) {
     ? `<a href="${e.link}" class="partner-link" target="_blank" rel="noopener noreferrer">Maggiori info ↗</a>`
     : '';
 
+  // ⚠️ `classeImmagine` stava su `renderEventGroupCard` e non qui (07/09/2026):
+  //    la stessa locandina usciva intera nella pagina Eventi e ritagliata nella
+  //    scheda «Prossimi eventi» della home. Due rese diverse per lo stesso file,
+  //    e nessuna delle due si lamentava.
   return `
     <article class="card">
-      <div class="card-image" style="cursor:pointer"><img src="${conVersione(e.image)}" alt="${escapeHTML(e.title)}" loading="lazy"></div>
+      <div class="card-image" style="cursor:pointer"><img src="${conVersione(e.image)}" alt="${escapeHTML(e.title)}" loading="lazy" class="${classeImmagine(e.image)}"></div>
       <div class="card-body">
         <h3>${escapeHTML(e.title)}</h3>
         <div class="event-meta">
@@ -1830,6 +1834,23 @@ function animaNumeri(contenitore) {
  * convenzione con cui locandine e fotografie sono state separate quando
  * sono state archiviate. ⛔ Non è una supposizione sul contenuto: è un
  * nome che diamo noi, e quindi si può fare affidamento.
+ *
+ * ⭐⭐ **07/09/2026 — il secondo riconoscimento, e serviva.** Dal gestionale
+ * si può ora caricare la locandina di un evento dalla sua scheda, e in quel
+ * caso `copertinaUrl` non è più un percorso a un file di questo sito: è
+ * l'indirizzo della rotta che ripubblica il file
+ * (`…/pubblico/eventi/<id>/copertina`), dove **nessun nome di file arriva
+ * fin qui** — apposta, perché su un canale pubblico un nome di file è testo
+ * pubblico. Il prefisso `loc-` non c'è e non ci sarà mai.
+ * ⛔ Senza questa seconda riga, ogni locandina caricata sarebbe stata
+ * ritagliata da `object-fit: cover` per riempire il riquadro 3:4, perdendo il
+ * titolo o le date — cioè proprio quello per cui una locandina esiste. E
+ * nessuno avrebbe visto un errore: un'immagine tagliata non si lamenta.
+ * ⚠️ **Il prezzo, dichiarato**: chi carica una *fotografia* come copertina di
+ * un evento la vedrà mostrata intera sul fondo chiaro invece che a
+ * riempimento. È il male minore fra i due — una foto con dei bordi si guarda,
+ * un manifesto senza titolo no — e la funzione che genera quell'indirizzo si
+ * chiama «copertina», non «foto».
  */
 // ⛔ Il server di Ergonet serve le immagini da sé, ignorando `.htaccess`:
 //    arrivano con `Cache-Control: max-age=10368000` (120 giorni) e non c'è
@@ -1865,5 +1886,6 @@ function conVersione(percorso) {
 }
 
 function classeImmagine(percorso) {
-  return typeof percorso === 'string' && percorso.includes('/loc-') ? 'locandina' : ''
+  if (typeof percorso !== 'string') return ''
+  return percorso.includes('/loc-') || /\/eventi\/[^/]+\/copertina(?:[?#]|$)/.test(percorso) ? 'locandina' : ''
 }
