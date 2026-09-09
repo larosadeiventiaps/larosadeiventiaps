@@ -1273,6 +1273,61 @@ main {
 }
 
 /* ------------------------------------------------------------
+   Pagina di ritorno da una donazione — grazie.html, 09/09/2026
+   ------------------------------------------------------------
+   ⚠️ Stessa impostazione di `.page-404` (una pagina, un centro, una sola
+   cosa da dire) apposta: non è un'altra pagina di errore, ma è la stessa
+   idea di «una pagina che dice una cosa sola e basta». */
+.pagina-esito {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.pagina-esito-icona {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.pagina-esito h1 {
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.pagina-esito p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* La riga che dice «arriva per email»: non è l'informazione principale, ma
+   deve leggersi bene lo stesso — 16px, mai un grigio più chiaro di questo. */
+.pagina-esito-nota {
+  background: var(--primary-light);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-input);
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+}
+
+.pagina-esito-azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------
    Solid button (per sfondi bianchi, dove .btn-primary si legge poco)
    ------------------------------------------------------------ */
 .btn-solid {
@@ -1491,6 +1546,20 @@ main {
   flex-direction: column;
   gap: 1.4rem;
   margin-top: 1.25rem;
+}
+
+/* ⛔⛔ Senza questa riga l'attributo `hidden` non nasconde un
+   `.modulo-candidatura`: stessa specificità di `[hidden]`, ma una regola
+   d'autore (questa classe) batte SEMPRE lo user-agent stylesheet da cui
+   arriva `[hidden]{display:none}`, qualunque sia l'ordine nel file. Misurato
+   dal vivo il 09/09/2026 su `js/donazioni.js`: `#modulo-donazione` restava
+   `display:flex` — quindi visibile, campi e pulsante compresi — anche con
+   `hidden` impostato, sia all'apertura pagina (prima che l'interruttore
+   rispondesse) sia nel ripiego onesto dopo un invio fallito. I moduli di
+   candidatura non lo notavano perché non nascondono mai se stessi, solo il
+   loro esito — questo è il primo `.modulo-candidatura` a doverlo fare. */
+.modulo-candidatura[hidden] {
+  display: none;
 }
 
 .campo-modulo {
@@ -3333,6 +3402,51 @@ main {
 
 .carta-teaming .sostieni-bottone {
   margin-top: 0.4rem;
+}
+
+/* ------------------------------------------------------------
+   Il modulo di donazione con carta — js/donazioni.js, 09/09/2026
+   ------------------------------------------------------------
+   ⭐ La scheda «Carta di credito» smette di essere grigia (niente
+   `.coming-soon-box`) quando il modulo compare davvero: lo decide
+   `js/donazioni.js` togliendo quella classe dal riquadro, non questo file. */
+.dona-tipo-scelta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Copiata a vista da `.stato-btn` (progetti/eventi), senza il pallino del
+   conteggio che qui non serve: stesso linguaggio visivo di scelta a due,
+   duplicato apposta invece di condiviso — sono due gruppi di pulsanti che
+   non hanno ragione di dipendere l'uno dall'altro. */
+.dona-tipo-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
+  border: 2px solid var(--primary);
+  background: white;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dona-tipo-btn.attivo {
+  background: var(--primary);
+  color: white;
+}
+
+/* Il testo accanto a un campo (non solo nell'errore): «minimo € 5,00», dove
+   arriva la ricevuta. ⚠️ 16px come ogni testo di questo sito, mai di meno. */
+.campo-suggerimento {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.4;
 }
 
 /* ------------------------------------------------------------

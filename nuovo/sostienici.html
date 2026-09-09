@@ -277,11 +277,85 @@
           <a class="sostieni-bottone sostieni-bottone-piccolo" href="https://www.teaming.net/larosadeiventi" target="_blank" rel="noopener noreferrer">Unisciti al gruppo su Teaming ↗</a>
         </div>
 
-        <div class="support-card coming-soon-box">
+        <!-- ⭐ 09/09/2026: il gestionale sa incassare con carta (Stripe), ma
+             il pulsante compare solo quando `js/donazioni.js` conferma con
+             `GET /configurazione` che si può incassare DAVVERO
+             (`donazioniConCarta: true`) — mai un pulsante che porta a un
+             errore del fornitore. Finché quella conferma non arriva (o non
+             arriva mai), resta esattamente il riquadro «prossimamente» di
+             sempre: `#dona-carta-prossimamente` non si tocca via JS. -->
+        <div class="support-card coming-soon-box" id="carta-dona-online">
           <h3>💳 Carta di credito</h3>
-          <span class="coming-soon-tag">🔒 Prossimamente</span>
-          <p>Stiamo attivando il pagamento online. Nel frattempo il bonifico qui accanto arriva allo stesso conto, e il 5x1000 non costa nulla.</p>
-          <button class="btn-solid disabled" type="button" disabled aria-disabled="true">Dona con carta — presto disponibile</button>
+
+          <div id="dona-carta-prossimamente">
+            <span class="coming-soon-tag">🔒 Prossimamente</span>
+            <p>Stiamo attivando il pagamento online. Nel frattempo il bonifico qui accanto arriva allo stesso conto, e il 5x1000 non costa nulla.</p>
+          </div>
+
+          <!-- Il modulo vero. Nasce nascosto (`hidden`): lo scopre solo
+               `js/donazioni.js`, e solo dopo la conferma di cui sopra. -->
+          <form class="modulo-candidatura modulo-donazione" id="modulo-donazione" novalidate hidden>
+            <div class="dona-tipo-scelta" role="group" aria-label="Chi dona">
+              <button type="button" class="dona-tipo-btn attivo" data-tipo-donatore="PERSONA" aria-pressed="true">Persona</button>
+              <button type="button" class="dona-tipo-btn" data-tipo-donatore="ORGANIZZAZIONE" aria-pressed="false">Azienda o ente</button>
+            </div>
+
+            <!-- ⚠️ Nome prima di Cognome, come ovunque su questo sito. -->
+            <div id="dona-campi-persona">
+              <div class="campo-modulo">
+                <label for="dona-nome">Nome</label>
+                <input type="text" id="dona-nome" name="nome" autocomplete="given-name" data-obbligatorio data-per="PERSONA" aria-describedby="dona-nome-errore">
+                <p class="campo-errore" id="dona-nome-errore"></p>
+              </div>
+              <div class="campo-modulo">
+                <label for="dona-cognome">Cognome</label>
+                <input type="text" id="dona-cognome" name="cognome" autocomplete="family-name" data-obbligatorio data-per="PERSONA" aria-describedby="dona-cognome-errore">
+                <p class="campo-errore" id="dona-cognome-errore"></p>
+              </div>
+              <div class="campo-modulo">
+                <label for="dona-cf">Codice fiscale</label>
+                <input type="text" id="dona-cf" name="codiceFiscale" autocomplete="off" maxlength="16" data-obbligatorio data-per="PERSONA" aria-describedby="dona-cf-errore">
+                <p class="campo-errore" id="dona-cf-errore"></p>
+              </div>
+            </div>
+
+            <!-- Nasce nascosto: si scopre solo scegliendo «Azienda o ente». -->
+            <div id="dona-campi-azienda" hidden>
+              <div class="campo-modulo">
+                <label for="dona-denominazione">Denominazione</label>
+                <input type="text" id="dona-denominazione" name="denominazione" autocomplete="organization" data-obbligatorio data-per="ORGANIZZAZIONE" aria-describedby="dona-denominazione-errore">
+                <p class="campo-errore" id="dona-denominazione-errore"></p>
+              </div>
+              <div class="campo-modulo">
+                <label for="dona-piva">Partita IVA</label>
+                <input type="text" id="dona-piva" name="partitaIva" inputmode="numeric" maxlength="11" data-obbligatorio data-per="ORGANIZZAZIONE" aria-describedby="dona-piva-errore">
+                <p class="campo-errore" id="dona-piva-errore"></p>
+              </div>
+            </div>
+
+            <div class="campo-modulo">
+              <label for="dona-email">Email</label>
+              <input type="email" id="dona-email" name="email" autocomplete="email" data-obbligatorio aria-describedby="dona-email-errore dona-email-nota">
+              <p class="campo-errore" id="dona-email-errore"></p>
+              <p class="campo-suggerimento" id="dona-email-nota">La ricevuta di erogazione liberale arriva qui.</p>
+            </div>
+
+            <div class="campo-modulo">
+              <label for="dona-importo">Importo (€)</label>
+              <input type="number" id="dona-importo" name="importo" min="5" max="5000" step="0.01" inputmode="decimal" data-obbligatorio aria-describedby="dona-importo-errore dona-importo-nota">
+              <p class="campo-errore" id="dona-importo-errore"></p>
+              <p class="campo-suggerimento" id="dona-importo-nota">Minimo € 5,00, massimo € 5.000,00.</p>
+            </div>
+
+            <button type="submit" class="btn-solid">Dona con carta</button>
+            <p class="campo-suggerimento" style="margin-top:0.5rem;">Il pagamento si completa su Stripe, il gestore che lo tratta: la carta non passa da questo sito.</p>
+            <p class="modulo-esito" id="donazione-esito" role="status" aria-live="polite"></p>
+          </form>
+
+          <!-- ⛔ Il ripiego onesto se il pagamento smette di rispondere DOPO
+               essere comparso: mai un ritorno all'email (vedi js/donazioni.js
+               in cima al file, è la differenza con gli altri moduli). -->
+          <p class="modulo-esito errore" id="donazione-fallback" role="status" aria-live="polite">⚠️ Il pagamento con carta non risponde in questo momento. Usa il bonifico qui accanto: arriva allo stesso conto.</p>
         </div>
       </div>
     </section>
@@ -476,6 +550,7 @@
   <script src="js/gestionale.js?v=20260901-1831"></script>
   <script src="js/dati-pubblici.js?v=20260901-1831"></script>
   <script src="js/candidature.js?v=20260901-1831"></script>
+  <script src="js/donazioni.js?v=20260909-1"></script>
   <script src="js/copia.js?v=20260901-1831"></script>
 </body>
 </html>
