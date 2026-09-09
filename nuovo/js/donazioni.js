@@ -61,10 +61,19 @@
     importo: 'Scrivi un importo fra ' + formattaEuro(IMPORTO_MINIMO) + ' e ' + formattaEuro(IMPORTO_MASSIMO) + '.'
   };
 
+  /**
+   * ⛔ Convenzione del titolare, in ogni ambito e ogni contesto: simbolo
+   * davanti, separatore delle migliaia, due decimali — "€ 5.000,00", mai
+   * "€ 5000,00". Trovato dal revisore: mancava il separatore delle migliaia,
+   * e il messaggio d'errore sull'importo massimo contraddiceva il testo
+   * statico accanto al campo ("massimo € 5.000,00"), che lo scrive giusto a
+   * mano. `importo` arriva gia' a due decimali col punto (es. "5000.00"): qui
+   * si aggiunge il separatore sulla parte intera, poi si passa alla virgola.
+   */
   function formattaEuro(importo) {
-    // Stessa forma usata ovunque sul sito: simbolo davanti, virgola per i
-    // decimali. `importo` arriva gia' con due decimali e il punto (es. "5.00").
-    return '€ ' + importo.replace('.', ',');
+    var parti = importo.split('.');
+    var interi = parti[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return '€ ' + interi + ',' + parti[1];
   }
 
   function emailValida(v) {
