@@ -803,6 +803,10 @@ function testoCercabileGruppo(g) {
     g.title,
     g.fasciaAnni,
     ...(g.sponsor || []),
+    // ⚠️ La scheda mostra anche «In collaborazione con …» (14/09/2026):
+    //    per la stessa regola di cui sopra, chi cerca «VAB» o «Nomya» deve
+    //    trovare il progetto in cui li ha appena letti.
+    ...(g.collaboratori || []),
     g.location || '',
     ...g.edizioni.map(e => e.description || ''),
     ...g.edizioni.map(e => e.location || '')
@@ -854,9 +858,38 @@ function renderNumeriProgetto(numeri) {
   return `<div class="progetto-numeri">${voci.map(v => `<span>${escapeHTML(v)}</span>`).join('')}</div>`;
 }
 
+/**
+ * Un elenco di nomi da un campo che può arrivare in DUE forme: un array
+ * (l'api del gestionale, `collaboratori: string[]`) o una stringa con le
+ * virgole («La Lanterna, Scuola Redi - IC Caponnetto»), che è come
+ * `data/projects.json` — la copia di sicurezza, generata a suo tempo
+ * dall'Excel — ha sempre scritto `collaboratori`.
+ *
+ * ⚠️ Si spezza SOLO sulla virgola e sul punto e virgola, non sul punto: nel
+ * file una riga dice «CRC Antella. Il teatro dell'Inutile» (un refuso), ma
+ * spezzare sul punto romperebbe «Coop. Sociale» e simili. Un refuso nei
+ * dati si corregge nei dati, non con una regola che ne inventa altri.
+ */
+function elencoNomi(valore) {
+  if (Array.isArray(valore)) return valore.filter(Boolean);
+  if (typeof valore === 'string') {
+    return valore.split(/\s*[,;]\s*/).map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
 function renderProjectCard(progetto, index) {
   const sponsorHtml = progetto.sponsor.length
     ? `<p class="progetto-sponsor">🤝 Sostenuto da ${escapeHTML(progetto.sponsor.join(', '))}</p>`
+    : '';
+  // ⭐ I collaboratori del progetto (14/09/2026): una riga a sé, sotto gli
+  //    sponsor, con un'icona diversa perché sono una cosa diversa — chi
+  //    collabora non finanzia, e non compare nella tabella «Con il sostegno
+  //    di». Se non ce ne sono, la riga non c'è: niente «In collaborazione
+  //    con —» che non dice nulla.
+  const collaboratori = progetto.collaboratori || [];
+  const collaboratoriHtml = collaboratori.length
+    ? `<p class="progetto-collaboratori">🔗 In collaborazione con ${escapeHTML(collaboratori.join(', '))}</p>`
     : '';
 
   return `
@@ -872,6 +905,7 @@ function renderProjectCard(progetto, index) {
         <p>${escapeHTML(progetto.descrizione)}</p>
         ${renderNumeriProgetto(progetto.numeri)}
         ${sponsorHtml}
+        ${collaboratoriHtml}
       </div>
     </article>
   `;
@@ -1114,6 +1148,10 @@ function loadProjects() {
       // Uno sponsor che ha sostenuto più edizioni dello stesso progetto va
       // scritto una volta sola sulla scheda, non ripetuto.
       sponsor: Array.from(new Set(g.edizioni.flatMap(e => e.sponsor || []))),
+      // I collaboratori sono del PROGETTO e l'adattatore li copia su ogni
+      // edizione: riuniti qui, escono una volta sola. `elencoNomi` perché
+      // la copia di sicurezza li ha come stringa, l'api come array.
+      collaboratori: Array.from(new Set(g.edizioni.flatMap(e => elencoNomi(e.collaboratori)))),
       numeri: {
         incontri: sommaCampoEdizioni(g.edizioni, 'incontri'),
         ore: sommaCampoEdizioni(g.edizioni, 'ore'),

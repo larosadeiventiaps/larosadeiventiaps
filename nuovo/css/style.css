@@ -651,12 +651,23 @@ main {
   white-space: nowrap;
 }
 
-.progetto-sponsor {
+.progetto-sponsor,
+.progetto-collaboratori {
   font-size: 1rem;
   color: #555;
   margin-top: 0.7rem;
   padding-top: 0.6rem;
   border-top: 1px solid #eee;
+}
+
+/* «In collaborazione con …» sta sotto «Sostenuto da …» (14/09/2026), e
+   quando ci sono entrambe la seconda non ripete il filetto: sono due righe
+   dello stesso blocco, non due blocchi. Da sola, si comporta come quella
+   degli sponsor. */
+.progetto-sponsor + .progetto-collaboratori {
+  margin-top: 0.3rem;
+  padding-top: 0;
+  border-top: 0;
 }
 
 /* Riga "📍 luogo" sulla scheda evento raggruppata: gli eventi non hanno

@@ -389,9 +389,22 @@
                 e `sommaCampoEdizioni` in `main.js` somma numeri, non
                 `undefined`.
               */
-              incontriInProgramma: (ed.numeri && ed.numeri.incontriInProgramma) || 0
-              // ⛔ `collaboratori` resta fuori: quello il gestionale non lo
-              // conta davvero, e un campo assente qui è la verità.
+              incontriInProgramma: (ed.numeri && ed.numeri.incontriInProgramma) || 0,
+              /*
+                ⭐ **I collaboratori stanno sul PROGETTO, non sull'edizione**
+                (14/09/2026) — al contrario degli sponsor. Chi collabora a un
+                progetto (VAB su Villa Mondeggi, Nomya su Case d'Artista) lo
+                fa per tutte le sue edizioni: si copia lo stesso elenco su
+                ogni riga, e `arricchisciGruppi` in `main.js` lo deduplica
+                quando riunisce le edizioni in una scheda.
+                ⛔ NON sono sponsor e non vanno sommati con loro: la tabella
+                «Con il sostegno di» (`loadPartnerSponsorship`) legge solo
+                `sponsor`, e deve continuare a farlo.
+                ⚠️ `|| []`: il campo è arrivato nell'api il 14/09/2026, e un
+                gestionale più vecchio del sito non lo manda. Senza, la riga
+                «In collaborazione con» semplicemente non compare.
+              */
+              collaboratori: dettaglio.collaboratori || []
             });
           });
         });
