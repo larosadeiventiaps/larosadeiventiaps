@@ -21,6 +21,13 @@
     "url": "https://apicolturasanmartino.com/"
   },
   {
+    "name": "Associazione Gabriele Borgogni",
+    "type": "associazione",
+    "description": "Associazione di Firenze impegnata nella sicurezza stradale e nel sostegno ai familiari delle vittime della strada.",
+    "logo": "images/partners/borgogni.jpg",
+    "url": "https://gabrieleborgogni.com/"
+  },
+  {
     "name": "Associazione Nomya",
     "type": "associazione",
     "description": "Associazione di promozione sociale di Bagno a Ripoli, nata nel 1999, dedicata a ricerca, pubblicazioni e mostre attorno alle case e agli studi d'artista.",
@@ -54,13 +61,6 @@
     "description": "Centro estetico e istituto di bellezza dell'Antella, a Bagno a Ripoli: trattamenti per il corpo, massaggi e benessere.",
     "logo": "images/partners/body-beauty.jpg",
     "url": "https://www.facebook.com/centrobodybeauty/"
-  },
-  {
-    "name": "Borgogni",
-    "type": "associazione",
-    "description": "Associazione di Firenze impegnata nella sicurezza stradale e nel sostegno ai familiari delle vittime della strada.",
-    "logo": "images/partners/borgogni.jpg",
-    "url": "https://gabrieleborgogni.com/"
   },
   {
     "name": "Carp Team Leccatori di Passera",
