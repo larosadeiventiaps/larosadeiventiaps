@@ -21,6 +21,13 @@
     "url": "https://apicolturasanmartino.com/"
   },
   {
+    "name": "Associazione Nomya",
+    "type": "associazione",
+    "description": "Associazione di promozione sociale di Bagno a Ripoli, nata nel 1999, dedicata a ricerca, pubblicazioni e mostre attorno alle case e agli studi d'artista.",
+    "logo": "images/partners/nomya.png",
+    "url": "https://www.associazionenomya.com/"
+  },
+  {
     "name": "Auser",
     "type": "associazione",
     "description": "Associazione di volontariato e promozione sociale dedicata alla valorizzazione degli anziani e all'invecchiamento attivo.",
@@ -40,6 +47,13 @@
     "description": "Biblioteca comunale con servizi di prestito, consultazione e iniziative culturali per il territorio.",
     "logo": "images/partners/biblioteca-bagno-a-ripoli.png",
     "url": "https://www.comune.bagno-a-ripoli.fi.it/biblioteca/home"
+  },
+  {
+    "name": "Body Beauty",
+    "type": "azienda",
+    "description": "Centro estetico e istituto di bellezza dell'Antella, a Bagno a Ripoli: trattamenti per il corpo, massaggi e benessere.",
+    "logo": "images/partners/body-beauty.jpg",
+    "url": "https://www.facebook.com/centrobodybeauty/"
   },
   {
     "name": "Borgogni",
@@ -117,6 +131,13 @@
     "description": "Cooperativa sociale fiorentina che si occupa di persone con disabilità fisica, psichica e di chi si trova in difficoltà sociale, con servizi diurni e residenziali e percorsi educativi e riabilitativi.",
     "logo": "images/partners/cooperativa-matrix.png",
     "url": "https://www.coopmatrix.it/"
+  },
+  {
+    "name": "Coordinamento Toscano delle Associazioni per la Salute Mentale ODV",
+    "type": "associazione",
+    "description": "Punto di ritrovo delle associazioni toscane di volontariato che si occupano di salute mentale: 54 associazioni di familiari, utenti e promozione sociale.",
+    "logo": "images/partners/coordinamento-toscano-salute-mentale.png",
+    "url": "https://www.coordinamentotoscanosalutementale.it/"
   },
   {
     "name": "CRC Antella",
@@ -229,6 +250,13 @@
     "description": "Gestore del servizio idrico integrato in Toscana centrale, sostenitore di progetti di educazione ambientale.",
     "logo": "images/partners/publiacqua.png",
     "url": "https://www.publiacqua.it/qualita/bagno-ripoli"
+  },
+  {
+    "name": "Quelli Delle Erbe",
+    "type": "associazione",
+    "description": "Associazione di Certaldo dedicata a erbe, piante e frutti: divulgazione e conoscenza, con passeggiate e incontri sul tema.",
+    "logo": "images/partners/quelli-delle-erbe.png",
+    "url": "https://www.facebook.com/profile.php?id=100071987057247"
   },
   {
     "name": "Scuola Redi - IC Caponnetto",

@@ -13,7 +13,9 @@
     "professionisti": 3,
     "sponsor": [],
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
-    "collaboratori": "Angeli del bello"
+    "collaboratori": [
+      "Angeli del bello"
+    ]
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -29,7 +31,9 @@
     "professionisti": 3,
     "sponsor": [],
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
-    "collaboratori": "Angeli del bello"
+    "collaboratori": [
+      "Angeli del bello"
+    ]
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -45,7 +49,9 @@
     "professionisti": 3,
     "sponsor": [],
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
-    "collaboratori": "Angeli del bello"
+    "collaboratori": [
+      "Angeli del bello"
+    ]
   },
   {
     "title": "Aiutiamo l'ambiente",
@@ -61,11 +67,13 @@
     "professionisti": 3,
     "sponsor": [],
     "description": "Giornata di volontariato ambientale per la pulizia e la cura degli spazi verdi, in collaborazione con Angeli del Bello.",
-    "collaboratori": "Angeli del bello"
+    "collaboratori": [
+      "Angeli del bello"
+    ]
   },
   {
     "title": "Autonomia",
-    "image": "images/progetti-nuove/autonomia.jpg",
+    "image": "images/progetti-nuove/loc-autonomia-2026-2027.jpg",
     "startDate": "2025-10-11",
     "endDate": "2025-12-20",
     "status": "passato",
@@ -76,7 +84,8 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Uscite con gli amici imparando ad usare i mezzi pubblici e google map"
+    "description": "Uscite con gli amici imparando ad usare i mezzi pubblici e google map",
+    "collaboratori": []
   },
   {
     "title": "Autonomia Abitativa",
@@ -92,7 +101,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Giochi, spesa, cena, pizza in compagnia",
-    "collaboratori": "Fondazione Nuovi Giorni"
+    "collaboratori": [
+      "Fondazione Nuovi Giorni"
+    ]
   },
   {
     "title": "Case d'Artista",
@@ -110,7 +121,9 @@
       "Publiacqua"
     ],
     "description": "Percorso di conoscenza dell'attività dell'artista che ci ospita e lavoro finale tutti insieme",
-    "collaboratori": "Associazione Nomya"
+    "collaboratori": [
+      "Associazione Nomya"
+    ]
   },
   {
     "title": "Centro Estivo",
@@ -126,11 +139,13 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Settimana di attività estive per ragazzi con giochi, laboratori, uscite e momenti di socializzazione durante l'estate.",
-    "collaboratori": "Cooperativa Fontenuova"
+    "collaboratori": [
+      "Cooperativa Fontenuova"
+    ]
   },
   {
     "title": "Cinema",
-    "image": "images/projects/cinema-movie-time.jpeg",
+    "image": "images/progetti-nuove/loc-cinema-2026-2027.jpg",
     "startDate": "2023-09-01",
     "endDate": "2023-12-01",
     "status": "passato",
@@ -142,11 +157,13 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
-    "collaboratori": "CRC Antella"
+    "collaboratori": [
+      "CRC Antella"
+    ]
   },
   {
     "title": "Cinema",
-    "image": "images/projects/cinema-movie-time.jpeg",
+    "image": "images/progetti-nuove/loc-cinema-2026-2027.jpg",
     "startDate": "2024-09-01",
     "endDate": "2024-12-31",
     "status": "passato",
@@ -158,11 +175,13 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
-    "collaboratori": "CRC Antella"
+    "collaboratori": [
+      "CRC Antella"
+    ]
   },
   {
     "title": "Cinema",
-    "image": "images/projects/cinema-movie-time.jpeg",
+    "image": "images/progetti-nuove/loc-cinema-2026-2027.jpg",
     "startDate": "2025-09-01",
     "endDate": "2025-12-20",
     "status": "passato",
@@ -174,11 +193,13 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
-    "collaboratori": "CRC Antella"
+    "collaboratori": [
+      "CRC Antella"
+    ]
   },
   {
     "title": "Cinema",
-    "image": "images/projects/cinema-movie-time.jpeg",
+    "image": "images/progetti-nuove/loc-cinema-2026-2027.jpg",
     "startDate": "2026-10-17",
     "endDate": "2026-12-26",
     "status": "futuro",
@@ -190,6 +211,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Ciclo di proiezioni cinematografiche seguite da discussione di gruppo, per condividere emozioni e riflessioni attraverso il grande schermo.",
+    "collaboratori": [
+      "CRC Antella"
+    ],
     "appuntamenti": [
       {
         "data": "2026-10-17",
@@ -225,7 +249,7 @@
   },
   {
     "title": "Colori in libertà",
-    "image": "images/progetti-nuove/loc-colori-in-liberta-2026.jpg",
+    "image": "images/progetti-nuove/loc-colori-in-liberta-2026-2027.jpg",
     "startDate": "2025-01-01",
     "endDate": "2025-05-01",
     "status": "passato",
@@ -239,11 +263,14 @@
       "Intesa Sanpaolo"
     ],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
-    "collaboratori": "Cooperativa Fontenuova"
+    "collaboratori": [
+      "Consorzio blu Ancora",
+      "Cooperativa Fontenuova"
+    ]
   },
   {
     "title": "Colori in libertà",
-    "image": "images/progetti-nuove/loc-colori-in-liberta-2026.jpg",
+    "image": "images/progetti-nuove/loc-colori-in-liberta-2026-2027.jpg",
     "startDate": "2025-01-01",
     "endDate": "2025-06-01",
     "status": "passato",
@@ -257,11 +284,14 @@
       "Intesa Sanpaolo"
     ],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
-    "collaboratori": "Cooperativa Fontenuova"
+    "collaboratori": [
+      "Consorzio blu Ancora",
+      "Cooperativa Fontenuova"
+    ]
   },
   {
     "title": "Colori in libertà",
-    "image": "images/progetti-nuove/loc-colori-in-liberta-2026.jpg",
+    "image": "images/progetti-nuove/loc-colori-in-liberta-2026-2027.jpg",
     "startDate": "2025-09-27",
     "endDate": "2025-11-29",
     "status": "passato",
@@ -272,14 +302,18 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [
-      "Intesa Sanpaolo"
+      "Intesa Sanpaolo",
+      "Body Beauty"
     ],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
-    "collaboratori": "Cooperativa Fontenuova"
+    "collaboratori": [
+      "Consorzio blu Ancora",
+      "Cooperativa Fontenuova"
+    ]
   },
   {
     "title": "Colori in libertà",
-    "image": "images/progetti-nuove/loc-colori-in-liberta-2026.jpg",
+    "image": "images/progetti-nuove/loc-colori-in-liberta-2026-2027.jpg",
     "startDate": "2026-01-17",
     "endDate": "2026-03-22",
     "status": "passato",
@@ -291,13 +325,16 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
-    "collaboratori": "Cooperativa Fontenuova"
+    "collaboratori": [
+      "Consorzio blu Ancora",
+      "Cooperativa Fontenuova"
+    ]
   },
   {
     "title": "Colori in libertà",
-    "image": "images/progetti-nuove/loc-colori-in-liberta-2026.jpg",
-    "startDate": "2026-09-01",
-    "endDate": "2027-06-30",
+    "image": "images/progetti-nuove/loc-colori-in-liberta-2026-2027.jpg",
+    "startDate": "2026-09-26",
+    "endDate": "2026-12-19",
     "status": "futuro",
     "incontri": 0,
     "ore": 0,
@@ -307,7 +344,10 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Laboratorio artistico di pittura libera e creativa, per esprimersi attraverso i colori senza vincoli e in totale libertà.",
-    "collaboratori": "Cooperativa Sociale Fontenuova"
+    "collaboratori": [
+      "Consorzio blu Ancora",
+      "Cooperativa Fontenuova"
+    ]
   },
   {
     "title": "Conversazioni con il pc",
@@ -326,7 +366,9 @@
       "CRI Bagno a Ripoli"
     ],
     "description": "Corso di alfabetizzazione informatica per imparare ad usare il computer, navigare in internet e utilizzare i principali strumenti digitali.",
-    "collaboratori": "La Lanterna"
+    "collaboratori": [
+      "La Lanterna"
+    ]
   },
   {
     "title": "Dall'orto con amore",
@@ -344,7 +386,10 @@
       "Scuola Redi - IC Caponnetto"
     ],
     "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra.",
-    "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto"
+    "collaboratori": [
+      "La Lanterna",
+      "Scuola Redi - IC Caponnetto"
+    ]
   },
   {
     "title": "Dall'orto con amore",
@@ -362,11 +407,14 @@
       "Scuola Redi - IC Caponnetto"
     ],
     "description": "Laboratorio di orticultura educativa per imparare a coltivare ortaggi e piante, promuovendo il contatto con la natura e il lavoro di squadra.",
-    "collaboratori": "La Lanterna, Scuola Redi - IC Caponnetto"
+    "collaboratori": [
+      "La Lanterna",
+      "Scuola Redi - IC Caponnetto"
+    ]
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
-    "image": "images/progetti-nuove/loc-follow-me-cultura.jpg",
+    "image": "images/progetti-nuove/loc-follow-me-2026-2027.jpg",
     "startDate": "2023-01-01",
     "endDate": "2023-05-01",
     "status": "passato",
@@ -378,11 +426,14 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
-    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
+    "collaboratori": [
+      "Elsa Morante",
+      "Croce d'Oro Ponte a Ema"
+    ]
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
-    "image": "images/progetti-nuove/loc-follow-me-cultura.jpg",
+    "image": "images/progetti-nuove/loc-follow-me-2026-2027.jpg",
     "startDate": "2024-01-01",
     "endDate": "2024-05-31",
     "status": "passato",
@@ -396,11 +447,14 @@
       "Intesa Sanpaolo"
     ],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
-    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
+    "collaboratori": [
+      "Elsa Morante",
+      "Croce d'Oro Ponte a Ema"
+    ]
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
-    "image": "images/progetti-nuove/loc-follow-me-cultura.jpg",
+    "image": "images/progetti-nuove/loc-follow-me-2026-2027.jpg",
     "startDate": "2025-01-01",
     "endDate": "2025-05-01",
     "status": "passato",
@@ -414,11 +468,14 @@
       "Fondazione CR Firenze"
     ],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
-    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
+    "collaboratori": [
+      "Elsa Morante",
+      "Croce d'Oro Ponte a Ema"
+    ]
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
-    "image": "images/progetti-nuove/loc-follow-me-cultura.jpg",
+    "image": "images/progetti-nuove/loc-follow-me-2026-2027.jpg",
     "startDate": "2026-01-01",
     "endDate": "2026-05-30",
     "status": "passato",
@@ -432,11 +489,14 @@
       "Fondazione CR Firenze"
     ],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
-    "collaboratori": "Elsa Morante, Croce d'oro Ponte a Ema"
+    "collaboratori": [
+      "Elsa Morante",
+      "Croce d'Oro Ponte a Ema"
+    ]
   },
   {
     "title": "Follow me...Ad uno s-passo dalla cultura",
-    "image": "images/progetti-nuove/loc-follow-me-cultura.jpg",
+    "image": "images/progetti-nuove/loc-follow-me-2026-2027.jpg",
     "startDate": "2027-01-01",
     "endDate": "2027-05-31",
     "status": "futuro",
@@ -448,7 +508,10 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Percorso di uscite culturali guidate a Firenze e dintorni per scoprire monumenti, musei e bellezze del patrimonio artistico toscano.",
-    "collaboratori": "Istituto Morante-Ginori Conti"
+    "collaboratori": [
+      "Elsa Morante",
+      "Croce d'Oro Ponte a Ema"
+    ]
   },
   {
     "title": "Genitori a confronto",
@@ -464,7 +527,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli.",
-    "collaboratori": "Circolo Vie Nuove"
+    "collaboratori": [
+      "Circolo Vie Nuove"
+    ]
   },
   {
     "title": "Genitori a confronto",
@@ -480,7 +545,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli.",
-    "collaboratori": "Circolo Vie Nuove"
+    "collaboratori": [
+      "Circolo Vie Nuove"
+    ]
   },
   {
     "title": "Genitori a confronto",
@@ -496,11 +563,13 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Gruppo di sostegno e confronto tra genitori su tematiche legate alla genitorialità, alla disabilità e alla crescita dei figli.",
-    "collaboratori": "Circolo Vie Nuove"
+    "collaboratori": [
+      "Circolo Vie Nuove"
+    ]
   },
   {
     "title": "Giochiamo con l'inglese",
-    "image": "images/progetti-nuove/loc-giochiamo-inglese.jpg",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026-2027.jpg",
     "startDate": "2021-09-18",
     "endDate": "2022-06-18",
     "status": "passato",
@@ -512,11 +581,13 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
-    "collaboratori": "CdP Balatro"
+    "collaboratori": [
+      "CdP Balatro"
+    ]
   },
   {
     "title": "Giochiamo con l'inglese",
-    "image": "images/progetti-nuove/loc-giochiamo-inglese.jpg",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026-2027.jpg",
     "startDate": "2022-09-01",
     "endDate": "2023-06-01",
     "status": "passato",
@@ -529,11 +600,14 @@
     "sponsor": [
       "Biblioteca di Bagno a Ripoli"
     ],
-    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
+    "collaboratori": [
+      "CdP Balatro"
+    ]
   },
   {
     "title": "Giochiamo con l'inglese",
-    "image": "images/progetti-nuove/loc-giochiamo-inglese.jpg",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026-2027.jpg",
     "startDate": "2023-09-01",
     "endDate": "2024-06-01",
     "status": "passato",
@@ -546,11 +620,14 @@
     "sponsor": [
       "Biblioteca di Bagno a Ripoli"
     ],
-    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
+    "collaboratori": [
+      "CdP Balatro"
+    ]
   },
   {
     "title": "Giochiamo con l'inglese",
-    "image": "images/progetti-nuove/loc-giochiamo-inglese.jpg",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026-2027.jpg",
     "startDate": "2024-09-01",
     "endDate": "2025-06-30",
     "status": "passato",
@@ -563,11 +640,14 @@
     "sponsor": [
       "Biblioteca di Bagno a Ripoli"
     ],
-    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
+    "collaboratori": [
+      "CdP Balatro"
+    ]
   },
   {
     "title": "Giochiamo con l'inglese",
-    "image": "images/progetti-nuove/loc-giochiamo-inglese.jpg",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026-2027.jpg",
     "startDate": "2025-09-01",
     "endDate": "2026-06-10",
     "status": "passato",
@@ -580,13 +660,16 @@
     "sponsor": [
       "Biblioteca di Bagno a Ripoli"
     ],
-    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi."
+    "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
+    "collaboratori": [
+      "CdP Balatro"
+    ]
   },
   {
     "title": "Giochiamo con l'inglese",
-    "image": "images/progetti-nuove/loc-giochiamo-inglese.jpg",
-    "startDate": "2026-09-22",
-    "endDate": "2027-06-30",
+    "image": "images/progetti-nuove/loc-giochiamo-inglese-2026-2027.jpg",
+    "startDate": "2026-10-06",
+    "endDate": "2027-06-15",
     "status": "futuro",
     "incontri": 0,
     "ore": 0,
@@ -596,8 +679,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Laboratorio ludico-didattico di lingua inglese per ragazzi, con giochi, conversazione e attività interattive per imparare divertendosi.",
-    "location": "Biblioteca di Bagno a Ripoli",
-    "luogoId": "biblioteca-bagno-a-ripoli"
+    "collaboratori": [
+      "CdP Balatro"
+    ]
   },
   {
     "title": "Il Lavandeto",
@@ -615,7 +699,11 @@
       "Comune di Bagno a Ripoli"
     ],
     "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni.",
-    "collaboratori": "Comune di Bagno a Ripoli, Il Teatro dell'Inutile, Apicoltura San Martino"
+    "collaboratori": [
+      "Comune di Bagno a Ripoli",
+      "Il Teatro dell'Inutile",
+      "Apicoltura San Martino"
+    ]
   },
   {
     "title": "Il Lavandeto",
@@ -630,7 +718,12 @@
     "volontari": 0,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni."
+    "description": "Visita al lavandeto con laboratorio esperienziale tra piante aromatiche, teatro e apiario, alla scoperta della natura e delle tradizioni.",
+    "collaboratori": [
+      "Comune di Bagno a Ripoli",
+      "Il Teatro dell'Inutile",
+      "Apicoltura San Martino"
+    ]
   },
   {
     "title": "Marciapiede Didattico",
@@ -648,7 +741,13 @@
       "Scuola Redi - IC Caponnetto"
     ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
-    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
+    "collaboratori": [
+      "CRI Bagno a Ripoli",
+      "Misericordia Antella",
+      "Fratellanza Popolare di Grassina",
+      "Croce d'Oro Ponte a Ema",
+      "Misericordia Badia a Ripoli"
+    ]
   },
   {
     "title": "Marciapiede Didattico",
@@ -667,7 +766,13 @@
       "Fondazione Claudio Ciai"
     ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
-    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
+    "collaboratori": [
+      "CRI Bagno a Ripoli",
+      "Misericordia Antella",
+      "Fratellanza Popolare di Grassina",
+      "Croce d'Oro Ponte a Ema",
+      "Misericordia Badia a Ripoli"
+    ]
   },
   {
     "title": "Marciapiede Didattico",
@@ -685,7 +790,13 @@
       "Comune di Bagno a Ripoli"
     ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
-    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
+    "collaboratori": [
+      "CRI Bagno a Ripoli",
+      "Misericordia Antella",
+      "Fratellanza Popolare di Grassina",
+      "Croce d'Oro Ponte a Ema",
+      "Misericordia Badia a Ripoli"
+    ]
   },
   {
     "title": "Marciapiede Didattico",
@@ -703,7 +814,13 @@
       "Comune di Bagno a Ripoli"
     ],
     "description": "Progetto di educazione stradale e civile per le scuole con percorsi pratici, in collaborazione con Croce Rossa, Misericordie e Fratellanza Popolare.",
-    "collaboratori": "CRI Bagno a Ripoli, Misericordia Antella, FPGrassina, Croce d'Oro Ponte a Ema, Misericordia Badia a Ripoli"
+    "collaboratori": [
+      "CRI Bagno a Ripoli",
+      "Misericordia Antella",
+      "Fratellanza Popolare di Grassina",
+      "Croce d'Oro Ponte a Ema",
+      "Misericordia Badia a Ripoli"
+    ]
   },
   {
     "title": "Musica alla lavanda",
@@ -719,7 +836,9 @@
     "professionisti": 2,
     "sponsor": [],
     "description": "Pomeriggio di merenda in compagnia della musica di due giovani arpiste",
-    "collaboratori": "Comune di Bagno a Ripoli"
+    "collaboratori": [
+      "Comune di Bagno a Ripoli"
+    ]
   },
   {
     "title": "Musica ed Espressione corporea",
@@ -735,11 +854,13 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Laboratorio di Musica ed espressione Corporea",
-    "collaboratori": "CdP Grassina"
+    "collaboratori": [
+      "CdP Grassina"
+    ]
   },
   {
     "title": "Musica e Movimento",
-    "image": "images/progetti-nuove/loc-musica-espressione-corporea-grassina.jpg",
+    "image": "images/progetti-nuove/loc-musica-e-movimento-2026-2027.jpg",
     "startDate": "2025-09-27",
     "endDate": "2025-12-20",
     "status": "passato",
@@ -752,11 +873,12 @@
     "sponsor": [
       "Intesa Sanpaolo"
     ],
-    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina."
+    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina.",
+    "collaboratori": []
   },
   {
     "title": "Musica e Movimento",
-    "image": "images/progetti-nuove/loc-musica-espressione-corporea-grassina.jpg",
+    "image": "images/progetti-nuove/loc-musica-e-movimento-2026-2027.jpg",
     "startDate": "2026-02-07",
     "endDate": "2026-04-18",
     "status": "passato",
@@ -769,11 +891,12 @@
     "sponsor": [
       "Intesa Sanpaolo"
     ],
-    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina."
+    "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina.",
+    "collaboratori": []
   },
   {
     "title": "Musica e Movimento",
-    "image": "images/progetti-nuove/loc-musica-espressione-corporea-grassina.jpg",
+    "image": "images/progetti-nuove/loc-musica-e-movimento-2026-2027.jpg",
     "startDate": "2026-09-19",
     "endDate": "2026-12-05",
     "status": "futuro",
@@ -785,6 +908,7 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Laboratorio di musica e movimento con la musica suonata dal vivo, il sabato pomeriggio, con la merenda insieme. Al DO.ME.A. di Grassina.",
+    "collaboratori": [],
     "appuntamenti": [
       {
         "data": "2026-09-19",
@@ -841,7 +965,10 @@
       "Comune di Bagno a Ripoli"
     ],
     "description": "Progetto di orti sociali nel verde del bosco, per coltivare insieme ortaggi e piante promuovendo la socializzazione all'aria aperta.",
-    "collaboratori": "Auser, Legambiente"
+    "collaboratori": [
+      "Auser",
+      "Legambiente"
+    ]
   },
   {
     "title": "Passeggiate Ripolesi",
@@ -856,7 +983,8 @@
     "volontari": 6,
     "professionisti": 0,
     "sponsor": [],
-    "description": "Escursioni guidate alla scoperta del territorio di Bagno a Ripoli, tra sentieri, borghi e paesaggi collinari."
+    "description": "Escursioni guidate alla scoperta del territorio di Bagno a Ripoli, tra sentieri, borghi e paesaggi collinari.",
+    "collaboratori": []
   },
   {
     "title": "Percorso Didattico Naturalistico parco Villa Mondeggi",
@@ -872,7 +1000,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Escursione naturalistica al parco di Villa Mondeggi per scoprire la biodiversità, le piante e gli animali del territorio.",
-    "collaboratori": "VAB Bagno a Ripoli"
+    "collaboratori": [
+      "VAB Bagno a Ripoli"
+    ]
   },
   {
     "title": "Pomeriggio con i lego",
@@ -888,7 +1018,9 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Pomeriggio creativo con i mattoncini Lego per stimolare la fantasia, la manualità e la collaborazione tra i partecipanti.",
-    "collaboratori": "CdP Grassina"
+    "collaboratori": [
+      "CdP Grassina"
+    ]
   },
   {
     "title": "Settimana dei Diritti",
@@ -906,7 +1038,9 @@
       "Scuola Redi - IC Caponnetto"
     ],
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
-    "collaboratori": "Comune di Bagno a Ripoli"
+    "collaboratori": [
+      "Comune di Bagno a Ripoli"
+    ]
   },
   {
     "title": "Settimana dei Diritti",
@@ -922,7 +1056,9 @@
     "professionisti": 4,
     "sponsor": [],
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
-    "collaboratori": "Comune di Bagno a Ripoli"
+    "collaboratori": [
+      "Comune di Bagno a Ripoli"
+    ]
   },
   {
     "title": "Settimana dei Diritti",
@@ -938,11 +1074,13 @@
     "professionisti": 4,
     "sponsor": [],
     "description": "Settimana di eventi e incontri nelle scuole sui diritti delle persone con disabilità, con professionisti e testimonianze dirette.",
-    "collaboratori": "Comune di Bagno a Ripoli"
+    "collaboratori": [
+      "Comune di Bagno a Ripoli"
+    ]
   },
   {
     "title": "Teatro",
-    "image": "images/projects/corso-teatro.jpg",
+    "image": "images/progetti-nuove/loc-teatro-2026-2027.jpg",
     "startDate": "2025-09-27",
     "endDate": "2025-12-13",
     "status": "passato",
@@ -954,11 +1092,14 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale.",
-    "collaboratori": "CRC Antella"
+    "collaboratori": [
+      "CRC Antella",
+      "Il Teatro dell'Inutile"
+    ]
   },
   {
     "title": "Teatro",
-    "image": "images/projects/corso-teatro.jpg",
+    "image": "images/progetti-nuove/loc-teatro-2026-2027.jpg",
     "startDate": "2026-02-14",
     "endDate": "2026-05-16",
     "status": "passato",
@@ -970,14 +1111,17 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale.",
-    "collaboratori": "CRC Antella. Il teatro dell'Inutile"
+    "collaboratori": [
+      "CRC Antella",
+      "Il Teatro dell'Inutile"
+    ]
   },
   {
     "title": "Teatro",
-    "image": "images/projects/corso-teatro.jpg",
+    "image": "images/progetti-nuove/loc-teatro-2026-2027.jpg",
     "startDate": "2026-09-01",
     "endDate": "2026-12-31",
-    "status": "futuro",
+    "status": "in_corso",
     "incontri": 0,
     "ore": 0,
     "partecipanti": 0,
@@ -986,7 +1130,10 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Laboratorio di teatro per ragazzi al CRC Antella: giochi di espressione, voce e movimento, fino alla messa in scena finale.",
-    "collaboratori": "CRC Antella, Il Teatro dell'Inutile"
+    "collaboratori": [
+      "CRC Antella",
+      "Il Teatro dell'Inutile"
+    ]
   },
   {
     "title": "Una coccola in corsia",
@@ -1004,7 +1151,9 @@
       "Fondazione CR Firenze"
     ],
     "description": "Iniziativa di volontariato per portare comfort e vicinanza ai pazienti ricoverati attraverso piccoli gesti di cura e attenzione.",
-    "collaboratori": "Borgogni"
+    "collaboratori": [
+      "Borgogni"
+    ]
   },
   {
     "title": "Un dolce ronzio",
@@ -1020,7 +1169,9 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Laboratorio di apicoltura didattica per scoprire il mondo delle api, la produzione del miele e l'importanza degli impollinatori.",
-    "collaboratori": "Apicoltura San Martino"
+    "collaboratori": [
+      "Apicoltura San Martino"
+    ]
   },
   {
     "title": "Un gioco per tutti",
@@ -1038,7 +1189,9 @@
       "Fondazione CR Firenze"
     ],
     "description": "Progetto di socializzazione attraverso il gioco per bambini e ragazzi con disabilità, favorendo l'inclusione e il divertimento condiviso.",
-    "collaboratori": "Borgogni"
+    "collaboratori": [
+      "Borgogni"
+    ]
   },
   {
     "title": "Un pennello per amico",
@@ -1054,7 +1207,9 @@
     "professionisti": 1,
     "sponsor": [],
     "description": "Laboratorio di pittura e arti visive dove esprimere la propria creatività attraverso colori, pennelli e tecniche artistiche diverse.",
-    "collaboratori": "CRC Antella"
+    "collaboratori": [
+      "CRC Antella"
+    ]
   },
   {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
@@ -1070,7 +1225,9 @@
     "professionisti": 5,
     "sponsor": [],
     "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti.",
-    "collaboratori": "Trekking di Bagno a Ripoli"
+    "collaboratori": [
+      "Trekking di Bagno a Ripoli"
+    ]
   },
   {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
@@ -1086,7 +1243,9 @@
     "professionisti": 5,
     "sponsor": [],
     "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti.",
-    "collaboratori": "Trekking di Bagno a Ripoli"
+    "collaboratori": [
+      "Trekking di Bagno a Ripoli"
+    ]
   },
   {
     "title": "Uscita con il Trekking di Bagno a Ripoli",
@@ -1102,6 +1261,8 @@
     "professionisti": 0,
     "sponsor": [],
     "description": "Escursioni sui sentieri di Bagno a Ripoli insieme al gruppo Trekking BaR: una giornata all'aria aperta, camminando al passo di tutti.",
-    "collaboratori": "Trekking di Bagno a Ripoli"
+    "collaboratori": [
+      "Trekking di Bagno a Ripoli"
+    ]
   }
 ]

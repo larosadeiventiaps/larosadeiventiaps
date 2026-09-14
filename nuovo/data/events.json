@@ -5,7 +5,16 @@
     "endDate": "2026-11-25",
     "location": "CRC Antella",
     "description": "Evento di restituzione del progetto Marciapiede Didattico, in mattinata, con spettacolo teatrale sulla violenza sulle donne. Invitati gli studenti che hanno partecipato al percorso.",
-    "image": null,
+    "image": "images/progetti-nuove/marciapiede-didattico.jpg",
+    "status": "futuro"
+  },
+  {
+    "title": "Merenda al lavandeto",
+    "startDate": "2026-09-19",
+    "endDate": "2026-09-19",
+    "location": "La dispensa delle api, Via del Carota 31",
+    "description": "Merenda, musica e piantumazione delle piccole lavande. Si comincia alle 17.30: merenda con il miele della dispensa e musica dal vivo con Stella e la sua arpa. Con il patrocinio del Comune di Bagno a Ripoli. Per informazioni: Valentina 328 8424884.",
+    "image": "https://rdv.nextum.it/api/pubblico/eventi/ffde06f4-947c-4607-85f6-0f8ac2a91eda/copertina",
     "status": "futuro"
   },
   {
